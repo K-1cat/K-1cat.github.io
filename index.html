@@ -9,67 +9,86 @@
 body {
     margin: 0;
     font-family: "Segoe UI", sans-serif;
-    background: #ffffff;
+    background: white;
     color: #333;
 }
 
-h1, h2, h3 {
+/* TOP BAR */
+.topbar {
+    background: #4a5bdc;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar .links span {
+    margin-left: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+/* MAIN NAV */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
     color: #4a5bdc;
 }
 
-button {
-    padding: 10px 15px;
-    background: #4a5bdc;
-    border: none;
-    color: white;
+.nav-links span {
+    margin: 0 15px;
     cursor: pointer;
-    border-radius: 6px;
 }
 
-button:hover {
-    background: #3b4cc0;
-}
-
-input {
-    padding: 10px;
-    margin: 5px 0;
-    width: 100%;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-/* LOGIN */
-#loginScreen {
-    display: flex;
-    justify-content: center;
+/* HERO SECTION */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
     align-items: center;
-    height: 100vh;
+    padding: 50px;
+    gap: 40px;
 }
 
-.login-box {
-    background: #f5f7ff;
-    padding: 30px;
-    border-radius: 12px;
-    width: 320px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+.hero-text small {
+    color: #7a84ff;
+    letter-spacing: 1px;
 }
 
-/* MAIN PAGE */
-#mainPage {
-    display: none;
+.hero-text h1 {
+    font-size: 3em;
+    margin: 10px 0;
+    color: #222;
 }
 
-.navbar {
-    background: #4a5bdc;
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
+.hero-text p {
+    font-size: 1.1em;
+    color: #555;
 }
 
-.container {
-    padding: 20px;
+.hero-text .line {
+    width: 50px;
+    height: 4px;
+    background: #7a84ff;
+    margin: 15px 0;
+}
+
+.hero img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* SECTIONS */
+.section {
+    padding: 40px 50px;
 }
 
 .grid {
@@ -80,164 +99,92 @@ input {
 
 .card {
     background: #f5f7ff;
-    padding: 15px;
+    padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin: 6px 0;
-    padding: 6px;
-    background: #ffffff;
-    border-radius: 6px;
-}
-
-.section {
-    margin-top: 30px;
 }
 
 .footer {
-    margin-top: 40px;
-    padding: 20px;
     background: #f0f2ff;
+    padding: 20px;
     text-align: center;
-    font-size: 0.9em;
+    margin-top: 40px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginScreen">
-    <div class="login-box">
-        <h1>Welcome to VAI</h1>
-        <p>Virtual Academy Institution</p>
-        <input type="text" placeholder="Student ID">
-        <input type="password" placeholder="Password">
-        <button onclick="login()">Login</button>
-        <br><br>
-        <button onclick="guestLogin()">Enter as Guest</button>
-        <p style="font-size: 0.8em; color: #666;">Empowering the next generation of VTubers ✨</p>
+<!-- TOP BAR -->
+<div class="topbar">
+    <div>VAI | Virtual Academy Institution</div>
+    <div class="links">
+        <span>About</span>
+        <span>Visit</span>
+        <span>Apply</span>
+        <span>Alumni</span>
     </div>
 </div>
 
-<!-- MAIN -->
-<div id="mainPage">
-
-    <div class="navbar">
-        <div><b>VAI Dashboard</b></div>
-        <div>Home | Events | Students | Messages</div>
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">VAI</div>
+    <div class="nav-links">
+        <span>Academics</span>
+        <span>Admissions</span>
+        <span>Student Life</span>
+        <span>Events</span>
+        <span>Resources</span>
+        <span style="font-weight:bold;">Campus Life</span>
     </div>
-
-    <div class="container">
-
-        <!-- INTRO -->
-        <div class="section">
-            <h1>Welcome to VAI 🎉</h1>
-            <p>
-                The Virtual Academy Institution is dedicated to training the next generation of VTubers.
-                Learn streaming, performance, voice acting, branding, and community building in a supportive environment.
-            </p>
-        </div>
-
-        <!-- MAIN GRID -->
-        <div class="grid section">
-
-            <!-- EVENTS -->
-            <div class="card">
-                <h2>📅 Upcoming Events</h2>
-                <ul>
-                    <li>May 3 - Debut Training Workshop</li>
-                    <li>May 6 - Live Performance Review</li>
-                    <li>May 10 - Voice Acting Class</li>
-                    <li>May 15 - Collaboration Event</li>
-                    <li>May 20 - Talent Showcase</li>
-                </ul>
-            </div>
-
-            <!-- LIVE -->
-            <div class="card">
-                <h2>🔴 Students Live Now</h2>
-                <ul>
-                    <li>Hikari_Nova - Just Chatting</li>
-                    <li>ZeroByte - Gaming Stream</li>
-                    <li>LunaStar - Singing Session</li>
-                    <li>PixelMiko - Art Stream</li>
-                </ul>
-            </div>
-
-            <!-- EMAIL -->
-            <div class="card">
-                <h2>📧 Messages</h2>
-                <ul>
-                    <li><b>Admin:</b> Welcome to VAI!</li>
-                    <li><b>Mentor:</b> Feedback on your last stream</li>
-                    <li><b>System:</b> New lessons unlocked</li>
-                </ul>
-            </div>
-
-            <!-- STATS -->
-            <div class="card">
-                <h2>📊 Your Progress</h2>
-                <p>Followers Growth: +15%</p>
-                <p>Streaming Consistency: 90%</p>
-                <p>Audience Engagement: High</p>
-            </div>
-
-        </div>
-
-        <!-- EXTRA CONTENT -->
-        <div class="section">
-            <h2>🌟 Featured Programs</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Beginner VTuber Course</h3>
-                    <p>Learn the basics of streaming, avatars, and audience interaction.</p>
-                </div>
-                <div class="card">
-                    <h3>Voice Acting Mastery</h3>
-                    <p>Improve character voices and emotional delivery.</p>
-                </div>
-                <div class="card">
-                    <h3>Brand Building</h3>
-                    <p>Create a unique identity and grow your fanbase.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>🏫 About VAI</h2>
-            <p>
-                VAI combines technology and creativity to empower aspiring VTubers worldwide.
-                Our mission is to provide tools, mentorship, and opportunities to help students succeed in the virtual entertainment industry.
-            </p>
-        </div>
-
-    </div>
-
-    <div class="footer">
-        © 2026 Virtual Academy Institution | Inspiring Virtual Talent Worldwide
-    </div>
-
 </div>
 
-<script>
-function login() {
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("mainPage").style.display = "block";
-}
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-text">
+        <small>CAMPUS LIFE</small>
+        <h1>Your Stage.<br>Our Support.</h1>
+        <div class="line"></div>
+        <p>
+            VAI is a community for aspiring VTubers and creators to learn,
+            collaborate, and shine—together.
+        </p>
+    </div>
 
-function guestLogin() {
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("mainPage").style.display = "block";
-}
-</script>
+    <!-- IMAGE HERE -->
+    <img src="vai-campus.jpg" alt="VAI Campus">
+</div>
+
+<!-- EXTRA CONTENT -->
+<div class="section">
+    <h2>🌟 Featured Programs</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>VTuber Fundamentals</h3>
+            <p>Learn streaming, avatars, and audience interaction.</p>
+        </div>
+        <div class="card">
+            <h3>Voice Acting</h3>
+            <p>Master expressive performance and character voices.</p>
+        </div>
+        <div class="card">
+            <h3>Content Strategy</h3>
+            <p>Grow your audience and build your brand.</p>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>📅 Upcoming Events</h2>
+    <div class="grid">
+        <div class="card">Debut Workshop - May 3</div>
+        <div class="card">Performance Review - May 6</div>
+        <div class="card">Collab Event - May 15</div>
+    </div>
+</div>
+
+<div class="footer">
+    © 2026 Virtual Academy Institution
+</div>
 
 </body>
 </html>
