@@ -1,13 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
-    <!-- Tailwind CSS CDN (easy way for GitHub Pages) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAI - Virtual Academy Institution</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0b0f1a;
+        color: #e0e6ff;
+    }
+
+    h1, h2 {
+        margin: 0;
+    }
+
+    button {
+        padding: 10px 15px;
+        background: #5865f2;
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background: #4752c4;
+    }
+
+    input {
+        padding: 10px;
+        margin: 5px 0;
+        width: 100%;
+        border-radius: 5px;
+        border: none;
+    }
+
+    /* LOGIN SCREEN */
+    #loginScreen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .login-box {
+        background: #141a2e;
+        padding: 30px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+    }
+
+    /* MAIN PAGE */
+    #mainPage {
+        display: none;
+        padding: 20px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .card {
+        background: #141a2e;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        margin: 5px 0;
+        padding: 5px;
+        background: #1c2240;
+        border-radius: 5px;
+    }
+
+    .header {
+        margin-bottom: 20px;
+    }
+
+    .small {
+        font-size: 0.8em;
+        color: #8a90c7;
+    }
+</style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 min-h-screen">
-    <p>404 not found</p>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+    <div class="login-box">
+        <h1>VAI</h1>
+        <p>Virtual Academy Institution</p>
+        <input type="text" placeholder="Student ID">
+        <input type="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <br><br>
+        <button onclick="guestLogin()">Enter as Guest</button>
+        <p class="small">Authorized access only</p>
+    </div>
+</div>
+
+<!-- MAIN PAGE -->
+<div id="mainPage">
+    <div class="header">
+        <h1>VAI Student Dashboard</h1>
+        <p class="small">Welcome to Virtual Academy Institution</p>
+    </div>
+
+    <div class="grid">
+
+        <!-- EVENTS -->
+        <div class="card">
+            <h2>📅 Events Calendar</h2>
+            <ul>
+                <li>May 3 - Debut Training Workshop</li>
+                <li>May 6 - Live Performance Review</li>
+                <li>May 10 - Voice Acting Class</li>
+                <li>May 15 - Collaboration Event</li>
+            </ul>
+        </div>
+
+        <!-- STREAMING -->
+        <div class="card">
+            <h2>🔴 Students Live Now</h2>
+            <ul>
+                <li>Hikari_Nova - Just Chatting</li>
+                <li>ZeroByte - Gaming Stream</li>
+                <li>Luna.exe - Singing Session</li>
+            </ul>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="card">
+            <h2>📧 Messages</h2>
+            <ul>
+                <li><b>Admin:</b> Orientation schedule updated</li>
+                <li><b>Mentor:</b> Review your last stream</li>
+                <li><b>System:</b> New module unlocked</li>
+            </ul>
+        </div>
+
+        <!-- EXTRA FEATURE -->
+        <div class="card">
+            <h2>📊 Performance Stats</h2>
+            <p>Followers Growth: +12%</p>
+            <p>Stream Consistency: 85%</p>
+            <p>Engagement Rate: Medium</p>
+        </div>
+
+    </div>
+
+    <br>
+
+    <!-- SECRET-ish DETAIL -->
+    <p class="small">System Status: Stable | Archive Sync: Active</p>
+</div>
+
+<script>
+function login() {
+    // fake login
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+}
+
+function guestLogin() {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+}
+</script>
+
 </body>
 </html>
