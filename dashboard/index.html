@@ -142,6 +142,30 @@ body {
     border-radius: 8px;
     font-family: monospace;
 }
+
+/* Bottom Mail Box */
+.bottom-mail-box {
+    display: none;
+    margin-top: 30px;
+    background: white;
+    border: 2px solid #4a5bdc;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(74, 91, 220, 0.15);
+    overflow: hidden;
+}
+
+.bottom-mail-header {
+    background: #4a5bdc;
+    color: white;
+    padding: 12px 18px;
+    font-size: 1.05em;
+}
+
+.bottom-mail-body {
+    padding: 20px;
+    line-height: 1.6;
+    min-height: 180px;
+}
 </style>
 </head>
 
@@ -233,33 +257,20 @@ body {
 <div id="email" class="section">
     <h2>📩 メール</h2>
     <div class="card">
+        <div class="email" onclick="openMail(1)">【運営】評価更新のお知らせ</div>
+        <div class="email" onclick="openMail(2)">【システム】異常検出</div>
+        <div class="email" onclick="openMail(3)">【内部】配信ログ確認</div>
 
-        <div class="email" onclick="openMail(1)">
-            【運営】評価更新のお知らせ
+        <div id="mail-content" style="margin-top:20px; padding:15px; background:#f9f9ff; border-radius:8px; min-height:80px;"></div>
+    </div>
+
+    <!-- NEW: Bottom Detail Box -->
+    <div id="bottom-mail-box" class="bottom-mail-box">
+        <div class="bottom-mail-header">
+            <strong id="bottom-mail-title"></strong>
+            <span onclick="closeBottomBox()" style="cursor:pointer; float:right; font-size:1.2em;">✕</span>
         </div>
-
-        <div class="email" onclick="openMail(2)">
-            【システム】異常検出
-        </div>
-
-        <div class="email" onclick="openMail(3)">
-            【内部】配信ログ確認
-        </div>
-
-        <div id="mail-content" style="margin-top:15px;"></div>
-
-        <div style="margin-top:15px; color:#777; cursor:pointer;" onclick="toggleLog()">
-            システムログを表示
-        </div>
-
-        <div id="log" class="log">
-[02:14] Stream Status: ACTIVE  
-[02:15] Loop detected  
-[02:16] Memory overwrite failed  
-[02:18] External observer detected  
-[02:19] Attempting isolation... FAILED  
-        </div>
-
+        <div id="bottom-mail-body" class="bottom-mail-body"></div>
     </div>
 </div>
 
@@ -277,17 +288,60 @@ function showSection(id, el) {
 }
     
 function openMail(id) {
-    const box = document.getElementById("mail-content");
+    const contentBox = document.getElementById("mail-content");
+    const bottomBox = document.getElementById("bottom-mail-box");
+    const bottomTitle = document.getElementById("bottom-mail-title");
+    const bottomBody = document.getElementById("bottom-mail-body");
+
+    let title = "";
+    let shortText = "";
+    let fullText = "";
 
     if (id === 1) {
-        box.innerHTML = "あなたの総合スコアが更新されました。";
+        title = "【運営】評価更新のお知らせ";
+        shortText = "あなたの総合スコアが更新されました。";
+        fullText = `
+            <p><strong>送信日:</strong> 2026年5月2日</p>
+            <p>赤井 瀧魔琉様</p>
+            <p>おめでとうございます！あなたの総合評価が <strong>A+</strong> に更新されました。</p>
+            <p>今月の活躍が非常に優秀でした。特にVAI-214でのコラボ配信が高評価です。</p>
+            <hr>
+            <p>引き続きVAI Student Portalをご利用ください。</p>
+        `;
+    } 
+    else if (id === 2) {
+        title = "【システム】異常検出";
+        shortText = "異常な配信活動が検出されました。確認してください。";
+        fullText = `
+            <p><strong>警告</strong></p>
+            <p>システムが異常なループ動作を検出しました。</p>
+            <p>詳細ログを確認の上、必要に応じてサポートへご連絡ください。</p>
+        `;
+    } 
+    else if (id === 3) {
+        title = "【内部】配信ログ確認";
+        shortText = "ログの整合性に問題があります。";
+        fullText = `
+            <p>配信ログの整合性チェックが完了しました。</p>
+            <p>一部のタイムスタンプに不整合が発見されています。</p>
+            <p>詳細はシステムログをご確認ください。</p>
+        `;
     }
-    if (id === 2) {
-        box.innerHTML = "異常な配信活動が検出されました。確認してください。";
-    }
-    if (id === 3) {
-        box.innerHTML = "ログの整合性に問題があります。";
-    }
+
+    // Show short version in the card
+    contentBox.innerHTML = `<strong>${title}</strong><br>${shortText}`;
+
+    // Open detailed box at the bottom
+    bottomTitle.textContent = title;
+    bottomBody.innerHTML = fullText;
+    bottomBox.style.display = "block";
+
+    // Optional: Scroll smoothly to the bottom box
+    bottomBox.scrollIntoView({ behavior: "smooth" });
+}
+
+function closeBottomBox() {
+    document.getElementById("bottom-mail-box").style.display = "none";
 }
 
 function toggleLog() {
