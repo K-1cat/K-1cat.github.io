@@ -13,6 +13,37 @@ body {
     color: #333;
 }
 
+/* TOP BAR */
+.topbar {
+    background: #4a5bdc;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 0.9em;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4a5bdc;
+}
+    
 /* CENTER BOX */
 .container {
     max-width: 500px;
@@ -70,6 +101,21 @@ button:hover {
 </head>
 
 <body>
+<!-- TOP BAR -->
+<div class="topbar">
+    <div>VAI | Virtual Academy Institution</div>
+    <div>
+        <a href="/">ホーム</a>
+        <a href="/login/" id="portal-link">ログイン</a>
+        <a href="/support/">サポート</a>
+    </div>
+</div>
+    
+<!-- NAV -->
+<div class="navbar">
+    <div class="logo">VAI</div>
+    <div>在校生配信</div>
+</div>
 
 <div class="container">
 
@@ -95,14 +141,25 @@ button:hover {
 </div>
 
 <script>
+const role = localStorage.getItem("vai_role");
+
+const link = document.getElementById("portal-link");
+const user = localStorage.getItem("vai_user");
+
+if (role === "student") {
+    document.querySelector(".topbar div").innerText = "VAI | Student Access";
+    link.innerText = user + "｜ポータル";
+    link.href = "/dashboard/";
+}
+
 let attempts = 0;
 
 function unlock() {
     const input = document.getElementById("code").value;
     attempts++;
 
-    if (input === "214203") {
-        window.location.href = "/streams/redvil/live.html";
+    if (input === "2141572") {
+        window.location.href = "/streams/85yen/live/index.html";
     } else {
         if (attempts > 2) {
             document.getElementById("msg").innerText = "認証に失敗しました。\nアクセスログが記録されました。";
