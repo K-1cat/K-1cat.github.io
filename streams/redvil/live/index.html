@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAI - Redvil 配信</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #ffffff;
+    color: #333;
+}
+
+/* NAV */
+.navbar {
+    padding: 15px 30px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    font-weight: bold;
+    color: #4a5bdc;
+}
+
+/* CONTAINER */
+.container {
+    padding: 40px 50px;
+}
+
+/* STREAM BOX */
+.stream-box {
+    background: #000;
+    color: #0f0;
+    height: 300px;
+    border-radius: 12px;
+    padding: 15px;
+    font-family: monospace;
+    overflow-y: auto;
+}
+
+/* META */
+.meta {
+    color: #777;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+/* CHAT */
+.chat {
+    margin-top: 30px;
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.chat p {
+    margin: 8px 0;
+}
+
+/* subtle glitch */
+.glitch {
+    animation: flicker 2s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 1; }
+    48% { opacity: 1; }
+    50% { opacity: 0.6; }
+    52% { opacity: 1; }
+    100% { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="logo">VAI</div>
+    <div>非公開配信</div>
+</div>
+
+<div class="container">
+
+    <h1 class="glitch">🔴 Redvil - 個人配信</h1>
+
+    <div class="meta">
+        状態：接続不安定<br>
+        Stream ID：0241
+    </div>
+
+    <div class="stream-box" id="log">
+        ▶ 接続中...<br>
+        ▶ 映像信号なし<br>
+        ▶ 音声のみ受信中...<br><br>
+
+        「……あれ？」<br>
+        「誰かいる？」<br><br>
+
+        ▶ ノイズ検出<br><br>
+
+        「ここ、VAIだよね？」<br>
+        「ずっと配信してる気がするんだけど…」<br><br>
+
+        ▶ 信号不安定<br><br>
+
+        「昨日も、同じこと言った気がする」<br>
+    </div>
+
+    <div class="chat">
+        <h2>💬 チャット</h2>
+        <p><b>system:</b> この配信は非公開です</p>
+        <p><b>system:</b> 外部アクセスは記録されます</p>
+        <p><b>viewer_01:</b> …誰かいる？</p>
+    </div>
+
+</div>
+
+<script>
+/* optional: slowly add text for realism */
+const log = document.getElementById("log");
+
+setTimeout(() => {
+    log.innerHTML += "<br>▶ 再接続試行中...<br>";
+}, 4000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>「これ、誰か見てる？」<br>";
+}, 7000);
+</script>
+
+</body>
+</html>
