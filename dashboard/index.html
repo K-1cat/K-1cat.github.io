@@ -102,7 +102,7 @@ body {
     <div>VAI 学生ポータル</div>
     <div>
         <a href="/">ホーム</a>
-        <a href="/dashboard/">学生ポータル</a>
+        <a href="/dashboard/" id="portal-link">学生ポータル</a>
         <a href="/support/">サポート</a>
     </div>
 </div>
@@ -200,6 +200,17 @@ body {
 </div>
 
 <script>
+const role = localStorage.getItem("vai_role");
+
+const link = document.getElementById("portal-link");
+const user = localStorage.getItem("vai_user");
+
+if (role === "student") {
+    document.querySelector(".topbar div").innerText = "VAI | Student Access";
+    link.innerText = user + "｜ポータル";
+    link.href = "/dashboard/";
+}
+    
 function show(section) {
     document.querySelectorAll(".section").forEach(s => s.style.display = "none");
     document.getElementById(section).style.display = "block";
