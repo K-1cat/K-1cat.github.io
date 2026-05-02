@@ -13,6 +13,23 @@ body {
     color: #333;
 }
 
+/* TOP BAR */
+.topbar {
+    background: #4a5bdc;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 0.9em;
+}
+    
 /* NAV */
 .navbar {
     padding: 15px 30px;
@@ -64,6 +81,16 @@ body {
 
 <body>
 
+<!-- TOP BAR -->
+<div class="topbar">
+    <div>VAI | Virtual Academy Institution</div>
+    <div>
+        <a href="/">ホーム</a>
+        <a href="/login/" id="portal-link">ログイン</a>
+        <a href="/support/">サポート</a>
+    </div>
+</div>
+    
 <!-- NAV -->
 <div class="navbar">
     <div class="logo">VAI</div>
