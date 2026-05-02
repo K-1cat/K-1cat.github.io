@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAI - 85Yen 配信</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: white;
+    color: #333;
+}
+
+/* TOP BAR */
+.topbar {
+    background: #4a5bdc;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 0.9em;
+}
+    
+/* NAV */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4a5bdc;
+}
+
+/* STREAM */
+.container {
+    padding: 40px 50px;
+}
+
+.stream-box {
+    background: #000;
+    color: #fff;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+/* META */
+.meta {
+    color: #777;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+/* CHAT */
+.chat {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.chat p {
+    margin: 8px 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div>VAI | Virtual Academy Institution</div>
+    <div>
+        <a href="/">ホーム</a>
+        <a href="/login/" id="portal-link">ログイン</a>
+        <a href="/support/">サポート</a>
+    </div>
+</div>
+    
+<!-- NAV -->
+<div class="navbar">
+    <div class="logo">VAI</div>
+    <div>在校生配信</div>
+</div>
+
+<div class="container">
+
+    <h1>👥 85Yen - コラボ配信 （w/ たんばりん）</h1>
+
+    <div class="meta">
+        配信メディア: VAI.sys<br>
+        配信開始：06/03　19:52<br>
+        Stream ID：YN-1572
+    </div>
+
+    <div class="stream-box">
+        <img src="85Yen-stream.jpg" alt="85Yen stream">
+    </div>
+
+    <p>
+        たんばりんとスプラしてます！視聴者参加型！！強者カモン！🦑
+    </p>
+
+    <h2>💬 チャット</h2>
+
+    <div class="chat">
+        <p><b>viewer_04:</b> 58ha~</p>
+        <p><b>viewer_12:</b> こん～</p>
+        <p><b>viewer_03:</b> コラボ最高！</p>
+        <p><b>viewer_08:</b> たんばりんさんから来ました</p>
+        <p><b>viewer_26:</b> めっちゃ上手いですね。</p>
+        <p><b>viewer_20:</b> チャンネル登録しました！</p>
+        <p><b>viewer_12:</b> 次のコラボ配信いつですか？</p>
+    </div>
+
+</div>
+
+</body>
+
+<script>
+const role = localStorage.getItem("vai_role");
+
+const link = document.getElementById("portal-link");
+const user = localStorage.getItem("vai_user");
+
+if (role === "student") {
+    document.querySelector(".topbar div").innerText = "VAI | Student Access";
+    link.innerText = user + "｜ポータル";
+    link.href = "/dashboard/";
+}
+</script>
+</html>
