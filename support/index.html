@@ -105,7 +105,7 @@ button:hover {
     <div>VAI | Virtual Academy Institution</div>
     <div>
         <a href="/">ホーム</a>
-        <a href="/login/">ログイン</a>
+        <a href="/login/" id="portal-link">ログイン</a>
         <a href="/support/">サポート</a>
     </div>
 </div>
@@ -157,4 +157,17 @@ button:hover {
 </div>
 
 </body>
+
+<script>
+const role = localStorage.getItem("vai_role");
+
+const link = document.getElementById("portal-link");
+const user = localStorage.getItem("vai_user");
+
+if (role === "student") {
+    document.querySelector(".topbar div").innerText = "VAI | Student Access";
+    link.innerText = user + "｜ポータル";
+    link.href = "/dashboard/";
+}
+</script>
 </html>
