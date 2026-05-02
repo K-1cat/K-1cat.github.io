@@ -13,15 +13,23 @@ body {
     color: #333;
 }
 
-/* TOPBAR */
+/* TOP BAR */
 .topbar {
     background: #4a5bdc;
     color: white;
     padding: 10px 30px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
+.topbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 0.9em;
+}
+    
 /* LAYOUT */
 .container {
     padding: 30px;
@@ -95,9 +103,14 @@ body {
 
 <body>
 
+<!-- TOP BAR -->
 <div class="topbar">
-    <div>VAI 学生ポータル</div>
-    <div>redvil</div>
+    <div>VAI | Virtual Academy Institution</div>
+    <div>
+        <a href="/">ホーム</a>
+        <a href="/dashboard/">Redvil | ポータル</a>
+        <a href="/support/">サポート</a>
+    </div>
 </div>
 
 <div class="container">
