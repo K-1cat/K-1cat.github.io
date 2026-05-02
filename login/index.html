@@ -133,7 +133,8 @@ function login() {
     // Redvil credentials
     if (id === "Redvil" && pw === "Tono0128") {
         localStorage.setItem("vai_role", "student");
-        localStorage.setItem("vai_user", "redvil");
+        localStorage.setItem("vai_user", "Redvil");
+        localStorage.removeItem("vai_site_down");
 
         document.getElementById("msg").style.color = "green";
         document.getElementById("msg").innerText = "認証中…";
