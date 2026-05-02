@@ -13,6 +13,10 @@ body {
     color: #333;
 }
 
+body {
+    transition: opacity 1s;
+}
+
 /* NAV */
 .navbar {
     padding: 15px 30px;
@@ -125,27 +129,39 @@ setTimeout(() => {
 
 setTimeout(() => {
     log.innerHTML += "<br>「誰かいる？」<br>";
-}, 11000);
+}, 12000);
 
 setTimeout(() => {
     log.innerHTML += "<br>▶ ノイズ検出";
-}, 13000);
+}, 15000);
 
 setTimeout(() => {
     log.innerHTML += "<br>▶ 信号不安定<br>";
-}, 14000);
+}, 17000);
     
 setTimeout(() => {
     log.innerHTML += "<br>「ず………信……る………る…だ…ど…」<br>";
-}, 16000);
+}, 20000);
 
 setTimeout(() => {
     log.innerHTML += "<br>▶ 部外者の侵入を検知";
-}, 19000);
+}, 23000);
 
 setTimeout(() => {
     log.innerHTML += "<br>▶ 強制再起動を行います<br>";
-}, 20000);
+}, 26000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>▶ セッションを終了します<br>";
+}, 28000);
+
+setTimeout(() => {
+    document.body.style.opacity = "0";
+}, 30000);
+    
+setTimeout(() => {
+    window.location.href = "/";
+}, 31000);
 </script>
 
 </body>
