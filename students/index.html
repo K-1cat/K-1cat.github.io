@@ -150,7 +150,7 @@ a.active {
 <div class="grid">
 
     <!-- STUDENT 1 -->
-    <a href="/streams/85yen/" style="text-decoration:none; color:inherit;" id="85Yen-portal">
+    <a href="/streams/85yen/" style="text-decoration:none; color:inherit;" id="85Yen-link">
         <div class="card">
             <div class="avatar">Avatar</div>
             <div class="tag">VAI-214</div>
@@ -163,7 +163,7 @@ a.active {
     </a>
 
     <!-- STUDENT 2 -->
-    <a href="/streams/85yen/" style="text-decoration:none; color:inherit;" id="85Yen-portal">
+    <a href="/streams/85yen/" style="text-decoration:none; color:inherit;" id="tanbarin-link">
     <div class="card">
         <div class="avatar">Avatar</div>
         <div class="tag">VAI-203</div>
@@ -187,7 +187,7 @@ a.active {
     </div>
 
     <!-- Student 4 -->
-    <a href="/streams/redvil/" style="text-decoration:none; color:inherit;" id="redvil-portal">
+    <a href="/streams/redvil/" style="text-decoration:none; color:inherit;" id="redvil-link">
     <div class="card">
         <div class="avatar">Avatar</div>
         <div class="tag">VAI-101</div>
@@ -213,14 +213,16 @@ const role = localStorage.getItem("vai_role");
 const link = document.getElementById("portal-link");
 const user = localStorage.getItem("vai_user");
 
-const redLink = document.getElementById("redvil-portal");
-const YenLink = document.getElementById("85Yen-portal");
+const redLink = document.getElementById("redvil-link");
+const YenLink = document.getElementById("85Yen-link");
+const tanLink = document.getElementById("tanbarin-link");
 
 if (role === "student") {
     document.querySelector(".topbar div").innerText = "VAI | Student Access";
     link.innerText = user + "｜ポータル";
     link.href = "/dashboard/";
     YenLink.href = "/streams/85yen/live";
+    tanLink.href = "/streams/85yen/live";
     redLink.href = "/students/";
 }
 </script>
