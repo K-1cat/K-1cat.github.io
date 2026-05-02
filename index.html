@@ -131,6 +131,7 @@ a.active {
 <!-- TOP BAR -->
 <div class="topbar">
     <div>VAI | Virtual Academy Institution</div>
+    <div><a href="/login/">ログイン</a></div>
     <div><a href="/support/">サポート</a></div>
 </div>
 
@@ -235,4 +236,15 @@ a.active {
 </div>
 
 </body>
+
+<script>
+const role = localStorage.getItem("vai_role");
+
+if (role === "student") {
+    // Example: change topbar text
+    document.querySelector(".topbar div").innerText = "VAI | Student Access";
+
+    // You can reveal hidden content here later
+}
+</script>
 </html>
