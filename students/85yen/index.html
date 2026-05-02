@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAI - 学生プロフィール</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: white;
+    color: #333;
+}
+
+/* TOP BAR */
+.topbar {
+    background: #4a5bdc;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4a5bdc;
+}
+
+.nav-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* HEADER PROFILE */
+.profile {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 30px;
+    padding: 50px;
+    align-items: center;
+}
+
+.avatar {
+    width: 200px;
+    height: 200px;
+    background: #ddd;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.profile-info h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 10px;
+    background: #4a5bdc;
+    color: white;
+    border-radius: 6px;
+    font-size: 0.8em;
+}
+
+.status {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* SECTIONS */
+.section {
+    padding: 30px 50px;
+}
+
+.section.gray {
+    background: #f5f5f5;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* CARD */
+.card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* FOOTER */
+.footer {
+    background: #f0f2ff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div>VAI | Virtual Academy Institution</div>
+    <div><a href="/support/">サポート</a></div>
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">VAI</div>
+    <div class="nav-links">
+        <a href="/">キャンパスライフ</a>
+        <a href="/programs/">学部・プログラム</a>
+        <a href="/students/">学生</a>
+        <a href="/alumni/">卒業生</a>
+        <a href="/events/">イベント</a>
+    </div>
+</div>
+
+<!-- PROFILE HEADER -->
+<div class="profile">
+    <div class="avatar">Avatar</div>
+
+    <div class="profile-info">
+        <h1>85Yen</h1>
+        <div class="tag">VAI-214</div>
+        <div class="status">🔴 現在配信中（視聴者数：125人）</div>
+
+        <p>
+            コラボ配信を中心に活動する学生VTuber。安定した進行と柔軟な対応力で、
+            グループ配信において中心的な役割を担う。
+        </p>
+    </div>
+</div>
+
+<!-- DETAILS -->
+<div class="section gray">
+    <h2>📘 基本情報</h2>
+    <div class="grid">
+        <div class="card">
+            <b>専攻</b>
+            <p>コラボ配信・コミュニケーション</p>
+        </div>
+        <div class="card">
+            <b>主な活動</b>
+            <p>グループ配信、企画進行</p>
+        </div>
+        <div class="card">
+            <b>指導コース</b>
+            <p>VAI-214：コラボ配信実習</p>
+        </div>
+    </div>
+</div>
+
+<!-- STREAM HISTORY -->
+<div class="section">
+    <h2>📺 最近の配信</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>コラボ企画配信</h3>
+            <p>視聴者数：110人</p>
+        </div>
+        <div class="card">
+            <h3>学習配信（グループ）</h3>
+            <p>視聴者数：95人</p>
+        </div>
+        <div class="card">
+            <h3>イベント振り返り配信</h3>
+            <p>視聴者数：80人</p>
+        </div>
+    </div>
+</div>
+
+<!-- NOTES -->
+<div class="section gray">
+    <h2>📝 活動メモ</h2>
+    <div class="card">
+        <p>
+            最近はコラボ配信での進行役としての評価が高く、複数人配信における安定感が際立っている。
+        </p>
+    </div>
+</div>
+
+<div class="footer">
+    © 2026 Virtual Academy Institution（VAI）
+</div>
+
+</body>
+</html>
