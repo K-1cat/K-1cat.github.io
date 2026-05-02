@@ -102,6 +102,7 @@ button:hover {
 <div class="topbar">
     <div>VAI | Virtual Academy Institution</div>
     <div>
+        <a href="/">ホーム</a>
         <a href="/login/">ログイン</a>
         <a href="/support/">サポート</a>
     </div>
@@ -133,7 +134,17 @@ function login() {
     if (id === "Redvil" && pw === "Tono0128") {
         localStorage.setItem("vai_role", "student");
         localStorage.setItem("vai_user", "redvil");
-        window.location.href = "/";
+
+        document.getElementById("msg").style.color = "green";
+        document.getElementById("msg").innerText = "認証中…";
+
+        setTimeout(() => {
+            document.getElementById("msg").innerText = "認証成功";
+        }, 800);
+
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 1800);
     } else {
         document.getElementById("msg").innerText = "ログインに失敗しました";
     }
