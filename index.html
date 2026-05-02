@@ -127,7 +127,7 @@ a.active {
 </head>
 
 <body>
-
+    
 <!-- TOP BAR -->
 <div class="topbar">
     <div>VAI | Virtual Academy Institution</div>
@@ -135,6 +135,13 @@ a.active {
     <div><a href="/support/">サポート</a></div>
 </div>
 
+<div id="down-page" style="display:none; text-align:center; padding:100px;">
+    <h1>アクセス制限が適用されています。</h1>
+    <p>一部のユーザーのみアクセス可能です。</p>
+</div>
+
+<div id="main-content">
+    
 <!-- NAVBAR -->
 <div class="navbar">
     <div class="logo">VAI</div>
@@ -235,9 +242,17 @@ a.active {
     © 2026 Virtual Academy Institution（VAI）
 </div>
 
+</div>
 </body>
 
 <script>
+const down = localStorage.getItem("vai_site_down");
+
+if (down === "true") {
+    document.getElementById("main-content").style.display = "none";
+    document.getElementById("down-page").style.display = "block";
+}
+    
 const role = localStorage.getItem("vai_role");
 
 if (role === "student") {
