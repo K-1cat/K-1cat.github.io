@@ -88,33 +88,17 @@ body {
     <h1 class="glitch">🔴 Redvil - 個人配信</h1>
 
     <div class="meta">
-        状態：接続不安定<br>
+        配信メディア: VAI.sys<br>
+        配信開始：05/27　10:52<br>
         Stream ID：0241
     </div>
 
-    <div class="stream-box" id="log">
-        ▶ 接続中...<br>
-        ▶ 映像信号なし<br>
-        ▶ 音声のみ受信中...<br><br>
-
-        「……あれ？」<br>
-        「誰かいる？」<br><br>
-
-        ▶ ノイズ検出<br><br>
-
-        「ここ、VAIだよね？」<br>
-        「ずっと配信してる気がするんだけど…」<br><br>
-
-        ▶ 信号不安定<br><br>
-
-        「昨日も、同じこと言った気がする」<br>
-    </div>
+    <div class="stream-box" id="log"></div>
 
     <div class="chat">
         <h2>💬 チャット</h2>
         <p><b>system:</b> この配信は非公開です</p>
         <p><b>system:</b> 外部アクセスは記録されます</p>
-        <p><b>viewer_01:</b> …誰かいる？</p>
     </div>
 
 </div>
@@ -124,12 +108,44 @@ body {
 const log = document.getElementById("log");
 
 setTimeout(() => {
-    log.innerHTML += "<br>▶ 再接続試行中...<br>";
-}, 4000);
+    log.innerHTML += "<br>▶ 接続中...<br>";
+}, 3000);
 
 setTimeout(() => {
-    log.innerHTML += "<br>「これ、誰か見てる？」<br>";
+    log.innerHTML += "<br>▶ 映像信号なし<br>";
+}, 6000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>▶ 音声のみ受信中...<br><br>";
 }, 7000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>「……あれ？」<br>";
+}, 9000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>「誰かいる？」<br><br>";
+}, 10000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>▶ ノイズ検出<br><br>";
+}, 11000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>▶ 信号不安定<br><br>";
+}, 12000);
+    
+setTimeout(() => {
+    log.innerHTML += "<br>「ず………信……る………る…だ…ど…」<br><br>";
+}, 14000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>▶ 部外者の侵入を検知<br>";
+}, 15000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>▶ 強制再起動を行います<br><br>";
+}, 15500);
 </script>
 
 </body>
