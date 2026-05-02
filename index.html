@@ -249,20 +249,26 @@ a.active {
 </body>
 
 <script>
+const role = localStorage.getItem("vai_role");
+
+if (role === "student") {
+    localStorage.setItem("vai_site_down", "false");
+    document.querySelector(".topbar div").innerText = "VAI | Student Access";
+}
+
+const link = document.getElementById("portal-link");
+const user = localStorage.getItem("vai_user");
+
+if (role === "student") {
+    link.innerText = user + "｜ポータル";
+    link.href = "/dashboard/";
+}
+
 const down = localStorage.getItem("vai_site_down");
 
 if (down === "true") {
     document.getElementById("main-content").style.display = "none";
     document.getElementById("down-page").style.display = "block";
-}
-    
-const role = localStorage.getItem("vai_role");
-
-if (role === "student") {
-    // Example: change topbar text
-    document.querySelector(".topbar div").innerText = "VAI | Student Access";
-
-    // You can reveal hidden content here later
 }
 </script>
 </html>
