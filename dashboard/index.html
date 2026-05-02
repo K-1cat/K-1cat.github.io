@@ -22,54 +22,51 @@ body {
     justify-content: space-between;
 }
 
-.topbar a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.9em;
-}
-
 /* LAYOUT */
 .container {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    height: 100vh;
-}
-
-/* SIDEBAR */
-.sidebar {
-    background: white;
-    padding: 20px;
-    border-right: 1px solid #eee;
-}
-
-.sidebar h3 {
-    margin-bottom: 20px;
-}
-
-.sidebar div {
-    margin: 10px 0;
-    cursor: pointer;
-}
-
-/* MAIN */
-.main {
     padding: 30px;
 }
 
-/* CARDS */
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
+/* SECTION */
+.section {
+    margin-bottom: 40px;
 }
 
 /* GRID */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* PROFILE */
+.profile {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    background: #ddd;
+    border-radius: 12px;
+}
+
+/* STREAM THUMB */
+.thumb {
+    width: 100%;
+    height: 120px;
+    background: #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
 
 /* EMAIL */
@@ -83,15 +80,15 @@ body {
     background: #f5f5f5;
 }
 
-/* hidden log */
-.hidden {
+/* LOG */
+.log {
     display: none;
-    margin-top: 20px;
-    font-family: monospace;
-    color: #444;
-    background: #f0f0f0;
+    margin-top: 15px;
+    background: #111;
+    color: #0f0;
     padding: 15px;
     border-radius: 8px;
+    font-family: monospace;
 }
 </style>
 </head>
@@ -100,138 +97,123 @@ body {
 
 <div class="topbar">
     <div>VAI 学生ポータル</div>
-    <div>
-        <a href="/">ホーム</a>
-        <a href="/dashboard/" id="portal-link">学生ポータル</a>
-        <a href="/support/">サポート</a>
-    </div>
+    <div>redvil</div>
 </div>
 
 <div class="container">
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-    <h3>メニュー</h3>
-    <div onclick="show('overview')">概要</div>
-    <div onclick="show('grades')">成績</div>
-    <div onclick="show('email')">メール</div>
+<!-- ① PROFILE -->
+<div class="section">
+    <h2>👤 基本情報</h2>
+    <div class="card profile">
+        <div class="avatar"></div>
+        <div>
+            <p><b>名前：</b>Redvil</p>
+            <p><b>VTuber名：</b>Redvil</p>
+            <p><b>性別：</b>非公開</p>
+            <p><b>年齢：</b>??</p>
+        </div>
+    </div>
 </div>
 
-<!-- MAIN -->
-<div class="main">
+<!-- ② STREAMING -->
+<div class="section">
+    <h2>📊 配信データ</h2>
 
-    <!-- OVERVIEW -->
-    <div id="overview" class="section">
-        <div class="grid">
-            <div class="card">
-                <h3>VTuberスコア</h3>
-                <p style="font-size:2em;">87</p>
-                <p>視聴維持率・交流率・成長度から算出</p>
-            </div>
-
-            <div class="card">
-                <h3>配信数</h3>
-                <p style="font-size:2em;">42</p>
-                <p>今月の総配信数</p>
-            </div>
-
-            <div class="card">
-                <h3>評価</h3>
-                <p style="font-size:2em;">A</p>
-                <p>総合パフォーマンス評価</p>
-            </div>
-        </div>
+    <div class="grid">
+        <div class="card"><b>総配信数</b><br>58</div>
+        <div class="card"><b>総時間</b><br>142h</div>
+        <div class="card"><b>総視聴数</b><br>48,210</div>
+        <div class="card"><b>総いいね</b><br>9,420</div>
+        <div class="card"><b>フォロワー</b><br>6,120</div>
+        <div class="card"><b>総合スコア</b><br><span style="font-size:1.5em;">91</span></div>
     </div>
 
-    <!-- GRADES -->
-    <div id="grades" class="section" style="display:none;">
+    <h3 style="margin-top:20px;">最近の配信</h3>
+
+    <div class="grid">
         <div class="card">
-            <h3>成績一覧</h3>
-            <p>VAI-101：A</p>
-            <p>VAI-203：B+</p>
-            <p>VAI-214：A-</p>
-            <p>VAI-241：A</p>
+            <div class="thumb"></div>
+            <p>コラボ配信（VAI-214）</p>
         </div>
-    </div>
-
-    <!-- EMAIL -->
-    <div id="email" class="section" style="display:none;">
         <div class="card">
-            <h3>受信メール</h3>
-
-            <div class="email" onclick="openMail(1)">
-                【システム】スコア更新のお知らせ
-            </div>
-
-            <div class="email" onclick="openMail(2)">
-                【運営】配信頻度について
-            </div>
-
-            <div class="email" onclick="openMail(3)">
-                【内部通知】ログ確認
-            </div>
-
-            <div id="mail-content" style="margin-top:20px;"></div>
-
-            <!-- hidden log trigger -->
-            <div onclick="revealLog()" style="margin-top:20px; color:#888; cursor:pointer;">
-                システムログを表示
-            </div>
-
-            <div id="hidden-log" class="hidden">
-                [LOG 02:41]<br>
-                Stream Active: redvil<br>
-                Status: looping<br>
-                Access Count: ∞<br><br>
-
-                [LOG 02:42]<br>
-                External Access Detected<br>
-                Source: UNKNOWN<br><br>
-
-                [LOG 02:43]<br>
-                Attempting containment...<br>
-                FAILED
-            </div>
-
+            <div class="thumb"></div>
+            <p>実験配信ログ</p>
+        </div>
+        <div class="card">
+            <div class="thumb"></div>
+            <p>深夜雑談</p>
         </div>
     </div>
-
 </div>
+
+<!-- ③ GRADES -->
+<div class="section">
+    <h2>🎓 成績</h2>
+    <div class="card">
+        <p>VAI-101：A+</p>
+        <p>VAI-203：A</p>
+        <p>VAI-214：A+</p>
+        <p>VAI-241：A</p>
+        <hr>
+        <p><b>総合評価：A+</b></p>
+    </div>
+</div>
+
+<!-- ④ EMAIL -->
+<div class="section">
+    <h2>📩 メール</h2>
+    <div class="card">
+
+        <div class="email" onclick="openMail(1)">
+            【運営】評価更新のお知らせ
+        </div>
+
+        <div class="email" onclick="openMail(2)">
+            【システム】異常検出
+        </div>
+
+        <div class="email" onclick="openMail(3)">
+            【内部】配信ログ確認
+        </div>
+
+        <div id="mail-content" style="margin-top:15px;"></div>
+
+        <div style="margin-top:15px; color:#777; cursor:pointer;" onclick="toggleLog()">
+            システムログを表示
+        </div>
+
+        <div id="log" class="log">
+[02:14] Stream Status: ACTIVE  
+[02:15] Loop detected  
+[02:16] Memory overwrite failed  
+[02:18] External observer detected  
+[02:19] Attempting isolation... FAILED  
+        </div>
+
+    </div>
+</div>
+
 </div>
 
 <script>
-const role = localStorage.getItem("vai_role");
-
-const link = document.getElementById("portal-link");
-const user = localStorage.getItem("vai_user");
-
-if (role === "student") {
-    document.querySelector(".topbar div").innerText = "VAI | Student Access";
-    link.innerText = user + "｜ポータル";
-    link.href = "/dashboard/";
-}
-    
-function show(section) {
-    document.querySelectorAll(".section").forEach(s => s.style.display = "none");
-    document.getElementById(section).style.display = "block";
-}
-
 function openMail(id) {
     const box = document.getElementById("mail-content");
 
     if (id === 1) {
-        box.innerHTML = "あなたのVTuberスコアが更新されました。";
+        box.innerHTML = "あなたの総合スコアが更新されました。";
     }
     if (id === 2) {
-        box.innerHTML = "配信頻度を維持してください。評価に影響します。";
+        box.innerHTML = "異常な配信活動が検出されました。確認してください。";
     }
     if (id === 3) {
-        box.innerHTML = "ログに異常が検出されました。確認してください。";
+        box.innerHTML = "ログの整合性に問題があります。";
     }
 }
 
-function revealLog() {
-    document.getElementById("hidden-log").style.display = "block";
+function toggleLog() {
+    const log = document.getElementById("log");
+    log.style.display = log.style.display === "block" ? "none" : "block";
 }
 </script>
 
