@@ -251,15 +251,11 @@ a.active {
 <script>
 const role = localStorage.getItem("vai_role");
 
-if (role === "student") {
-    localStorage.setItem("vai_site_down", "false");
-    document.querySelector(".topbar div").innerText = "VAI | Student Access";
-}
-
 const link = document.getElementById("portal-link");
 const user = localStorage.getItem("vai_user");
 
 if (role === "student") {
+    document.querySelector(".topbar div").innerText = "VAI | Student Access";
     link.innerText = user + "｜ポータル";
     link.href = "/dashboard/";
 }
