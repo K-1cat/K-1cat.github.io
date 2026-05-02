@@ -328,9 +328,6 @@ function openMail(id) {
         `;
     }
 
-    // Show short version in the card
-    contentBox.innerHTML = `<strong>${title}</strong><br>${shortText}`;
-
     // Open detailed box at the bottom
     bottomTitle.textContent = title;
     bottomBody.innerHTML = fullText;
@@ -342,11 +339,6 @@ function openMail(id) {
 
 function closeBottomBox() {
     document.getElementById("bottom-mail-box").style.display = "none";
-}
-
-function toggleLog() {
-    const log = document.getElementById("log");
-    log.style.display = log.style.display === "block" ? "none" : "block";
 }
 </script>
 
