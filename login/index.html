@@ -8,53 +8,121 @@
 <style>
 body {
     font-family: "Segoe UI", sans-serif;
-    background: #f5f5f5;
-    text-align: center;
-    padding-top: 100px;
+    margin: 0;
+    background: linear-gradient(135deg, #f7f8ff, #eef1ff);
+}
+
+/* TOPBAR */
+.topbar {
+    background: #4a5bdc;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.topbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+/* CENTER BOX */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
 }
 
 .box {
     background: white;
     padding: 40px;
-    border-radius: 12px;
-    display: inline-block;
+    border-radius: 16px;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    text-align: center;
 }
 
+/* TITLE */
+.box h2 {
+    margin-bottom: 10px;
+}
+
+.sub {
+    font-size: 0.85em;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* INPUT */
 input {
-    display: block;
-    margin: 10px auto;
+    width: 100%;
     padding: 10px;
-    width: 200px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
 }
 
+/* BUTTON */
 button {
-    padding: 10px 20px;
-    background: #4a5bdc;
-    color: white;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
     border: none;
     border-radius: 8px;
+    background: #4a5bdc;
+    color: white;
+    cursor: pointer;
 }
 
+button:hover {
+    opacity: 0.9;
+}
+
+/* MESSAGE */
 .msg {
     margin-top: 10px;
     color: red;
+    font-size: 0.9em;
+}
+
+/* subtle detail */
+.footer-note {
+    margin-top: 15px;
+    font-size: 0.75em;
+    color: #aaa;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-    <h2>VAI ログイン</h2>
-
-    <input id="id" placeholder="ID">
-    <input id="pw" placeholder="パスワード" type="password">
-
-    <button onclick="login()">ログイン</button>
-
-    <div class="msg" id="msg"></div>
+<div class="topbar">
+    <div>VAI | Virtual Academy Institution</div>
+    <div>
+        <a href="/login/">ログイン</a>
+        <a href="/support/">サポート</a>
+    </div>
 </div>
 
+<div class="container">
+    <div class="box">
+        <h2>VAI ログイン</h2>
+        <div class="sub">学生専用ポータル｜アクセスログは記録されます</div>
+
+        <input id="id" placeholder="ID">
+        <input id="pw" type="password" placeholder="パスワード">
+
+        <button onclick="login()">ログイン</button>
+
+        <div class="msg" id="msg"></div>
+
+        <div class="footer-note">
+            Secure Access v2.1
+        </div>
+    </div>
+</div>
 <script>
 function login() {
     const id = document.getElementById("id").value;
