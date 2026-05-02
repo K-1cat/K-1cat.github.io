@@ -36,9 +36,14 @@ body {
     color: #4a5bdc;
 }
 
-.nav-links span {
+.nav-links a {
     margin: 0 15px;
-    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+a.active {
+    border-bottom: 2px solid #4a5bdc;
 }
 
 /* HEADER */
@@ -94,7 +99,7 @@ body {
 <!-- TOP BAR -->
 <div class="topbar">
     <div>VAI | Virtual Academy Institution</div>
-    <div>イベント一覧</div>
+    <div class="links"><a href="/support/">サポート</a></div>
 </div>
 
 <!-- NAVBAR -->
