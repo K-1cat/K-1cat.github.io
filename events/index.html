@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAI - イベント</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: white;
+    color: #333;
+}
+
+/* TOP BAR */
+.topbar {
+    background: #4a5bdc;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4a5bdc;
+}
+
+.nav-links span {
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+/* HEADER */
+.header {
+    padding: 40px 50px;
+}
+
+.header h1 {
+    font-size: 2.5em;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px 50px;
+}
+
+.card {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+/* TAGS */
+.tag {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #4a5bdc;
+    color: white;
+    border-radius: 6px;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+}
+
+/* FOOTER */
+.footer {
+    background: #f0f2ff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div>VAI | Virtual Academy Institution</div>
+    <div>イベント一覧</div>
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">VAI</div>
+    <div class="nav-links">
+        <span onclick="location.href='/'">ホーム</span>
+        <span style="font-weight:bold;">イベント</span>
+        <span onclick="location.href='/students/'">学生</span>
+        <span onclick="location.href='/live/'">配信</span>
+    </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>📅 イベント一覧</h1>
+    <p>VAIで開催される講義・実習・コラボイベントのスケジュールです。</p>
+</div>
+
+<!-- EVENTS GRID -->
+<div class="grid">
+
+    <div class="card">
+        <div class="tag">VAI-203</div>
+        <h3>6月3日：パフォーマンス理論講義</h3>
+        <p><b>担当：</b>水野 明 教授</p>
+        <p>配信における表現力や視聴者との関わり方、デジタル上のキャラクター構築について学びます。</p>
+        <p>👥 参加者：128名</p>
+    </div>
+
+    <div class="card">
+        <div class="tag">VAI-214</div>
+        <h3>6月5日：コラボ配信実習</h3>
+        <p><b>担当：</b>田中 恒一 教授</p>
+        <p>チームで配信を企画・実施し、連携や進行、共同での視聴者対応を実践的に学びます。</p>
+        <p>👥 参加者：64名（16グループ）</p>
+    </div>
+
+    <div class="card">
+        <div class="tag">VAI-178</div>
+        <h3>6月10日：キャラクターデザインワークショップ</h3>
+        <p><b>担当：</b>藤本 梨沙（アーティスト）</p>
+        <p>VTuberアバターのデザインやブランディング、ビジュアル表現について学ぶ実践型ワークショップです。</p>
+        <p>👥 参加者：92名</p>
+    </div>
+
+    <div class="card">
+        <div class="tag">VAI-301</div>
+        <h3>6月18日：クロスチャンネルコラボ実習</h3>
+        <p><b>担当：</b>黒田 進 講師</p>
+        <p>複数の配信者によるコラボ配信の企画・実施を通じて、異なる視聴者層へのアプローチを学びます。</p>
+        <p>👥 参加者：48名</p>
+    </div>
+
+    <div class="card">
+        <div class="tag">VAI-250</div>
+        <h3>6月23日：中間発表・相互評価</h3>
+        <p><b>担当：</b>教員委員会</p>
+        <p>これまでの成果を配信形式で発表し、学生同士や指導者からのフィードバックを受けます。</p>
+        <p>👥 参加者：150名 | 🎥 視聴者：1,200人</p>
+    </div>
+
+    <div class="card">
+        <div class="tag">VAI-190</div>
+        <h3>6月24日：業界ゲスト講演</h3>
+        <p><b>ゲスト：</b>星川ユナ（インディーVTuber）</p>
+        <p>VTuber業界で活躍するゲストを招き、実務やトレンド、キャリアについて学びます。</p>
+        <p>👥 参加者：200名 | 🎥 視聴者：2,500人</p>
+    </div>
+
+</div>
+
+<div class="footer">
+    © 2026 Virtual Academy Institution（VAI）
+</div>
+
+</body>
+</html>
