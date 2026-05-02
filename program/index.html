@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAI - プログラム</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: white;
+    color: #333;
+}
+
+/* TOP BAR */
+.topbar {
+    background: #4a5bdc;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4a5bdc;
+}
+
+.nav-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: inherit;
+}
+
+a.active {
+    border-bottom: 2px solid #4a5bdc;
+}
+
+/* HEADER */
+.header {
+    padding: 40px 50px;
+}
+
+.header h1 {
+    font-size: 2.5em;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px 50px;
+}
+
+/* CARD */
+.card {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.code {
+    display: inline-block;
+    background: #4a5bdc;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+}
+
+/* FOOTER */
+.footer {
+    background: #f0f2ff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div>VAI | Virtual Academy Institution</div>
+    <div>プログラム</div>
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">VAI</div>
+    <div class="nav-links">
+        <a href="/">キャンパスライフ</a>
+        <a href="/events/">イベント</a>
+        <a href="/students/">学生</a>
+        <a href="/live/">配信</a>
+        <a href="/programs/" class="active">プログラム</a>
+    </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>📚 プログラム</h1>
+    <p>VAIでは、VTuber活動に必要なスキルを体系的に学ぶことができます。</p>
+</div>
+
+<!-- PROGRAMS -->
+<div class="grid">
+
+    <div class="card">
+        <div class="code">VAI-101</div>
+        <h3>VTuber基礎</h3>
+        <p>配信の基本、アバター設定、機材の扱い方など、VTuberとしての基盤を総合的に学びます。</p>
+    </div>
+
+    <div class="card">
+        <div class="code">VAI-203</div>
+        <h3>パフォーマンス理論</h3>
+        <p>配信中の表現力やキャラクター性、視聴者との関係構築について理論的に理解を深めます。</p>
+    </div>
+
+    <div class="card">
+        <div class="code">VAI-178</div>
+        <h3>キャラクターデザイン</h3>
+        <p>VTuberアバターのビジュアル設計やブランドイメージの構築を学びます。</p>
+    </div>
+
+    <div class="card">
+        <div class="code">VAI-214</div>
+        <h3>コラボ配信実習</h3>
+        <p>複数人での配信企画・進行を実践し、チームワークや連携スキルを習得します。</p>
+    </div>
+
+    <div class="card">
+        <div class="code">VAI-250</div>
+        <h3>映像編集・制作</h3>
+        <p>配信映像の編集や演出技術を学び、より魅力的なコンテンツ制作を目指します。</p>
+    </div>
+
+    <div class="card">
+        <div class="code">VAI-301</div>
+        <h3>クロスチャンネル戦略</h3>
+        <p>複数のプラットフォームや配信者との連携を通じて、影響力を広げる方法を学びます。</p>
+    </div>
+
+</div>
+
+<div class="footer">
+    © 2026 Virtual Academy Institution（VAI）
+</div>
+
+</body>
+</html>
