@@ -14,7 +14,7 @@ body {
 }
 
 body {
-    transition: opacity 1s;
+    transition: opacity 0.5s;
 }
 
 /* NAV */
@@ -132,36 +132,44 @@ setTimeout(() => {
 }, 12000);
 
 setTimeout(() => {
+    log.innerHTML += "<br>「助けて！」";
+}, 16000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>「俺のア…ウントにログイ…し…！」";
+}, 19000);
+
+setTimeout(() => {
     log.innerHTML += "<br>▶ ノイズ検出";
-}, 15000);
+}, 21000);
 
 setTimeout(() => {
     log.innerHTML += "<br>▶ 信号不安定<br>";
-}, 17000);
+}, 23000);
     
 setTimeout(() => {
-    log.innerHTML += "<br>「ず………信……る………る…だ…ど…」<br>";
-}, 20000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>▶ 部外者の侵入を検知";
-}, 23000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>▶ 強制再起動を行います<br>";
+    log.innerHTML += "<br>「…ス……ドはTo…o0…2…」<br>";
 }, 26000);
 
 setTimeout(() => {
-    log.innerHTML += "<br>▶ セッションを終了します<br>";
+    log.innerHTML += "<br>▶ 部外者の侵入を検知";
 }, 28000);
 
 setTimeout(() => {
+    log.innerHTML += "<br>▶ 強制再起動を行います<br>";
+}, 31000);
+
+setTimeout(() => {
+    log.innerHTML += "<br>▶ セッションを終了します<br>";
+}, 33000);
+
+setTimeout(() => {
     document.body.style.opacity = "0";
-}, 30000);
+}, 35000);
     
 setTimeout(() => {
     window.location.href = "/";
-}, 31000);
+}, 35500);
 </script>
 
 </body>
