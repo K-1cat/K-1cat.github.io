@@ -13,6 +13,37 @@ body {
     color: #333;
 }
 
+/* TOP BAR */
+.topbar {
+    background: #4a5bdc;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 0.9em;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4a5bdc;
+}
+    
 /* CENTER BOX */
 .container {
     max-width: 500px;
@@ -70,6 +101,22 @@ button:hover {
 </head>
 
 <body>
+<!-- TOP BAR -->
+<div class="topbar">
+    <div>VAI | Virtual Academy Institution</div>
+    <div>
+        <a href="/">ホーム</a>
+        <a href="/login/" id="portal-link">ログイン</a>
+        <a href="/support/">サポート</a>
+        <a href="/search/">検索</a>
+    </div>
+</div>
+    
+<!-- NAV -->
+<div class="navbar">
+    <div class="logo">VAI</div>
+    <div>在校生配信</div>
+</div>
 
 <div class="container">
 
