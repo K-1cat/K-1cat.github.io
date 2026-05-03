@@ -1,175 +1,128 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAI - 配信アクセス</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAI - 配信アクセス</title>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
 
-<style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: #f5f5f5;
-    color: #333;
-}
-
-/* TOP BAR */
-.topbar {
-    background: #4a5bdc;
-    color: white;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.topbar a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.9em;
-}
-
-/* NAVBAR */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 30px;
-    border-bottom: 1px solid #eee;
-}
-
-.logo {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #4a5bdc;
-}
-    
-/* CENTER BOX */
-.container {
-    max-width: 500px;
-    margin: 100px auto;
-    background: white;
-    padding: 40px;
-    border-radius: 12px;
-    text-align: center;
-}
-
-/* TITLE */
-h1 {
-    margin-bottom: 10px;
-}
-
-/* INPUT */
-input {
-    width: 80%;
-    padding: 10px;
-    margin-top: 20px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    text-align: center;
-}
-
-/* BUTTON */
-button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    background: #4a5bdc;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-/* MESSAGE */
-.message {
-    margin-top: 20px;
-    color: red;
-    font-size: 0.9em;
-}
-
-/* SUBTEXT */
-.sub {
-    margin-top: 15px;
-    font-size: 0.85em;
-    color: #777;
-}
-</style>
-</head>
-
-<body>
-<!-- TOP BAR -->
-<div class="topbar">
-    <div>VAI | Virtual Academy Institution</div>
-    <div>
-        <a href="/">ホーム</a>
-        <a href="/login/" id="portal-link">ログイン</a>
-        <a href="/support/">サポート</a>
-        <a href="/search/">検索</a>
-    </div>
-</div>
-    
-<!-- NAV -->
-<div class="navbar">
-    <div class="logo">VAI</div>
-    <div>在校生配信</div>
-</div>
-
-<div class="container">
-
-    <h1>🔒 配信アクセス制限</h1>
-
-    <p>
-        この配信は非公開に設定されています。<br>
-        アクセスするには認証コードが必要です。
-    </p>
-
-    <input type="text" id="code" placeholder="認証コードを入力">
-
-    <br>
-    <button onclick="unlock()">接続</button>
-
-    <div class="message" id="msg"></div>
-
-    <div class="sub">
-        Stream ID: YN-1572<br>
-        Status: ACTIVE
-    </div>
-
-</div>
-
-<script>
-const role = localStorage.getItem("vai_role");
-
-const link = document.getElementById("portal-link");
-const user = localStorage.getItem("vai_user");
-
-if (role === "student") {
-    document.querySelector(".topbar div").innerText = "VAI | Student Access";
-    link.innerText = user + "｜ポータル";
-    link.href = "/dashboard/";
-}
-
-let attempts = 0;
-
-function unlock() {
-    const input = document.getElementById("code").value;
-    attempts++;
-
-    if (input === "2141572") {
-        window.location.href = "/streams/85yen/live/index.html";
-    } else {
-        if (attempts > 2) {
-            document.getElementById("msg").innerText = "認証に失敗しました。\nアクセスログが記録されました。";
-        } else {
-            document.getElementById("msg").innerText = "認証に失敗しました。";
-        }
+    .stream-nav {
+      padding: 10px 30px;
+      font-size: 0.85em;
+      color: #888;
+      border-bottom: 1px solid #eee;
     }
-}
-</script>
 
+    .stream-wrap {
+      max-width: 500px;
+      margin: 80px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .lock-icon { font-size: 3em; margin-bottom: 16px; }
+
+    .stream-wrap h1 { font-size: 1.5em; margin: 0 0 8px; }
+    .stream-wrap p { color: #666; font-size: 0.95em; margin: 0 0 28px; }
+
+    .code-input {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .code-input input {
+      padding: 10px 16px;
+      border: 1px solid #ccd;
+      border-radius: 8px;
+      font-size: 1em;
+      width: 200px;
+      text-align: center;
+      letter-spacing: 0.1em;
+      background: white;
+      color: #333;
+    }
+    .code-input input:focus { outline: none; border-color: #4a5bdc; }
+    .code-input button {
+      padding: 10px 20px;
+      background: #4a5bdc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .code-input button:hover { background: #3a4bc8; }
+
+    .error-msg { color: #c0392b; font-size: 0.85em; display: none; margin-bottom: 10px; }
+
+    .stream-meta {
+      margin-top: 40px;
+      font-size: 0.8em;
+      color: #aaa;
+      font-family: monospace;
+      line-height: 1.8;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2ecc71;
+      margin-right: 6px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+  </style>
+</head>
+<body>
+  <div id="vai-topbar"></div>
+  <div id="main-content">
+    <div class="stream-nav">VAI &rsaquo; 在校生配信</div>
+
+    <div class="stream-wrap">
+      <div class="lock-icon">🔒</div>
+      <h1>配信アクセス制限</h1>
+      <p>この配信は非公開に設定されています。<br>アクセスするには認証コードが必要です。</p>
+
+      <div class="code-input">
+        <input type="text" id="code-input" placeholder="認証コード" maxlength="12">
+        <button onclick="checkCode()">接続</button>
+      </div>
+      <div class="error-msg" id="error-msg">認証コードが正しくありません。</div>
+
+      <div class="stream-meta">
+        Stream ID: YN-1572<br>
+        <span class="status-dot"></span>Status: ACTIVE
+      </div>
+    </div>
+
+    <div id="vai-footer"></div>
+  </div>
+  <script src="/layout.js"></script>
+  <script>
+    const CORRECT_CODE = 'YN1572';  // ← change this
+
+    document.getElementById('code-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkCode();
+    });
+
+    function checkCode() {
+      const input = document.getElementById('code-input').value.trim().toUpperCase();
+      const err   = document.getElementById('error-msg');
+      if (input === CORRECT_CODE) {
+        err.style.display = 'none';
+        setTimeout(() => { location.href = '/dashboard/'; }, 400);
+      } else {
+        err.style.display = 'block';
+        document.getElementById('code-input').value = '';
+      }
+    }
+  </script>
 </body>
 </html>
