@@ -98,8 +98,7 @@ body {
 
 <!-- NAV -->
 <div class="navbar">
-    <div class="logo">VAI</div>
-    <div>検索</div>
+    <div class="logo">VAI 検索</div>
 </div>
 
 <div class="container">
@@ -201,6 +200,17 @@ function search() {
             </div>
         `;
     }
+}
+
+const role = localStorage.getItem("vai_role");
+
+const link = document.getElementById("portal-link");
+const user = localStorage.getItem("vai_user");
+
+if (role === "student") {
+    document.querySelector(".topbar div").innerText = "VAI | Student Access";
+    link.innerText = user + "｜ポータル";
+    link.href = "/dashboard/";
 }
 </script>
 
