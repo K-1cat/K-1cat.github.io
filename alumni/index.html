@@ -1,207 +1,121 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAI - 卒業生</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAI - 卒業生</title>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
 
-<style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: white;
-    color: #333;
-}
+    .page-header { padding: 40px 50px 10px; }
+    .page-header h1 { margin: 0 0 8px; font-size: 2em; }
+    .page-header p { color: #666; margin: 0; }
 
-/* TOP BAR */
-.topbar {
-    background: #4a5bdc;
-    color: white;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .alumni-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 30px 50px 50px;
+    }
 
-.topbar a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.9em;
-}
+    .alumni-card {
+      border: 1px solid #e0e4f8;
+      border-radius: 12px;
+      padding: 24px;
+      background: #f9f9ff;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: box-shadow 0.15s;
+    }
+    .alumni-card:hover { box-shadow: 0 4px 16px rgba(74,91,220,0.12); }
+    .alumni-card.no-link { cursor: default; }
+    .alumni-card.no-link:hover { box-shadow: none; }
 
-/* NAVBAR */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 30px;
-    border-bottom: 1px solid #eee;
-}
+    .avatar-placeholder {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #d0d5f5;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6em;
+    }
 
-.logo {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #4a5bdc;
-}
+    .badge {
+      display: inline-block;
+      font-size: 0.75em;
+      font-weight: 600;
+      color: #555;
+      background: #e8e8e8;
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-bottom: 10px;
+    }
 
-.nav-links a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: inherit;
-}
+    .alumni-card h3 { margin: 0 0 10px; font-size: 1.1em; color: #222; }
+    .meta { font-size: 0.85em; color: #555; line-height: 1.8; }
+    .meta strong { color: #333; }
 
-a.active {
-    border-bottom: 2px solid #4a5bdc;
-}
-
-/* HEADER */
-.header {
-    padding: 40px 50px;
-}
-
-.header h1 {
-    font-size: 2.5em;
-}
-
-/* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-    padding: 20px 50px;
-}
-
-/* CARD */
-.card {
-    background: #f5f5f5;
-    padding: 20px;
-    border-radius: 12px;
-    transition: 0.2s;
-}
-
-.card:hover {
-    transform: translateY(-3px);
-}
-
-.avatar {
-    width: 100%;
-    height: 150px;
-    background: #ddd;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-}
-
-/* TAG */
-.tag {
-    display: inline-block;
-    padding: 4px 8px;
-    background: #4a5bdc;
-    color: white;
-    border-radius: 6px;
-    font-size: 0.8em;
-    margin-bottom: 10px;
-}
-
-/* FOOTER */
-.footer {
-    background: #f0f2ff;
-    padding: 20px;
-    text-align: center;
-    margin-top: 40px;
-}
-</style>
+    .status-live   { color: #c0392b; font-weight: 600; }
+    .status-prep   { color: #e67e22; font-weight: 600; }
+    .status-offline{ color: #888; }
+  </style>
 </head>
+<body data-page="alumni">
+  <div id="vai-topbar"></div>
+  <div id="main-content">
+    <div id="vai-navbar"></div>
 
-<body>
-
-<!-- TOP BAR -->
-<div class="topbar">
-    <div>VAI | Virtual Academy Institution</div>
-    <div>
-        <a href="/">ホーム</a>
-        <a href="/login/" id="portal-link">ログイン</a>
-        <a href="/support/">サポート</a>
-        <a href="/search/">検索</a>
+    <div class="page-header">
+      <h1>🎓 卒業生</h1>
+      <p>VAIを修了し、それぞれの分野で活躍しているVTuber・クリエイターの紹介です。</p>
     </div>
-</div>
 
-<!-- NAVBAR -->
-<div class="navbar">
-    <div class="logo">VAI</div>
-    <div class="nav-links">
-        <a href="/">キャンパスライフ</a>
-        <a href="/programs/">学部・プログラム</a>
-        <a href="/students/">学生</a>
-        <a href="/alumni/" class="active">卒業生</a>
-        <a href="/events/">イベント</a>
-    </div>
-</div>
+    <div class="alumni-grid">
 
-<!-- HEADER -->
-<div class="header">
-    <h1>🎓 卒業生</h1>
-    <p>VAIを修了し、それぞれの分野で活躍しているVTuber・クリエイターの紹介です。</p>
-</div>
-
-<!-- ALUMNI -->
-<div class="grid">
-
-    <!-- ALUMNI 1 -->
-    <div class="card">
-        <div class="avatar">Avatar</div>
-        <div class="tag">卒業生</div>
+      <div class="alumni-card no-link">
+        <div class="avatar-placeholder">🐟</div>
+        <span class="badge">卒業生</span>
         <h3>秋刀魚屋</h3>
-        <p><b>状態：</b>🕒 準備中</p>
-        <p><b>専門：</b>雑談配信・コミュニティ形成</p>
-        <p><b>現在：</b>個人勢VTuberとして活動中</p>
-        <p>落ち着いたトークと安定した配信スタイルで、多くの固定ファンを持つ配信者として活躍している。</p>
-    </div>
+        <div class="meta">
+          <strong>状態：</strong><span class="status-prep">🕒 準備中</span><br>
+          <strong>専門：</strong>雑談配信・コミュニティ形成<br>
+          <strong>現在：</strong>個人勢VTuberとして活動中
+        </div>
+        <p style="font-size:0.85em;color:#666;margin:10px 0 0;">落ち着いたトークと安定した配信スタイルで、多くの固定ファンを持つ配信者として活躍している。</p>
+      </div>
 
-    <!-- ALUMNI 2 -->
-    <div class="card">
-        <div class="avatar">Avatar</div>
-        <div class="tag">卒業生</div>
+      <div class="alumni-card no-link">
+        <div class="avatar-placeholder">😄</div>
+        <span class="badge">卒業生</span>
         <h3>Dadandy</h3>
-        <p><b>状態：</b>⚫ オフライン</p>
-        <p><b>専門：</b>ゲーム実況・エンタメ配信</p>
-        <p><b>現在：</b>ストリーマーとして活動中</p>
-        <p>高いテンションとユーモアを武器に、多くの視聴者を引き込むエンタメ配信で人気を集めている。</p>
-    </div>
+        <div class="meta">
+          <strong>状態：</strong><span class="status-offline">⚫ オフライン</span><br>
+          <strong>専門：</strong>ゲーム実況・エンタメ配信<br>
+          <strong>現在：</strong>ストリーマーとして活動中
+        </div>
+        <p style="font-size:0.85em;color:#666;margin:10px 0 0;">高いテンションとユーモアを武器に、多くの視聴者を引き込むエンタメ配信で人気を集めている。</p>
+      </div>
 
-    <!-- ALUMNI 3 -->
-    <a href="/streams/izunokatariko/" style="text-decoration:none; color:inherit;">
-    <div class="card">
-        <div class="avatar">Avatar</div>
-        <div class="tag">卒業生</div>
+      <a href="/streams/izunokatariko/" class="alumni-card">
+        <div class="avatar-placeholder">📖</div>
+        <span class="badge">卒業生</span>
         <h3>伊豆の語り子</h3>
-        <p><b>状態：</b>🔴 配信中（視聴者数：2745人）</p>
-        <p><b>専門：</b>朗読・ストーリーテリング</p>
-        <p><b>現在：</b>音声コンテンツクリエイター</p>
-        <p>物語性のある配信と独特の語り口で、リスナーを引き込む表現力の高い配信を展開している。</p>
+        <div class="meta">
+          <strong>状態：</strong><span class="status-live">🔴 配信中（視聴者数：2,745人）</span><br>
+          <strong>専門：</strong>朗読・ストーリーテリング<br>
+          <strong>現在：</strong>音声コンテンツクリエイター
+        </div>
+        <p style="font-size:0.85em;color:#666;margin:10px 0 0;">物語性のある配信と独特の語り口で、リスナーを引き込む表現力の高い配信を展開している。</p>
+      </a>
+
     </div>
-    </a>
 
-</div>
-
-<div class="footer">
-    © 2026 Virtual Academy Institution（VAI）
-</div>
-
+    <div id="vai-footer"></div>
+  </div>
+  <script src="/layout.js"></script>
 </body>
-<script>
-const role = localStorage.getItem("vai_role");
-
-const link = document.getElementById("portal-link");
-const user = localStorage.getItem("vai_user");
-
-if (role === "student") {
-    document.querySelector(".topbar div").innerText = "VAI | Student Access";
-    link.innerText = user + "｜ポータル";
-    link.href = "/dashboard/";
-}
-</script>
 </html>
