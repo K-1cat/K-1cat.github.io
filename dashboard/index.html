@@ -212,6 +212,7 @@ body {
             <p><b>VTuber名：</b>Redvil</p>
             <p><b>性別：</b>男</p>
             <p><b>年齢：</b>非公開</p>
+            <p><b>状態：</b>観測中</p>
         </div>
     </div>
 </div>
@@ -235,6 +236,7 @@ body {
         <div class="card">
             <div class="thumb"><img src="redvil-stream-1.jpg" alt="配信１"></div>
             <p>コラボ配信（VAI-214）- 5月24日</p>
+            <p style="color:#888; font-size:0.85em;">分類：最終セッション</p>
         </div>
         <div class="card">
             <div class="thumb"><img src="redvil-stream-2.jpg" alt="配信２"></div>
@@ -305,7 +307,6 @@ function openMail(id) {
 
     if (id === 1) {
         title = "【運営】評価更新のお知らせ";
-        shortText = "あなたの総合スコアが更新されました。";
         fullText = `
             <p><strong>送信日:</strong> 2026年5月26日</p>
             <p>赤井 瀧魔琉様</p>
@@ -313,11 +314,11 @@ function openMail(id) {
             <p>今月の活躍が非常に優秀でした。特にVAI-214でのコラボ配信が高評価です。</p>
             <hr>
             <p>至急、本キャンパスまでお越しください。</p>
+            <p style="color:#888;">※以降の対応は現地で実施されます。</p>
         `;
     } 
     else if (id === 2) {
         title = "【システム】予定されていたメンテナンスの実施";
-        shortText = "予定されておりましたシステムメンテナンスが完了しました。";
         fullText = `
             <p><strong>送信日:</strong> 2026年5月25日</p>
             <p><strong>予定されておりましたシステムメンテナンスが完了しました。</strong></p>
@@ -329,7 +330,6 @@ function openMail(id) {
     } 
     else if (id === 3) {
         title = "【VAI-214】最終課題の内容について";
-        shortText = "VAI-214の最終課題を公開いたしました。";
         fullText = `
             <p><strong>送信日:</strong> 2026年5月23日</p>
             <p><b>課題テーマ</b>: 「視聴者とのインタラクションを最大化する配信設計」</p>
@@ -341,7 +341,6 @@ function openMail(id) {
     }
     else if (id === 4) {
         title = "【VAI-214】最終課題の評価";
-        shortText = "VAI-214の最終課題を評価しました。";
         fullText = `
             <p><strong>送信日:</strong> 2026年5月25日</p>
             <p>最終課題の早期提出、ありがとうございました。</p>
