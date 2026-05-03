@@ -1,219 +1,118 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAI - 検索</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAI - 検索</title>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
 
-<style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: white;
-    color: #333;
-}
+    .search-wrap { max-width: 700px; padding: 50px 50px 60px; }
+    .search-wrap h1 { font-size: 2em; margin: 0 0 24px; }
 
-/* TOP BAR */
-.topbar {
-    background: #4a5bdc;
-    color: white;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-}
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    .search-bar input {
+      flex: 1;
+      padding: 11px 16px;
+      border: 1px solid #ccd;
+      border-radius: 8px;
+      font-size: 1em;
+      background: white;
+      color: #333;
+    }
+    .search-bar input:focus { outline: none; border-color: #4a5bdc; }
+    .search-bar button {
+      padding: 11px 20px;
+      background: #4a5bdc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .search-bar button:hover { background: #3a4bc8; }
 
-.topbar a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.9em;
-}
+    #search-results { font-size: 0.95em; color: #444; line-height: 2; }
 
-/* NAV */
-.navbar {
-    padding: 15px 30px;
-    border-bottom: 1px solid #eee;
-}
+    .result-item {
+      border-bottom: 1px solid #eee;
+      padding: 12px 0;
+    }
+    .result-item:last-child { border-bottom: none; }
+    .result-item a { color: #4a5bdc; text-decoration: none; font-weight: 600; }
+    .result-item a:hover { text-decoration: underline; }
+    .result-item p { margin: 2px 0 0; font-size: 0.9em; color: #666; }
 
-.logo {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #4a5bdc;
-}
-
-/* CONTENT */
-.container {
-    padding: 40px 50px;
-}
-
-/* SEARCH BOX */
-.search-box {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-.search-box input {
-    flex: 1;
-    padding: 12px;
-    font-size: 1em;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-.search-box button {
-    padding: 12px 20px;
-    background: #4a5bdc;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-/* RESULT */
-.result {
-    background: #f5f5f5;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
-
-.hidden {
-    display: none;
-}
-</style>
+    .no-results { color: #888; font-size: 0.95em; }
+  </style>
 </head>
-
 <body>
+  <div id="vai-topbar"></div>
+  <div id="main-content">
+    <div id="vai-navbar"></div>
 
-<!-- TOP BAR -->
-<div class="topbar">
-    <div>VAI | Virtual Academy Institution</div>
-    <div>
-        <a href="/">ホーム</a>
-        <a href="/login/" id="portal-link">ログイン</a>
-        <a href="/support/">サポート</a>
-        <a href="/search/">検索</a>
-    </div>
-</div>
-
-<!-- NAV -->
-<div class="navbar">
-    <div class="logo">VAI 検索</div>
-</div>
-
-<div class="container">
-
-    <h1>🔍 サイト内検索</h1>
-
-    <div class="search-box">
-        <input type="text" id="query" placeholder="キーワードを入力...">
-        <button onclick="search()">検索</button>
+    <div class="search-wrap">
+      <h1>🔍 サイト内検索</h1>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="キーワードを入力してください" oninput="doSearch()">
+        <button onclick="doSearch()">検索</button>
+      </div>
+      <div id="search-results"></div>
     </div>
 
-    <div id="results"></div>
+    <div id="vai-footer"></div>
+  </div>
+  <script src="/layout.js"></script>
+  <script>
+    /* Simple client-side search over known pages.
+       Add more entries here as you add pages to the site.
+       ARG tip: you could add a hidden entry that only appears
+       for a specific secret keyword. */
+    const PAGES = [
+      { title: 'キャンパスライフ',       href: '/',            text: 'VAI VTuber コミュニティ ワークショップ メンター' },
+      { title: '学部・プログラム',        href: '/programs/',   text: 'VTuber基礎 キャラクターデザイン パフォーマンス理論 コラボ 映像編集 音声 VAI-101 VAI-178 VAI-203 VAI-214 VAI-250 VAI-310' },
+      { title: '学生一覧',               href: '/students/',   text: '85Yen たんばりん 春風チェリー Redvil 在校生' },
+      { title: '卒業生',                 href: '/alumni/',     text: '秋刀魚屋 Dadandy 伊豆の語り子 卒業' },
+      { title: 'イベント一覧',           href: '/events/',     text: '6月 講義 実習 ワークショップ コラボ 発表 ゲスト 星川ユナ' },
+      { title: 'ログイン',               href: '/login/',      text: 'ログイン パスワード 学生ポータル 認証' },
+      { title: 'サポート',               href: '/support/',    text: 'サポート FAQ よくある質問 機材 問い合わせ' },
+      { title: '配信 - Redvil',         href: '/streams/redvil/',         text: 'Redvil 配信 ゲーム RV-0214' },
+      { title: '配信 - 85Yen',          href: '/streams/85yen/',          text: '85Yen たんばりん 配信 YN-1572' },
+      { title: '配信 - 伊豆の語り子',   href: '/streams/izunokatariko/',  text: '伊豆の語り子 朗読 IK-8329' },
+    ];
 
-</div>
+    function doSearch() {
+      const q = document.getElementById('search-input').value.trim().toLowerCase();
+      const out = document.getElementById('search-results');
+      if (!q) { out.innerHTML = ''; return; }
 
-<script>
-function search() {
-    const q = document.getElementById("query").value.trim();
-    const results = document.getElementById("results");
+      const results = PAGES.filter(p =>
+        p.title.toLowerCase().includes(q) || p.text.toLowerCase().includes(q)
+      );
 
-    results.innerHTML = "";
+      if (results.length === 0) {
+        out.innerHTML = `<p class="no-results">「${q}」に一致するページは見つかりませんでした。</p>`;
+        return;
+      }
 
-    // --- NORMAL RESULTS ---
-    if (q === "学生") {
-        results.innerHTML += `
-            <div class="result">
-                <b>学生一覧</b><br>
-                VAIに所属する学生の一覧ページです。<br>
-                <a href="/students/">ページを見る</a>
-            </div>
-        `;
+      out.innerHTML = results.map(r => `
+        <div class="result-item">
+          <a href="${r.href}">${r.title}</a>
+          <p>${r.href}</p>
+        </div>
+      `).join('');
     }
 
-    else if (q === "イベント") {
-        results.innerHTML += `
-            <div class="result">
-                <b>イベントページ</b><br>
-                今後の講義・配信イベント一覧。<br>
-                <a href="/events/">ページを見る</a>
-            </div>
-        `;
+    // Support ?q= in URL
+    const params = new URLSearchParams(location.search);
+    if (params.get('q')) {
+      document.getElementById('search-input').value = params.get('q');
+      doSearch();
     }
-
-    else if (q === "プログラム") {
-        results.innerHTML += `
-            <div class="result">
-                <b>プログラム一覧</b><br>
-                学部・授業内容について。<br>
-                <a href="/programs/">ページを見る</a>
-            </div>
-        `;
-    }
-
-    // --- ARG CLUES ---
-    else if (q.toLowerCase() === "redvil") {
-        results.innerHTML += `
-            <div class="result">
-                <b>検索結果：0件</b><br>
-                該当するデータは見つかりませんでした。
-            </div>
-        `;
-
-        // hidden log
-        setTimeout(() => {
-            results.innerHTML += `
-                <div class="result" style="background:#111; color:#0f0;">
-                    ▶ ログアクセス検出<br>
-                    ▶ 非公開データへの照合が試行されました
-                </div>
-            `;
-        }, 1500);
-    }
-
-    else if (q === "同期") {
-        results.innerHTML += `
-            <div class="result">
-                <b>内部資料（制限付き）</b><br>
-                同期プロトコルに関する概要。<br><br>
-                「配信データは統合環境へ転送されます」
-            </div>
-        `;
-    }
-
-    else if (q === "VAI-101") {
-        results.innerHTML += `
-            <div class="result">
-                <b>VAI-101 基礎プログラム</b><br>
-                初期導入講義。<br>
-                一部のセッションは記録対象となります。
-            </div>
-        `;
-    }
-
-    // --- DEFAULT ---
-    else {
-        results.innerHTML = `
-            <div class="result">
-                該当する結果が見つかりませんでした。
-            </div>
-        `;
-    }
-}
-
-const role = localStorage.getItem("vai_role");
-
-const link = document.getElementById("portal-link");
-const user = localStorage.getItem("vai_user");
-
-if (role === "student") {
-    document.querySelector(".topbar div").innerText = "VAI | Student Access";
-    link.innerText = user + "｜ポータル";
-    link.href = "/dashboard/";
-}
-</script>
-
+  </script>
 </body>
 </html>
