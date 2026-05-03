@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAI - 検索</title>
 
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: white;
+    color: #333;
+}
+
+/* TOP BAR */
+.topbar {
+    background: #4a5bdc;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.topbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+/* NAV */
+.navbar {
+    padding: 15px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4a5bdc;
+}
+
+/* CONTENT */
+.container {
+    padding: 40px 50px;
+}
+
+/* SEARCH BOX */
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 12px;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.search-box button {
+    padding: 12px 20px;
+    background: #4a5bdc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* RESULT */
+.result {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div>VAI | Virtual Academy Institution</div>
+    <div>
+        <a href="/">ホーム</a>
+        <a href="/login/" id="portal-link">ログイン</a>
+        <a href="/support/">サポート</a>
+        <a href="/search/">検索</a>
+    </div>
+</div>
+
+<!-- NAV -->
+<div class="navbar">
+    <div class="logo">VAI</div>
+    <div>検索</div>
+</div>
+
+<div class="container">
+
+    <h1>🔍 サイト内検索</h1>
+
+    <div class="search-box">
+        <input type="text" id="query" placeholder="キーワードを入力...">
+        <button onclick="search()">検索</button>
+    </div>
+
+    <div id="results"></div>
+
+</div>
+
+<script>
+function search() {
+    const q = document.getElementById("query").value.trim();
+    const results = document.getElementById("results");
+
+    results.innerHTML = "";
+
+    // --- NORMAL RESULTS ---
+    if (q === "学生") {
+        results.innerHTML += `
+            <div class="result">
+                <b>学生一覧</b><br>
+                VAIに所属する学生の一覧ページです。<br>
+                <a href="/students/">ページを見る</a>
+            </div>
+        `;
+    }
+
+    else if (q === "イベント") {
+        results.innerHTML += `
+            <div class="result">
+                <b>イベントページ</b><br>
+                今後の講義・配信イベント一覧。<br>
+                <a href="/events/">ページを見る</a>
+            </div>
+        `;
+    }
+
+    else if (q === "プログラム") {
+        results.innerHTML += `
+            <div class="result">
+                <b>プログラム一覧</b><br>
+                学部・授業内容について。<br>
+                <a href="/programs/">ページを見る</a>
+            </div>
+        `;
+    }
+
+    // --- ARG CLUES ---
+    else if (q.toLowerCase() === "redvil") {
+        results.innerHTML += `
+            <div class="result">
+                <b>検索結果：0件</b><br>
+                該当するデータは見つかりませんでした。
+            </div>
+        `;
+
+        // hidden log
+        setTimeout(() => {
+            results.innerHTML += `
+                <div class="result" style="background:#111; color:#0f0;">
+                    ▶ ログアクセス検出<br>
+                    ▶ 非公開データへの照合が試行されました
+                </div>
+            `;
+        }, 1500);
+    }
+
+    else if (q === "同期") {
+        results.innerHTML += `
+            <div class="result">
+                <b>内部資料（制限付き）</b><br>
+                同期プロトコルに関する概要。<br><br>
+                「配信データは統合環境へ転送されます」
+            </div>
+        `;
+    }
+
+    else if (q === "VAI-101") {
+        results.innerHTML += `
+            <div class="result">
+                <b>VAI-101 基礎プログラム</b><br>
+                初期導入講義。<br>
+                一部のセッションは記録対象となります。
+            </div>
+        `;
+    }
+
+    // --- DEFAULT ---
+    else {
+        results.innerHTML = `
+            <div class="result">
+                該当する結果が見つかりませんでした。
+            </div>
+        `;
+    }
+}
+</script>
+
+</body>
+</html>
