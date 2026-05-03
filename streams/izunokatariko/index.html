@@ -1,149 +1,118 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAI - 伊豆の語り子 配信</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAI - 検索</title>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
 
-<style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: white;
-    color: #333;
-}
+    .search-wrap { max-width: 700px; padding: 50px 50px 60px; }
+    .search-wrap h1 { font-size: 2em; margin: 0 0 24px; }
 
-/* TOP BAR */
-.topbar {
-    background: #4a5bdc;
-    color: white;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    .search-bar input {
+      flex: 1;
+      padding: 11px 16px;
+      border: 1px solid #ccd;
+      border-radius: 8px;
+      font-size: 1em;
+      background: white;
+      color: #333;
+    }
+    .search-bar input:focus { outline: none; border-color: #4a5bdc; }
+    .search-bar button {
+      padding: 11px 20px;
+      background: #4a5bdc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .search-bar button:hover { background: #3a4bc8; }
 
-.topbar a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.9em;
-}
-    
-/* NAV */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 30px;
-    border-bottom: 1px solid #eee;
-}
+    #search-results { font-size: 0.95em; color: #444; line-height: 2; }
 
-.logo {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #4a5bdc;
-}
+    .result-item {
+      border-bottom: 1px solid #eee;
+      padding: 12px 0;
+    }
+    .result-item:last-child { border-bottom: none; }
+    .result-item a { color: #4a5bdc; text-decoration: none; font-weight: 600; }
+    .result-item a:hover { text-decoration: underline; }
+    .result-item p { margin: 2px 0 0; font-size: 0.9em; color: #666; }
 
-/* STREAM */
-.container {
-    padding: 40px 50px;
-}
-
-.stream-box {
-    background: #000;
-    color: #fff;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
-/* META */
-.meta {
-    color: #777;
-    font-size: 0.9em;
-    margin-bottom: 20px;
-}
-
-/* CHAT */
-.chat {
-    background: #f5f5f5;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-.chat p {
-    margin: 8px 0;
-}
-</style>
+    .no-results { color: #888; font-size: 0.95em; }
+  </style>
 </head>
-
 <body>
+  <div id="vai-topbar"></div>
+  <div id="main-content">
+    <div id="vai-navbar"></div>
 
-<!-- TOP BAR -->
-<div class="topbar">
-    <div>VAI | Virtual Academy Institution</div>
-    <div>
-        <a href="/">ホーム</a>
-        <a href="/login/" id="portal-link">ログイン</a>
-        <a href="/support/">サポート</a>
-        <a href="/search/">検索</a>
-    </div>
-</div>
-    
-<!-- NAV -->
-<div class="navbar">
-    <div class="logo">VAI</div>
-    <div>卒業生配信</div>
-</div>
-
-<div class="container">
-
-    <h1>📖 伊豆の語り子 - 朗読配信</h1>
-
-    <div class="meta">
-        配信メディア: YouTube<br>
-        配信開始：06/03　21:14<br>
-        Stream ID：IK-8329
+    <div class="search-wrap">
+      <h1>🔍 サイト内検索</h1>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="キーワードを入力してください" oninput="doSearch()">
+        <button onclick="doSearch()">検索</button>
+      </div>
+      <div id="search-results"></div>
     </div>
 
-    <div class="stream-box">
-        ▶ 再生中…
-    </div>
+    <div id="vai-footer"></div>
+  </div>
+  <script src="/layout.js"></script>
+  <script>
+    /* Simple client-side search over known pages.
+       Add more entries here as you add pages to the site.
+       ARG tip: you could add a hidden entry that only appears
+       for a specific secret keyword. */
+    const PAGES = [
+      { title: 'キャンパスライフ',       href: '/',            text: 'VAI VTuber コミュニティ ワークショップ メンター' },
+      { title: '学部・プログラム',        href: '/programs/',   text: 'VTuber基礎 キャラクターデザイン パフォーマンス理論 コラボ 映像編集 音声 VAI-101 VAI-178 VAI-203 VAI-214 VAI-250 VAI-310' },
+      { title: '学生一覧',               href: '/students/',   text: '85Yen たんばりん 春風チェリー Redvil 在校生' },
+      { title: '卒業生',                 href: '/alumni/',     text: '秋刀魚屋 Dadandy 伊豆の語り子 卒業' },
+      { title: 'イベント一覧',           href: '/events/',     text: '6月 講義 実習 ワークショップ コラボ 発表 ゲスト 星川ユナ' },
+      { title: 'ログイン',               href: '/login/',      text: 'ログイン パスワード 学生ポータル 認証' },
+      { title: 'サポート',               href: '/support/',    text: 'サポート FAQ よくある質問 機材 問い合わせ' },
+      { title: '配信 - Redvil',         href: '/streams/redvil/',         text: 'Redvil 配信 ゲーム RV-0214' },
+      { title: '配信 - 85Yen',          href: '/streams/85yen/',          text: '85Yen たんばりん 配信 YN-1572' },
+      { title: '配信 - 伊豆の語り子',   href: '/streams/izunokatariko/',  text: '伊豆の語り子 朗読 IK-8329' },
+    ];
 
-    <p>
-        静かな語り口で物語を紡ぐ配信。視聴者は音声に集中するため、
-        画面の演出は最小限に抑えられている。
-    </p>
+    function doSearch() {
+      const q = document.getElementById('search-input').value.trim().toLowerCase();
+      const out = document.getElementById('search-results');
+      if (!q) { out.innerHTML = ''; return; }
 
-    <h2>💬 チャット</h2>
+      const results = PAGES.filter(p =>
+        p.title.toLowerCase().includes(q) || p.text.toLowerCase().includes(q)
+      );
 
-    <div class="chat">
-        <p><b>izu:</b> パスワードを要求された場合: 3108329</p>
-        <p><b>viewer_12:</b> こんちゃ～</p>
-        <p><b>viewer_03:</b> 待ってました。</p>
-        <p><b>viewer_08:</b> 睡眠導入剤助かります！</p>
-        <p><b>viewer_26:</b> 声めっちゃ良いですね</p>
-        <p><b>viewer_20:</b> チャンネル登録しました！</p>
-        <p><b>viewer_12:</b> 次の歌配いつですか？</p>
-    </div>
+      if (results.length === 0) {
+        out.innerHTML = `<p class="no-results">「${q}」に一致するページは見つかりませんでした。</p>`;
+        return;
+      }
 
-</div>
+      out.innerHTML = results.map(r => `
+        <div class="result-item">
+          <a href="${r.href}">${r.title}</a>
+          <p>${r.href}</p>
+        </div>
+      `).join('');
+    }
 
+    // Support ?q= in URL
+    const params = new URLSearchParams(location.search);
+    if (params.get('q')) {
+      document.getElementById('search-input').value = params.get('q');
+      doSearch();
+    }
+  </script>
 </body>
-
-<script>
-const role = localStorage.getItem("vai_role");
-
-const link = document.getElementById("portal-link");
-const user = localStorage.getItem("vai_user");
-
-if (role === "student") {
-    document.querySelector(".topbar div").innerText = "VAI | Student Access";
-    link.innerText = user + "｜ポータル";
-    link.href = "/dashboard/";
-}
-</script>
 </html>
