@@ -1,206 +1,131 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAI - イベント</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAI - イベント一覧</title>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
 
-<style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: white;
-    color: #333;
-}
+    .page-header { padding: 40px 50px 10px; }
+    .page-header h1 { margin: 0 0 8px; font-size: 2em; }
+    .page-header p { color: #666; margin: 0; }
 
-/* TOP BAR */
-.topbar {
-    background: #4a5bdc;
-    color: white;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-}
+    .events-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 30px 50px 50px;
+      max-width: 860px;
+    }
 
-.topbar a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.9em;
-}
+    .event-card {
+      border: 1px solid #e0e4f8;
+      border-radius: 12px;
+      padding: 24px 28px;
+      background: #f9f9ff;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0 20px;
+      align-items: start;
+    }
 
-/* NAVBAR */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 30px;
-    border-bottom: 1px solid #eee;
-}
+    .course-id {
+      display: inline-block;
+      font-size: 0.75em;
+      font-weight: 600;
+      color: #4a5bdc;
+      background: #e8ebff;
+      border-radius: 6px;
+      padding: 2px 8px;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      margin-top: 4px;
+    }
 
-.logo {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #4a5bdc;
-}
-
-.nav-links a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: inherit;
-}
-
-a.active {
-    border-bottom: 2px solid #4a5bdc;
-}
-
-/* HEADER */
-.header {
-    padding: 40px 50px;
-}
-
-.header h1 {
-    font-size: 2.5em;
-}
-
-/* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px 50px;
-}
-
-.card {
-    background: #f5f5f5;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-.card h3 {
-    margin-top: 0;
-}
-
-/* TAGS */
-.tag {
-    display: inline-block;
-    padding: 5px 10px;
-    background: #4a5bdc;
-    color: white;
-    border-radius: 6px;
-    font-size: 0.8em;
-    margin-bottom: 10px;
-}
-
-/* FOOTER */
-.footer {
-    background: #f0f2ff;
-    padding: 20px;
-    text-align: center;
-    margin-top: 40px;
-}
-</style>
+    .event-body h3 { margin: 0 0 6px; font-size: 1.05em; color: #222; }
+    .event-meta { font-size: 0.85em; color: #555; margin-bottom: 8px; }
+    .event-meta strong { color: #333; }
+    .event-body p { margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; }
+    .event-stats { margin-top: 10px; font-size: 0.85em; color: #666; }
+  </style>
 </head>
+<body data-page="events">
+  <div id="vai-topbar"></div>
+  <div id="main-content">
+    <div id="vai-navbar"></div>
 
-<body>
-
-<!-- TOP BAR -->
-<div class="topbar">
-    <div>VAI | Virtual Academy Institution</div>
-    <div>
-        <a href="/">ホーム</a>
-        <a href="/login/" id="portal-link">ログイン</a>
-        <a href="/support/">サポート</a>
-        <a href="/search/">検索</a>
-    </div>
-</div>
-
-<!-- NAVBAR -->
-<div class="navbar">
-    <div class="logo">VAI</div>
-    <div class="nav-links">
-        <a href="/">キャンパスライフ</a>
-        <a href="/programs/">学部・プログラム</a>
-        <a href="/students/">学生</a>
-        <a href="/alumni/">卒業生</a>
-        <a href="/events/" class="active">イベント</a>
-    </div>
-</div>
-
-<!-- HEADER -->
-<div class="header">
-    <h1>📅 イベント一覧</h1>
-    <p>VAIで開催される講義・実習・コラボイベントのスケジュールです。</p>
-</div>
-
-<!-- EVENTS GRID -->
-<div class="grid">
-
-    <div class="card">
-        <div class="tag">VAI-203</div>
-        <h3>6月3日：パフォーマンス理論講義</h3>
-        <p><b>担当：</b>水野 明 教授</p>
-        <p>配信における表現力や視聴者との関わり方、デジタル上のキャラクター構築について学びます。</p>
-        <p>👥 参加者：128名</p>
+    <div class="page-header">
+      <h1>📅 イベント一覧</h1>
+      <p>VAIで開催される講義・実習・コラボイベントのスケジュールです。</p>
     </div>
 
-    <div class="card">
-        <div class="tag">VAI-214</div>
-        <h3>6月5日：コラボ配信実習</h3>
-        <p><b>担当：</b>田中 恒一 教授</p>
-        <p>チームで配信を企画・実施し、連携や進行、共同での視聴者対応を実践的に学びます。</p>
-        <p>👥 参加者：64名（16グループ）</p>
+    <div class="events-list">
+
+      <div class="event-card">
+        <span class="course-id">VAI-203</span>
+        <div class="event-body">
+          <h3>6月3日：パフォーマンス理論講義</h3>
+          <div class="event-meta"><strong>担当：</strong>水野 明 教授</div>
+          <p>配信における表現力や視聴者との関わり方、デジタル上のキャラクター構築について学びます。</p>
+          <div class="event-stats">👥 参加者：128名</div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <span class="course-id">VAI-214</span>
+        <div class="event-body">
+          <h3>6月5日：コラボ配信実習</h3>
+          <div class="event-meta"><strong>担当：</strong>田中 恒一 教授</div>
+          <p>チームで配信を企画・実施し、連携や進行、共同での視聴者対応を実践的に学びます。</p>
+          <div class="event-stats">👥 参加者：64名（16グループ）</div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <span class="course-id">VAI-178</span>
+        <div class="event-body">
+          <h3>6月10日：キャラクターデザインワークショップ</h3>
+          <div class="event-meta"><strong>担当：</strong>藤本 梨沙（アーティスト）</div>
+          <p>VTuberアバターのデザインやブランディング、ビジュアル表現について学ぶ実践型ワークショップです。</p>
+          <div class="event-stats">👥 参加者：92名</div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <span class="course-id">VAI-301</span>
+        <div class="event-body">
+          <h3>6月18日：クロスチャンネルコラボ実習</h3>
+          <div class="event-meta"><strong>担当：</strong>黒田 進 講師</div>
+          <p>複数の配信者によるコラボ配信の企画・実施を通じて、異なる視聴者層へのアプローチを学びます。</p>
+          <div class="event-stats">👥 参加者：48名</div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <span class="course-id">VAI-250</span>
+        <div class="event-body">
+          <h3>6月23日：中間発表・相互評価</h3>
+          <div class="event-meta"><strong>担当：</strong>教員委員会</div>
+          <p>これまでの成果を配信形式で発表し、学生同士や指導者からのフィードバックを受けます。</p>
+          <div class="event-stats">👥 参加者：150名 | 🎥 視聴者：1,200人</div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <span class="course-id">VAI-190</span>
+        <div class="event-body">
+          <h3>6月24日：業界ゲスト講演</h3>
+          <div class="event-meta"><strong>ゲスト：</strong>星川ユナ（インディーVTuber）</div>
+          <p>VTuber業界で活躍するゲストを招き、実務やトレンド、キャリアについて学びます。</p>
+          <div class="event-stats">👥 参加者：200名 | 🎥 視聴者：2,500人</div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="card">
-        <div class="tag">VAI-178</div>
-        <h3>6月10日：キャラクターデザインワークショップ</h3>
-        <p><b>担当：</b>藤本 梨沙（アーティスト）</p>
-        <p>VTuberアバターのデザインやブランディング、ビジュアル表現について学ぶ実践型ワークショップです。</p>
-        <p>👥 参加者：92名</p>
-    </div>
-
-    <div class="card">
-        <div class="tag">VAI-301</div>
-        <h3>6月18日：クロスチャンネルコラボ実習</h3>
-        <p><b>担当：</b>黒田 進 講師</p>
-        <p>複数の配信者によるコラボ配信の企画・実施を通じて、異なる視聴者層へのアプローチを学びます。</p>
-        <p>👥 参加者：48名</p>
-    </div>
-
-    <div class="card">
-        <div class="tag">VAI-250</div>
-        <h3>6月23日：中間発表・相互評価</h3>
-        <p><b>担当：</b>教員委員会</p>
-        <p>これまでの成果を配信形式で発表し、学生同士や指導者からのフィードバックを受けます。</p>
-        <p>👥 参加者：150名 | 🎥 視聴者：1,200人</p>
-    </div>
-
-    <div class="card">
-        <div class="tag">VAI-190</div>
-        <h3>6月24日：業界ゲスト講演</h3>
-        <p><b>ゲスト：</b>星川ユナ（インディーVTuber）</p>
-        <p>VTuber業界で活躍するゲストを招き、実務やトレンド、キャリアについて学びます。</p>
-        <p>👥 参加者：200名 | 🎥 視聴者：2,500人</p>
-    </div>
-
-</div>
-
-<div class="footer">
-    © 2026 Virtual Academy Institution（VAI）
-</div>
-
+    <div id="vai-footer"></div>
+  </div>
+  <script src="/layout.js"></script>
 </body>
-
-<script>
-const role = localStorage.getItem("vai_role");
-
-const link = document.getElementById("portal-link");
-const user = localStorage.getItem("vai_user");
-
-if (role === "student") {
-    document.querySelector(".topbar div").innerText = "VAI | Student Access";
-    link.innerText = user + "｜ポータル";
-    link.href = "/dashboard/";
-}
-</script>
 </html>
