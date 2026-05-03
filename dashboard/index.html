@@ -227,7 +227,7 @@ body {
     <div class="grid">
         <div class="card">
             <div class="thumb"><img src="redvil-stream-1.jpg" alt="配信１"></div>
-            <p>コラボ配信（VAI-214）- 5月25日</p>
+            <p>コラボ配信（VAI-214）- 5月24日</p>
         </div>
         <div class="card">
             <div class="thumb"><img src="redvil-stream-2.jpg" alt="配信２"></div>
@@ -258,6 +258,7 @@ body {
     <h2>📩 メール</h2>
     <div class="card">
         <div class="email" onclick="openMail(1)">【運営】評価更新のお知らせ - 5月26日</div>
+        <div class="email" onclick="openMail(4)">【VAI-214】最終課題の評価 - 5月25日</div>
         <div class="email" onclick="openMail(2)">【システム】予定されていたメンテナンスの実施 - 5月24日</div>
         <div class="email" onclick="openMail(3)">【VAI-214】最終課題の内容について - 5月23日</div>
     </div>
@@ -329,6 +330,18 @@ function openMail(id) {
             <p>詳細な課題内容・評価基準・提出ファイル形式は、</p>
             <p>VAI-214コースページよりご確認ください。</p>
             <p>提出をお待ちしております。</p>
+        `;
+    }
+    else if (id === 4) {
+        title = "【VAI-214】最終課題の評価";
+        shortText = "VAI-214の最終課題を評価しました。";
+        fullText = `
+            <p><strong>送信日:</strong> 2026年5月25日</p>
+            <p>最終課題の早期提出、ありがとうございました。</p>
+            <p>最終的な評価は<b>A+</b>となりました。</p><br>
+            <p>これからも仲間と連携し、視聴者を楽しませることを</p>
+            <p>心より祈っております。</p>
+            <p>このクラスの履行、お疲れさまでした。</p>
         `;
     }
 
