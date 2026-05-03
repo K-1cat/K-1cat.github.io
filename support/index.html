@@ -1,237 +1,162 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAI - サポート</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAI - サポート</title>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
 
-<style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: white;
-    color: #333;
-}
+    .support-wrap { max-width: 800px; padding: 40px 50px 60px; }
 
-/* TOP BAR */
-.topbar {
-    background: #4a5bdc;
-    color: white;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .support-wrap h1 { font-size: 2em; margin: 0 0 8px; }
+    .support-wrap > p { color: #666; margin: 0 0 40px; }
 
-.topbar a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.9em;
-}
+    .support-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
 
-.logo {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #4a5bdc;
-}
+    .support-card {
+      border: 1px solid #e0e4f8;
+      border-radius: 12px;
+      padding: 20px;
+      background: #f9f9ff;
+    }
+    .support-card h3 { margin: 0 0 8px; font-size: 1em; }
+    .support-card p { margin: 0; font-size: 0.9em; color: #555; line-height: 1.5; }
 
-/* HEADER */
-.header {
-    padding: 40px 50px;
-}
+    .faq-section { margin-bottom: 40px; }
+    .faq-section h2 { font-size: 1.3em; margin-bottom: 16px; }
 
-.header h1 {
-    font-size: 2.5em;
-}
+    .faq-item {
+      border-bottom: 1px solid #eee;
+      padding: 14px 0;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q { font-weight: 600; margin-bottom: 6px; font-size: 0.95em; }
+    .faq-a { font-size: 0.9em; color: #555; line-height: 1.6; }
 
-/* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px 50px;
-}
-
-/* CARD */
-.card {
-    background: #f5f5f5;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-/* FAQ SECTION */
-.faq-section {
-    padding: 20px 50px;
-}
-.faq-section h2 {
-    margin-bottom: 25px;
-}
-.faq-item {
-    margin-bottom: 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-}
-.faq-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-.faq-question {
-    font-weight: bold;
-    color: #4a5bdc;
-    margin-bottom: 8px;
-    font-size: 1.05em;
-}
-.faq-answer {
-    line-height: 1.6;
-    color: #444;
-}
-
-/* FORM */
-.form {
-    padding: 20px 50px;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-family: inherit;
-}
-
-button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    background: #4a5bdc;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-/* FOOTER */
-.footer {
-    background: #f0f2ff;
-    padding: 20px;
-    text-align: center;
-    margin-top: 40px;
-}
-</style>
+    .contact-section h2 { font-size: 1.3em; margin-bottom: 16px; }
+    .contact-section label {
+      display: block;
+      font-size: 0.85em;
+      color: #555;
+      margin-bottom: 5px;
+    }
+    .contact-section input,
+    .contact-section textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccd;
+      border-radius: 8px;
+      font-size: 1em;
+      margin-bottom: 14px;
+      box-sizing: border-box;
+      font-family: inherit;
+      background: white;
+      color: #333;
+    }
+    .contact-section input:focus,
+    .contact-section textarea:focus { outline: none; border-color: #4a5bdc; }
+    .contact-section textarea { resize: vertical; min-height: 100px; }
+    .submit-btn {
+      padding: 10px 28px;
+      background: #4a5bdc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .submit-btn:hover { background: #3a4bc8; }
+    .sent-msg { display: none; color: #3B6D11; font-size: 0.9em; margin-top: 10px; }
+  </style>
 </head>
-
 <body>
+  <div id="vai-topbar"></div>
+  <div id="main-content">
+    <div id="vai-navbar"></div>
 
-<!-- TOP BAR -->
-<div class="topbar">
-    <div>VAI | Virtual Academy Institution</div>
-    <div>
-        <a href="/">ホーム</a>
-        <a href="/login/" id="portal-link">ログイン</a>
-        <a href="/support/">サポート</a>
-        <a href="/search/">検索</a>
+    <div class="support-wrap">
+      <h1>🛠 サポート</h1>
+      <p>VAIのシステムや活動に関するお問い合わせはこちらからご連絡ください。</p>
+
+      <div class="support-cards">
+        <div class="support-card">
+          <h3>📘 よくある質問</h3>
+          <p>アカウント、配信環境、プログラム内容に関するよくある質問をまとめています。</p>
+        </div>
+        <div class="support-card">
+          <h3>🧑‍💻 技術サポート</h3>
+          <p>配信トラブルや機材に関する問題について、専門スタッフが対応します。</p>
+        </div>
+        <div class="support-card">
+          <h3>📩 お問い合わせ</h3>
+          <p>個別の質問や相談がある場合は、下記フォームからご連絡ください。</p>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <h2>📘 よくある質問 (FAQ)</h2>
+
+        <div class="faq-item">
+          <div class="faq-q">Q. 学生ポータルにログインできない場合、どうすればいいですか？</div>
+          <div class="faq-a">A. パスワードを忘れた場合は「パスワードをお忘れですか？」からパスワード設定時に記録したヒントをお使いください。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Q. 配信が頻繁に切断されます。</div>
+          <div class="faq-a">A. インターネット回線の安定性を確認してください。有線接続を推奨しています。また、ブラウザのキャッシュの削除もお試しください。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Q. 総合スコアはどのように計算されますか？</div>
+          <div class="faq-a">A. 配信時間、平均視聴者数、視聴維持率、いいね数、コラボ参加回数など複数の要素を総合的に評価して決定されます。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Q. アカウントを削除したいのですが？</div>
+          <div class="faq-a">A. アカウント削除はサポートチームが対応いたします。下記のお問い合わせフォームより「アカウント削除希望」とご連絡ください。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Q. 授業や配信は録画・視聴できますか？</div>
+          <div class="faq-a">A. 一部の講義と配信は学生ポータル内でアーカイブとして後から視聴可能です（権限があるもののみ）。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Q. おすすめの配信機材はありますか？</div>
+          <div class="faq-a">A. 最低でも CPU：i5 / Ryzen 5以上、メモリ：16GB、Webカメラ：1080p対応を推奨しています。</div>
+        </div>
+      </div>
+
+      <div class="contact-section">
+        <h2>📩 お問い合わせフォーム</h2>
+        <label for="contact-name">お名前</label>
+        <input type="text" id="contact-name" placeholder="例：山田 太郎">
+
+        <label for="contact-email">メールアドレス</label>
+        <input type="email" id="contact-email" placeholder="例：taro@example.com">
+
+        <label for="contact-msg">お問い合わせ内容</label>
+        <textarea id="contact-msg" placeholder="ご質問やご要望をご記入ください。"></textarea>
+
+        <button class="submit-btn" onclick="handleSubmit()">送信</button>
+        <div class="sent-msg" id="sent-msg">✅ 送信が完了しました。担当者よりご連絡いたします。</div>
+      </div>
     </div>
-</div>
 
-<!-- HEADER -->
-<div class="header">
-    <h1>🛠 サポート</h1>
-    <p>VAIのシステムや活動に関するお問い合わせはこちらからご連絡ください。</p>
-</div>
-
-<!-- SUPPORT OPTIONS -->
-<div class="grid">
-
-    <div class="card">
-        <h3>📘 よくある質問</h3>
-        <p>アカウント、配信環境、プログラム内容に関するよくある質問をまとめています。</p>
-    </div>
-
-    <div class="card">
-        <h3>🧑‍💻 技術サポート</h3>
-        <p>配信トラブルや機材に関する問題について、専門スタッフが対応します。</p>
-    </div>
-
-    <div class="card">
-        <h3>📩 お問い合わせ</h3>
-        <p>個別の質問や相談がある場合は、下記フォームからご連絡ください。</p>
-    </div>
-
-</div>
-
-<!-- FAQ -->
-<div class="faq-section">
-    <h2>📘 よくある質問 (FAQ)</h2>
-    
-    <div class="faq-item">
-        <div class="faq-question">Q. 学生ポータルにログインできない場合、どうすればいいですか？</div>
-        <div class="faq-answer">A. パスワードを忘れた場合は「パスワードをお忘れですか？」からパスワード設定時、記録したヒントをお使いください。</div>
-    </div>
-
-    <div class="faq-item">
-        <div class="faq-question">Q. 配信が頻繁に切断されます。</div>
-        <div class="faq-answer">A. インターネット回線の安定性を確認してください。有線接続を推奨しています。また、ブラウザのキャッシュの削除もお試しください。</div>
-    </div>
-
-    <div class="faq-item">
-        <div class="faq-question">Q. 総合スコアはどのように計算されますか？</div>
-        <div class="faq-answer">A. 配信時間、平均視聴者数、視聴維持率、いいね数、コラボ参加回数など複数の要素を総合的に評価して決定されます。</div>
-    </div>
-
-    <div class="faq-item">
-        <div class="faq-question">Q. アカウントを削除したいのですが？</div>
-        <div class="faq-answer">A. アカウント削除はサポートチームが対応いたします。下記のお問い合わせフォームより「アカウント削除希望」とご連絡ください。</div>
-    </div>
-
-    <div class="faq-item">
-        <div class="faq-question">Q. 授業や配信は録画・視聴できますか？</div>
-        <div class="faq-answer">A. 一部の講義と配信は学生ポータル内でアーカイブとして後から視聴可能です（権限があるもののみ）。</div>
-    </div>
-
-    <div class="faq-item">
-        <div class="faq-question">Q. おすすめの配信機材はありますか？</div>
-        <div class="faq-answer">A. 最低でも CPU：i5 / Ryzen 5以上、メモリ：16GB、Webカメラ：1080p対応を推奨しています。</div>
-    </div>
-</div>
-
-<!-- CONTACT FORM -->
-<div class="form">
-    <h2>お問い合わせフォーム</h2>
-
-    <label>お名前</label>
-    <input type="text" placeholder="例：山田 太郎"><br><br>
-
-    <label>メールアドレス</label>
-    <input type="email" placeholder="example@email.com"><br><br>
-
-    <label>お問い合わせ内容</label>
-    <textarea rows="5" placeholder="内容をご記入ください"></textarea>
-
-    <button>送信</button>
-</div>
-
-<div class="footer">
-    © 2026 Virtual Academy Institution（VAI）
-</div>
-
+    <div id="vai-footer"></div>
+  </div>
+  <script src="/layout.js"></script>
+  <script>
+    /* ARG hook: contact form shows a confirmation but doesn't actually send anything.
+       You could redirect to a puzzle page after submit if you want. */
+    function handleSubmit() {
+      const name  = document.getElementById('contact-name').value.trim();
+      const email = document.getElementById('contact-email').value.trim();
+      const msg   = document.getElementById('contact-msg').value.trim();
+      if (!name || !email || !msg) { alert('すべての項目をご記入ください。'); return; }
+      document.getElementById('sent-msg').style.display = 'block';
+    }
+  </script>
 </body>
-
-<script>
-const role = localStorage.getItem("vai_role");
-
-const link = document.getElementById("portal-link");
-const user = localStorage.getItem("vai_user");
-
-if (role === "student") {
-    document.querySelector(".topbar div").innerText = "VAI | Student Access";
-    link.innerText = user + "｜ポータル";
-    link.href = "/dashboard/";
-}
-</script>
 </html>
