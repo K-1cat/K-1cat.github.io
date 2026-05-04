@@ -259,20 +259,23 @@
 
     <div id="vai-footer"></div>
   </div>
-  <script src="/layout.js">
-    const role = localStorage.getItem("vai_role");
-
-    if (role === "student") {
-      document.getElementById("event-register").style.display = "block";
-    }
+  <script src="/layout.js"></script>
+  <script>
+    window.addEventListener("load", () => {
+      const role = localStorage.getItem("vai_role");
     
+      if (role === "student") {
+        document.getElementById("event-register").style.display = "block";
+      }
+    });
+  
     function submitEvent() {
       const event = document.getElementById("event-select").value;
       const msg = document.getElementById("event-msg");
-    
+  
       msg.innerHTML = "登録完了：" + event;
-    
-      // ARG HOOK (you’ll use this later)
+  
+      // ARG HOOK
       if (event.includes("399")) {
         setTimeout(() => {
           msg.innerHTML += "<br><span style='color:red;'>※承認待ち…</span>";
