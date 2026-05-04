@@ -159,12 +159,27 @@
       }
       .nav-links a:hover { color: #4a5bdc; }
 
+      /* BASE LAYOUT FIX */
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      /* MAIN CONTENT WRAPPER */
+      #main-content {
+        flex: 1;
+      }
+      
       /* FOOTER */
       .footer {
         background: #f0f2ff;
         padding: 20px;
         text-align: center;
-        margin-top: 40px;
         font-size: 0.9em;
         color: #555;
       }
