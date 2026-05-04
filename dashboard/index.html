@@ -1,369 +1,282 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAI - 学生ポータル</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAI - 学生ポータル</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #f7f8ff;
+      color: #333;
+    }
 
-<style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: #f7f8ff;
-    color: #333;
-}
+    /* LAYOUT */
+    .layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      height: calc(100vh - 50px); /* 50px = topbar height */
+    }
 
-/* TOP BAR */
-.topbar {
-    background: #4a5bdc;
-    color: white;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    /* SIDEBAR */
+    .sidebar {
+      background: white;
+      border-right: 1px solid #eee;
+      padding: 20px;
+    }
+    .sidebar h3 { margin-bottom: 20px; }
 
-.topbar a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.9em;
-}
+    .menu-item {
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .menu-item:hover { background: #f0f2ff; }
+    .menu-item.active { background: #4a5bdc; color: white; }
 
-.layout {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    height: calc(100vh - 50px);
-}
+    /* MAIN */
+    .main {
+      padding: 30px;
+      overflow-y: auto;
+    }
 
-.sidebar {
-    background: white;
-    border-right: 1px solid #eee;
-    padding: 20px;
-}
+    /* SECTION */
+    .section { margin-bottom: 40px; }
 
-.sidebar h3 {
-    margin-bottom: 20px;
-}
+    /* GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
 
-.menu-item {
-    padding: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    border-radius: 8px;
-}
+    /* CARD */
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+    }
 
-.menu-item:hover {
-    background: #f0f2ff;
-}
+    /* PROFILE */
+    .profile { display: flex; gap: 20px; align-items: center; }
+    .avatar { width: 100px; height: 100px; background: #ddd; border-radius: 12px; }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
 
-.menu-item.active {
-    background: #4a5bdc;
-    color: white;
-}
+    /* STREAM THUMB */
+    .thumb { width: 100%; height: 150px; background: #ccc; border-radius: 8px; margin-bottom: 10px; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
 
-.main {
-    padding: 30px;
-    overflow-y: auto;
-}
-    
-/* LAYOUT */
-.container {
-    padding: 30px;
-}
+    /* EMAIL */
+    .email { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+    .email:hover { background: #f5f5f5; }
 
-/* SECTION */
-.section {
-    margin-bottom: 40px;
-}
-
-/* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-}
-
-/* CARD */
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-/* PROFILE */
-.profile {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.avatar {
-    width: 100px;
-    height: 100px;
-    background: #ddd;
-    border-radius: 12px;
-}
-
-.avatar img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
-/* STREAM THUMB */
-.thumb {
-    width: 100%;
-    height: 150px;
-    background: #ccc;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-
-.thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-}
-    
-/* EMAIL */
-.email {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-}
-
-.email:hover {
-    background: #f5f5f5;
-}
-
-/* LOG */
-.log {
-    display: none;
-    margin-top: 15px;
-    background: #111;
-    color: #0f0;
-    padding: 15px;
-    border-radius: 8px;
-    font-family: monospace;
-}
-
-/* Bottom Mail Box */
-.bottom-mail-box {
-    display: none;
-    margin-top: 30px;
-    background: white;
-    border: 2px solid #4a5bdc;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(74, 91, 220, 0.15);
-    overflow: hidden;
-}
-
-.bottom-mail-header {
-    background: #4a5bdc;
-    color: white;
-    padding: 12px 18px;
-    font-size: 1.05em;
-}
-
-.bottom-mail-body {
-    padding: 20px;
-    line-height: 1.6;
-    min-height: 180px;
-}
-</style>
+    /* BOTTOM MAIL BOX */
+    .bottom-mail-box {
+      display: none;
+      margin-top: 30px;
+      background: white;
+      border: 2px solid #4a5bdc;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(74, 91, 220, 0.15);
+      overflow: hidden;
+    }
+    .bottom-mail-header {
+      background: #4a5bdc;
+      color: white;
+      padding: 12px 18px;
+      font-size: 1.05em;
+    }
+    .bottom-mail-body {
+      padding: 20px;
+      line-height: 1.6;
+      min-height: 180px;
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-    <div>VAI | Student Access</div>
-    <div>
-        <a href="/">ホーム</a>
-        <a href="/dashboard/">Redvil ｜ ポータル</a>
-        <a href="/support/">サポート</a>
-        <a href="/search/">検索</a>
+  <!-- layout.js topbar — overridden below to show student access state -->
+  <div id="vai-topbar"></div>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h3>VAI ポータル</h3>
+      <div class="menu-item active" onclick="showSection('profile', this)">👤 基本情報</div>
+      <div class="menu-item" onclick="showSection('stream', this)">📊 配信データ</div>
+      <div class="menu-item" onclick="showSection('grades', this)">🎓 成績</div>
+      <div class="menu-item" onclick="showSection('email', this)">📩 メール / ログ</div>
     </div>
-</div>
 
-<div class="layout">
+    <!-- MAIN -->
+    <div class="main">
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-    <h3>VAI ポータル</h3>
-
-    <div class="menu-item active" onclick="showSection('profile', this)">👤 基本情報</div>
-    <div class="menu-item" onclick="showSection('stream')">📊 配信データ</div>
-    <div class="menu-item" onclick="showSection('grades')">🎓 成績</div>
-    <div class="menu-item" onclick="showSection('email')">📩 メール / ログ</div>
-</div>
-
-<div class="main">
-
-<!-- ① PROFILE -->
-<div id="profile" class="section">
-    <h2>👤 基本情報</h2>
-    <div class="card profile">
-        <div class="avatar"><img src="redvil-icon.jpg" alt="アイコン"></div>
-        <div>
+      <!-- ① PROFILE -->
+      <div id="profile" class="section">
+        <h2>👤 基本情報</h2>
+        <div class="card profile">
+          <div class="avatar"><img src="/dashboard/redvil-icon.jpg" alt="アイコン"></div>
+          <div>
             <p><b>名前：</b>赤井 瀧魔琉</p>
             <p><b>VTuber名：</b>Redvil</p>
             <p><b>性別：</b>男</p>
             <p><b>年齢：</b>非公開</p>
             <p><b>状態：</b>VAULT転送中</p>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
 
-<!-- ② STREAMING -->
-<div id="stream" class="section">
-    <h2>📊 配信データ</h2>
+      <!-- ② STREAM DATA -->
+      <div id="stream" class="section" style="display:none;">
+        <h2>📊 配信データ</h2>
+        <div class="grid">
+          <div class="card"><b>総配信数</b><br>58</div>
+          <div class="card"><b>総時間</b><br>142h</div>
+          <div class="card"><b>総視聴数</b><br>48,210</div>
+          <div class="card"><b>総いいね</b><br>9,420</div>
+          <div class="card"><b>フォロワー</b><br>6,120</div>
+          <div class="card"><b>総合スコア</b><br><span style="font-size:1.5em;">91</span></div>
+        </div>
 
-    <div class="grid">
-        <div class="card"><b>総配信数</b><br>58</div>
-        <div class="card"><b>総時間</b><br>142h</div>
-        <div class="card"><b>総視聴数</b><br>48,210</div>
-        <div class="card"><b>総いいね</b><br>9,420</div>
-        <div class="card"><b>フォロワー</b><br>6,120</div>
-        <div class="card"><b>総合スコア</b><br><span style="font-size:1.5em;">91</span></div>
-    </div>
-
-    <h3 style="margin-top:20px;">最近の配信</h3>
-
-    <div class="grid">
-        <div class="card">
-            <div class="thumb"><img src="redvil-stream-1.jpg" alt="配信１"></div>
+        <h3 style="margin-top:20px;">最近の配信</h3>
+        <div class="grid">
+          <div class="card">
+            <div class="thumb"><img src="/dashboard/redvil-stream-1.jpg" alt="配信１"></div>
             <p>コラボ配信（VAI-214）- 5月24日</p>
             <p style="color:#888; font-size:0.85em;">分類：最終セッション</p>
-        </div>
-        <div class="card">
-            <div class="thumb"><img src="redvil-stream-2.jpg" alt="配信２"></div>
+          </div>
+          <div class="card">
+            <div class="thumb"><img src="/dashboard/redvil-stream-2.jpg" alt="配信２"></div>
             <p>実験配信ログ - 5月23日</p>
-        </div>
-        <div class="card">
-            <div class="thumb"><img src="redvil-stream-3.jpg" alt="配信３"></div>
+          </div>
+          <div class="card">
+            <div class="thumb"><img src="/dashboard/redvil-stream-3.jpg" alt="配信３"></div>
             <p>深夜雑談 - 5月22日</p>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
 
-<!-- ③ GRADES -->
-<div id="grades" class="section">
-    <h2>🎓 成績</h2>
-    <div class="card">
-        <p>VAI-101：A+</p>
-        <p>VAI-203：A</p>
-        <p>VAI-214：A+</p>
-        <p>VAI-241：A</p>
-        <hr>
-        <p><b>総合評価：A+</b></p>
-    </div>
-</div>
+      <!-- ③ GRADES -->
+      <div id="grades" class="section" style="display:none;">
+        <h2>🎓 成績</h2>
+        <div class="card">
+          <p>VAI-101：A+</p>
+          <p>VAI-203：A</p>
+          <p>VAI-214：A+</p>
+          <p>VAI-241：A</p>
+          <hr>
+          <p><b>総合評価：A+</b></p>
+        </div>
+      </div>
 
-<!-- ④ EMAIL -->
-<div id="email" class="section">
-    <h2>📩 メール</h2>
-    <div class="card">
-        <div class="email" onclick="openMail(1)">【運営】評価更新のお知らせ - 5月26日</div>
-        <div class="email" onclick="openMail(4)">【VAI-214】最終課題の評価 - 5月25日</div>
-        <div class="email" onclick="openMail(2)">【システム】予定されていたメンテナンスの実施 - 5月25日</div>
-        <div class="email" onclick="openMail(3)">【VAI-214】最終課題の内容について - 5月23日</div>
-    </div>
+      <!-- ④ EMAIL -->
+      <div id="email" class="section" style="display:none;">
+        <h2>📩 メール</h2>
+        <div class="card">
+          <div class="email" onclick="openMail(1)">【運営】評価更新のお知らせ - 5月26日</div>
+          <div class="email" onclick="openMail(4)">【VAI-214】最終課題の評価 - 5月25日</div>
+          <div class="email" onclick="openMail(2)">【システム】予定されていたメンテナンスの実施 - 5月25日</div>
+          <div class="email" onclick="openMail(3)">【VAI-214】最終課題の内容について - 5月23日</div>
+        </div>
 
-    <!-- NEW: Bottom Detail Box -->
-    <div id="bottom-mail-box" class="bottom-mail-box">
-        <div class="bottom-mail-header">
+        <div id="bottom-mail-box" class="bottom-mail-box">
+          <div class="bottom-mail-header">
             <strong id="bottom-mail-title"></strong>
             <span onclick="closeBottomBox()" style="cursor:pointer; float:right; font-size:1.2em;">✕</span>
+          </div>
+          <div id="bottom-mail-body" class="bottom-mail-body"></div>
         </div>
-        <div id="bottom-mail-body" class="bottom-mail-body"></div>
-    </div>
-</div>
+      </div>
 
-</div>
+    </div><!-- .main -->
+  </div><!-- .layout -->
 
-</div>
+  <script src="/layout.js"></script>
+  <script>
+    /* ── Override topbar to match original dashboard style ── */
+    const user = localStorage.getItem('vai_user') || 'Redvil';
 
-<script>
-function showSection(id, el) {
-    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
-    document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+    /* Wait for layout.js to inject the topbar, then patch it */
+    window.addEventListener('load', function () {
+      const brand = document.querySelector('#vai-topbar .topbar > div:first-child');
+      const portalLink = document.querySelector('#vai-topbar #portal-link');
+      if (brand) brand.textContent = 'VAI | Student Access';
+      if (portalLink) {
+        portalLink.textContent = user + '｜ポータル';
+        portalLink.href = '/dashboard/';
+      }
+    });
 
-    document.getElementById(id).style.display = "block";
-    el.classList.add("active");
-}
-    
-function openMail(id) {
-    const contentBox = document.getElementById("mail-content");
-    const bottomBox = document.getElementById("bottom-mail-box");
-    const bottomTitle = document.getElementById("bottom-mail-title");
-    const bottomBody = document.getElementById("bottom-mail-body");
-
-    let title = "";
-    let shortText = "";
-    let fullText = "";
-
-    if (id === 1) {
-        title = "【運営】評価更新のお知らせ";
-        fullText = `
-            <p><strong>送信日:</strong> 2026年5月26日</p>
-            <p>赤井 瀧魔琉様</p>
-            <p>おめでとうございます！あなたの総合評価が <strong>A+</strong> に更新されました。</p>
-            <p>今月の活躍が非常に優秀でした。特にVAI-214でのコラボ配信が高評価です。</p>
-            <hr>
-            <p>至急、本キャンパスまでお越しください。</p>
-            <p style="color:#888;">※以降の対応は現地で実施されます。</p>
-        `;
-    } 
-    else if (id === 2) {
-        title = "【システム】予定されていたメンテナンスの実施";
-        fullText = `
-            <p><strong>送信日:</strong> 2026年5月25日</p>
-            <p><strong>予定されておりましたシステムメンテナンスが完了しました。</strong></p>
-            <p><b>実施時間</b>: 2026年5月25日 9時00分 ～ 22時00分</p>
-            <p><b>影響</b>: 一時的に学生ポータルおよび配信機能が利用不可となっておりました。</p><br>
-            <p>メンテナンスにご協力いただきありがとうございました。</p>
-            <p>現在はすべてのサービスが正常にご利用いただけます。</p>
-        `;
-    } 
-    else if (id === 3) {
-        title = "【VAI-214】最終課題の内容について";
-        fullText = `
-            <p><strong>送信日:</strong> 2026年5月23日</p>
-            <p><b>課題テーマ</b>: 「視聴者とのインタラクションを最大化する配信設計」</p>
-            <p><b>提出期限</b>: 2026年5月31日 23:59</p><br>
-            <p>詳細な課題内容・評価基準・提出ファイル形式は、</p>
-            <p>VAI-214コースページよりご確認ください。</p>
-            <p>提出をお待ちしております。</p>
-        `;
-    }
-    else if (id === 4) {
-        title = "【VAI-214】最終課題の評価";
-        fullText = `
-            <p><strong>送信日:</strong> 2026年5月25日</p>
-            <p>最終課題の早期提出、ありがとうございました。</p>
-            <p>最終的な評価は<b>A+</b>となりました。</p><br>
-            <p>これからも仲間と連携し、視聴者を楽しませることを心より祈っております。</p>
-            <p>VAI-214の履行、お疲れさまでした。</p>
-        `;
+    /* ── Section switching ── */
+    function showSection(id, el) {
+      document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+      document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+      document.getElementById(id).style.display = 'block';
+      if (el) el.classList.add('active');
     }
 
-    // Open detailed box at the bottom
-    bottomTitle.textContent = title;
-    bottomBody.innerHTML = fullText;
-    bottomBox.style.display = "block";
+    /* ── Mail viewer ── */
+    function openMail(id) {
+      const bottomBox   = document.getElementById('bottom-mail-box');
+      const bottomTitle = document.getElementById('bottom-mail-title');
+      const bottomBody  = document.getElementById('bottom-mail-body');
 
-    // Optional: Scroll smoothly to the bottom box
-    bottomBox.scrollIntoView({ behavior: "smooth" });
-}
+      let title = '';
+      let fullText = '';
 
-function closeBottomBox() {
-    document.getElementById("bottom-mail-box").style.display = "none";
-}
-</script>
+      if (id === 1) {
+        title = '【運営】評価更新のお知らせ';
+        fullText = `
+          <p><strong>送信日:</strong> 2026年5月26日</p>
+          <p>赤井 瀧魔琉様</p>
+          <p>おめでとうございます！あなたの総合評価が <strong>A+</strong> に更新されました。</p>
+          <p>今月の活躍が非常に優秀でした。特にVAI-214でのコラボ配信が高評価です。</p>
+          <hr>
+          <p>至急、本キャンパスまでお越しください。</p>
+          <p style="color:#888;">※以降の対応は現地で実施されます。</p>`;
+      }
+      else if (id === 2) {
+        title = '【システム】予定されていたメンテナンスの実施';
+        fullText = `
+          <p><strong>送信日:</strong> 2026年5月25日</p>
+          <p><strong>予定されておりましたシステムメンテナンスが完了しました。</strong></p>
+          <p><b>実施時間</b>: 2026年5月25日 9時00分 ～ 22時00分</p>
+          <p><b>影響</b>: 一時的に学生ポータルおよび配信機能が利用不可となっておりました。</p><br>
+          <p>メンテナンスにご協力いただきありがとうございました。</p>
+          <p>現在はすべてのサービスが正常にご利用いただけます。</p>`;
+      }
+      else if (id === 3) {
+        title = '【VAI-214】最終課題の内容について';
+        fullText = `
+          <p><strong>送信日:</strong> 2026年5月23日</p>
+          <p><b>課題テーマ</b>: 「視聴者とのインタラクションを最大化する配信設計」</p>
+          <p><b>提出期限</b>: 2026年5月31日 23:59</p><br>
+          <p>詳細な課題内容・評価基準・提出ファイル形式は、</p>
+          <p>VAI-214コースページよりご確認ください。</p>
+          <p>提出をお待ちしております。</p>`;
+      }
+      else if (id === 4) {
+        title = '【VAI-214】最終課題の評価';
+        fullText = `
+          <p><strong>送信日:</strong> 2026年5月25日</p>
+          <p>最終課題の早期提出、ありがとうございました。</p>
+          <p>最終的な評価は<b>A+</b>となりました。</p><br>
+          <p>これからも仲間と連携し、視聴者を楽しませることを心より祈っております。</p>
+          <p>VAI-214の履行、お疲れさまでした。</p>`;
+      }
 
+      bottomTitle.textContent = title;
+      bottomBody.innerHTML = fullText;
+      bottomBox.style.display = 'block';
+      bottomBox.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeBottomBox() {
+      document.getElementById('bottom-mail-box').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
