@@ -386,10 +386,10 @@
 
     function logout() {
       // clear login state (adjust depending on your auth system)
-      localStorage.removeItem("vai_logged_in_user");
+      localStorage.removeItem("vai_role");
     
       // redirect to login page
-      window.location.href = "/login.html";
+      window.location.href = "/login/";
     }
   </script>
 </body>
