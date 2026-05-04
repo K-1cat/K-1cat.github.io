@@ -102,6 +102,7 @@
       overlay.style.cssText = 'text-align:center;padding:100px 30px;';
       overlay.innerHTML = `
         <h1>現在、メンテナンスを実施中です。</h1>
+        <p>不審なアクティビティを検知しました。</p>
         <p>一部のユーザーのみアクセス可能です。</p>`;
       document.body.appendChild(overlay);
     }
