@@ -60,6 +60,7 @@
     const links = [
       { key: 'home',     href: '/',          label: 'キャンパスライフ' },
       { key: 'programs', href: '/programs/', label: '学部・プログラム' },
+      { key: 'faculty',  href: '/faculty/',  label: '教員紹介'         },
       { key: 'students', href: '/students/', label: '学生'             },
       { key: 'alumni',   href: '/alumni/',   label: '卒業生'           },
       { key: 'events',   href: '/events/',   label: 'イベント'         },
