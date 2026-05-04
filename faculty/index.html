@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAI - 教員紹介</title>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
+
+    .page-header { padding: 40px 50px 10px; }
+    .page-header h1 { margin: 0 0 8px; font-size: 2em; }
+    .page-header p { color: #666; margin: 0 0 40px; }
+
+    /* PRESIDENT — full width, elevated */
+    .president-card {
+      margin: 0 50px 50px;
+      border: 1px solid #e0e4f8;
+      border-radius: 14px;
+      padding: 32px 36px;
+      background: #f4f5ff;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .president-card .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #c8ccf5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8em;
+    }
+
+    .president-card .title-tag {
+      display: inline-block;
+      font-size: 0.72em;
+      font-weight: 700;
+      color: white;
+      background: #4a5bdc;
+      border-radius: 6px;
+      padding: 2px 10px;
+      margin-bottom: 10px;
+      letter-spacing: 0.06em;
+    }
+
+    .president-card h2 { margin: 0 0 4px; font-size: 1.4em; color: #1a1a2e; }
+    .president-card .en-name { font-size: 0.85em; color: #888; margin: 0 0 14px; }
+    .president-card p { margin: 0; font-size: 0.95em; color: #444; line-height: 1.8; }
+
+    /* FACULTY GRID */
+    .faculty-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      padding: 0 50px 60px;
+    }
+
+    .faculty-card {
+      border: 1px solid #e0e4f8;
+      border-radius: 12px;
+      padding: 24px;
+      background: #f9f9ff;
+    }
+
+    /* subtle off-feel for suspicious cards */
+    .faculty-card.suspicious {
+      border-color: #d8daf0;
+      background: #f7f7fc;
+    }
+
+    .faculty-card .card-top {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .faculty-card .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #d0d5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6em;
+      flex-shrink: 0;
+    }
+
+    .faculty-card.suspicious .avatar { background: #c8cce8; }
+
+    .faculty-card .name-block h3 { margin: 0 0 3px; font-size: 1.05em; color: #222; }
+    .faculty-card .name-block .en-name { font-size: 0.8em; color: #999; margin: 0 0 6px; }
+
+    .course-tag {
+      display: inline-block;
+      font-size: 0.72em;
+      font-weight: 600;
+      color: #4a5bdc;
+      background: #e8ebff;
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+
+    .faculty-card p {
+      margin: 10px 0 0;
+      font-size: 0.88em;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .faculty-card .detail-row {
+      font-size: 0.8em;
+      color: #888;
+      margin-top: 12px;
+      line-height: 1.8;
+    }
+    .faculty-card .detail-row strong { color: #555; }
+
+    /* The one field that's blank / redacted */
+    .redacted {
+      display: inline-block;
+      background: #333;
+      color: #333;
+      border-radius: 3px;
+      min-width: 80px;
+      user-select: none;
+    }
+  </style>
+</head>
+<body data-page="faculty">
+  <div id="vai-topbar"></div>
+  <div id="main-content">
+    <div id="vai-navbar"></div>
+
+    <div class="page-header">
+      <h1>👨‍🏫 教員紹介</h1>
+      <p>VAIの教育・研究を担う教員・研究者のご紹介です。</p>
+    </div>
+
+    <!-- PRESIDENT -->
+    <div class="president-card">
+      <div class="avatar">🎓</div>
+      <div>
+        <span class="title-tag">学長</span>
+        <h2>御堂 静一郎</h2>
+        <div class="en-name">Seiichiro Mido — President, Virtual Academy Institution</div>
+        <p>
+          メディア心理学・デジタル認知工学を専門とし、「観測と自己同一性」に関する研究で国内外から高い評価を受ける。
+          VAIの創設者として、VTuber文化を通じた次世代クリエイター育成を推進してきた。
+          著書に『画面の向こう側で生きること』『デジタル空間における存在証明』など。
+          学外での活動については一切の取材・開示を拒否している。
+        </p>
+        <div class="detail-row" style="margin-top:16px;">
+          <strong>専門分野：</strong>メディア心理学 / デジタル認知工学 / 観測理論<br>
+          <strong>所属学会：</strong>非公開<br>
+          <strong>オフィス：</strong>本館 最上階（要予約・学長承認必須）
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFESSORS GRID -->
+    <div class="faculty-grid">
+
+      <!-- NORMAL: VAI-101 -->
+      <div class="faculty-card">
+        <div class="card-top">
+          <div class="avatar">🎮</div>
+          <div class="name-block">
+            <h3>橘 恵介</h3>
+            <div class="en-name">Keisuke Tachibana</div>
+            <span class="course-tag">VAI-101</span>
+          </div>
+        </div>
+        <p>
+          ゲーム実況・エンタメ配信のパイオニアとして15年のキャリアを持つ実務家教員。
+          初心者がつまずきやすいポイントを熟知しており、学生からの信頼が厚い。
+          授業は実践重視で、毎回必ず自身も配信しながら指導する。
+        </p>
+        <div class="detail-row">
+          <strong>担当：</strong>VAI-101 VTuber基礎<br>
+          <strong>経歴：</strong>個人配信者 → 大手事務所所属 → VAI着任<br>
+          <strong>連絡先：</strong>tachibana@vai.ac
+        </div>
+      </div>
+
+      <!-- NORMAL: VAI-178 -->
+      <div class="faculty-card">
+        <div class="card-top">
+          <div class="avatar">🎨</div>
+          <div class="name-block">
+            <h3>藤本 梨沙</h3>
+            <div class="en-name">Risa Fujimoto</div>
+            <span class="course-tag">VAI-178</span>
+          </div>
+        </div>
+        <p>
+          イラストレーター・アバターデザイナーとして活躍後、VAIに着任。
+          「見られる存在としてのデザイン」を軸に、外見と内面の一致をテーマにした指導を行う。
+          学生のアバター制作には必ず「誰に見せるためのデザインか」を問う。
+        </p>
+        <div class="detail-row">
+          <strong>担当：</strong>VAI-178 キャラクターデザイン<br>
+          <strong>経歴：</strong>フリーランスデザイナー → VAI着任<br>
+          <strong>連絡先：</strong>fujimoto@vai.ac
+        </div>
+      </div>
+
+      <!-- NORMAL: VAI-203 -->
+      <div class="faculty-card">
+        <div class="card-top">
+          <div class="avatar">🎭</div>
+          <div class="name-block">
+            <h3>水野 明</h3>
+            <div class="en-name">Akira Mizuno</div>
+            <span class="course-tag">VAI-203</span>
+          </div>
+        </div>
+        <p>
+          演劇・パフォーミングアーツの研究者。デジタル空間における「演じること」と「存在すること」の境界を長年研究している。
+          授業では即興演技と配信を組み合わせた独自カリキュラムを展開。
+          「画面越しでも人は人を感じ取れる」が口癖。
+        </p>
+        <div class="detail-row">
+          <strong>担当：</strong>VAI-203 パフォーマンス理論<br>
+          <strong>経歴：</strong>舞台演出家 → 大学研究員 → VAI着任<br>
+          <strong>連絡先：</strong>mizuno@vai.ac
+        </div>
+      </div>
+
+      <!-- NORMAL: VAI-214 -->
+      <div class="faculty-card">
+        <div class="card-top">
+          <div class="avatar">🤝</div>
+          <div class="name-block">
+            <h3>田中 恒一</h3>
+            <div class="en-name">Koichi Tanaka</div>
+            <span class="course-tag">VAI-214</span>
+            <span class="course-tag">VAI-301</span>
+          </div>
+        </div>
+        <p>
+          コミュニティマネジメントと多人数配信のスペシャリスト。
+          かつて国内最大規模のオンラインコミュニティを運営した経験を持ち、
+          「人と人をつなぐ配信」の設計を体系的に教える。明るく話しやすい性格で学生からの人気も高い。
+        </p>
+        <div class="detail-row">
+          <strong>担当：</strong>VAI-214 コラボ配信実習 / VAI-301 クロスチャンネル戦略<br>
+          <strong>経歴：</strong>コミュニティマネージャー → VAI着任<br>
+          <strong>連絡先：</strong>tanaka@vai.ac
+        </div>
+      </div>
+
+      <!-- SUSPICIOUS: VAI-241 -->
+      <div class="faculty-card suspicious">
+        <div class="card-top">
+          <div class="avatar">🔬</div>
+          <div class="name-block">
+            <h3>黒田 進</h3>
+            <div class="en-name">Susumu Kuroda</div>
+            <span class="course-tag">VAI-241</span>
+            <span class="course-tag">VAI-399</span>
+          </div>
+        </div>
+        <p>
+          認知科学・神経情報処理を専門とする研究者。VAI着任前の経歴は「複数の研究機関に所属」とのみ記載されており詳細は不明。
+          VAI-241「視聴者心理学」を担当し、上位成績者のみが受講できるVAI-399も兼任している。
+          学生との面談には必ず録音機器を持参するという噂がある。
+        </p>
+        <div class="detail-row">
+          <strong>担当：</strong>VAI-241 視聴者心理学 / VAI-399 観測と存在<br>
+          <strong>経歴：</strong><span class="redacted">██████████████</span><br>
+          <strong>連絡先：</strong>kuroda@vai.ac（返信なしの場合あり）
+        </div>
+      </div>
+
+      <!-- SUSPICIOUS: VAI-310 -->
+      <div class="faculty-card suspicious">
+        <div class="card-top">
+          <div class="avatar">🎙</div>
+          <div class="name-block">
+            <h3>音無 零</h3>
+            <div class="en-name">— / Rei Otonashi</div>
+            <span class="course-tag">VAI-310</span>
+          </div>
+        </div>
+        <p>
+          音声表現・朗読・歌唱を担当する教員。VAI着任時期・経歴ともに非公開。
+          授業はすべてオンラインで実施され、対面での姿を見た学生はいない。
+          提出された課題への評価コメントは毎回的確で詳細だが、文体が毎回微妙に異なる。
+          オフィスアワーの問い合わせへの返答は自動応答のみ。
+        </p>
+        <div class="detail-row">
+          <strong>担当：</strong>VAI-310 音声表現・朗読 / 歌唱<br>
+          <strong>経歴：</strong>非公開<br>
+          <strong>連絡先：</strong>otonashi@vai.ac
+        </div>
+      </div>
+
+    </div>
+
+    <div id="vai-footer"></div>
+  </div>
+  <script src="/layout.js"></script>
+</body>
+</html>
