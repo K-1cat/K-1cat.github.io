@@ -32,9 +32,29 @@
       background: white;
       border-right: 1px solid #eee;
       padding: 20px;
+    
+      display: flex;
+      flex-direction: column;
     }
     .sidebar h3 { margin-bottom: 20px; }
 
+    .menu-top {
+      flex-grow: 1;
+    }
+    
+    .logout-btn {
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #ffecec;
+      color: #c00;
+      text-align: center;
+    }
+    
+    .logout-btn:hover {
+      background: #ffdede;
+    }
+    
     .menu-item {
       padding: 10px;
       margin-bottom: 10px;
@@ -113,10 +133,16 @@
     <!-- SIDEBAR -->
     <div class="sidebar">
       <h3>VAI ポータル</h3>
-      <div class="menu-item active" onclick="scrollToSection('profile', this)">👤 基本情報</div>
-      <div class="menu-item" onclick="scrollToSection('stream', this)">📊 配信データ</div>
-      <div class="menu-item" onclick="scrollToSection('grades', this)">🎓 成績</div>
-      <div class="menu-item" onclick="scrollToSection('email', this)">📩 メール / ログ</div>
+    
+      <div class="menu-top">
+        <div class="menu-item active" onclick="scrollToSection('profile', this)">👤 基本情報</div>
+        <div class="menu-item" onclick="scrollToSection('stream', this)">📊 配信データ</div>
+        <div class="menu-item" onclick="scrollToSection('grades', this)">🎓 成績</div>
+        <div class="menu-item" onclick="scrollToSection('email', this)">📩 メール / ログ</div>
+      </div>
+
+      <!-- Logout at bottom -->
+      <div class="logout-btn" onclick="logout()">🚪 ログアウト</div>
     </div>
 
     <!-- MAIN -->
@@ -356,6 +382,14 @@
 
     function closeBottomBox() {
       document.getElementById('bottom-mail-box').style.display = 'none';
+    }
+
+    function logout() {
+      // clear login state (adjust depending on your auth system)
+      localStorage.removeItem("vai_logged_in_user");
+    
+      // redirect to login page
+      window.location.href = "/login.html";
     }
   </script>
 </body>
