@@ -260,14 +260,6 @@
     <div id="vai-footer"></div>
   </div>
   <script src="/layout.js">
-    function scrollEvents(dir) {
-      const container = document.querySelector(".events-list");
-      container.scrollBy({
-        left: dir * 350,
-        behavior: "smooth"
-      });
-    }
-
     const role = localStorage.getItem("vai_role");
 
     if (role === "student") {
