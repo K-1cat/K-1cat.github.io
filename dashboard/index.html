@@ -204,9 +204,6 @@
 
   <script src="/layout.js"></script>
   <script>
-    /* ── Override topbar to match original dashboard style ── */
-    const user = localStorage.getItem('vai_user') || 'Redvil';
-
     /* Wait for layout.js to inject the topbar, then patch it */
     window.addEventListener('load', function () {
       const brand = document.querySelector('#vai-topbar .topbar > div:first-child');
@@ -231,9 +228,11 @@
       if (el) el.classList.add('active');
     }
 
-    window.addEventListener("scroll", () => {
+    const main = document.querySelector(".main");
+
+    main.addEventListener("scroll", () => {
       const sections = document.querySelectorAll(".section");
-      const scrollPos = window.scrollY + 100;
+      const scrollPos = main.scrollY + 100;
     
       sections.forEach(sec => {
         if (
