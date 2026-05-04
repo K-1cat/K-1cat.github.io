@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VAI - 学生ポータル</title>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    .section {
+      scroll-margin-top: 20px;
+    }
+    
     body {
       margin: 0;
       font-family: "Segoe UI", sans-serif;
@@ -105,10 +113,10 @@
     <!-- SIDEBAR -->
     <div class="sidebar">
       <h3>VAI ポータル</h3>
-      <div class="menu-item active" onclick="showSection('profile', this)">👤 基本情報</div>
-      <div class="menu-item" onclick="showSection('stream', this)">📊 配信データ</div>
-      <div class="menu-item" onclick="showSection('grades', this)">🎓 成績</div>
-      <div class="menu-item" onclick="showSection('email', this)">📩 メール / ログ</div>
+      <div class="menu-item active" onclick="scrollToSection('profile', this)">👤 基本情報</div>
+      <div class="menu-item" onclick="scrollToSection('stream', this)">📊 配信データ</div>
+      <div class="menu-item" onclick="scrollToSection('grades', this)">🎓 成績</div>
+      <div class="menu-item" onclick="scrollToSection('email', this)">📩 メール / ログ</div>
     </div>
 
     <!-- MAIN -->
@@ -130,7 +138,7 @@
       </div>
 
       <!-- ② STREAM DATA -->
-      <div id="stream" class="section" style="display:none;">
+      <div id="stream" class="section">
         <h2>📊 配信データ</h2>
         <div class="grid">
           <div class="card"><b>総配信数</b><br>58</div>
@@ -160,7 +168,7 @@
       </div>
 
       <!-- ③ GRADES -->
-      <div id="grades" class="section" style="display:none;">
+      <div id="grades" class="section">
         <h2>🎓 成績</h2>
         <div class="card">
           <p>VAI-101：A+</p>
@@ -173,7 +181,7 @@
       </div>
 
       <!-- ④ EMAIL -->
-      <div id="email" class="section" style="display:none;">
+      <div id="email" class="section">
         <h2>📩 メール</h2>
         <div class="card">
           <div class="email" onclick="openMail(1)">【運営】評価更新のお知らせ - 5月26日</div>
@@ -210,13 +218,35 @@
       }
     });
 
-    /* ── Section switching ── */
-    function showSection(id, el) {
-      document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+    function scrollToSection(id, el) {
+      const target = document.getElementById(id);
+    
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    
+      // update active menu
       document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-      document.getElementById(id).style.display = 'block';
       if (el) el.classList.add('active');
     }
+
+    window.addEventListener("scroll", () => {
+      const sections = document.querySelectorAll(".section");
+      const scrollPos = window.scrollY + 100;
+    
+      sections.forEach(sec => {
+        if (
+          scrollPos >= sec.offsetTop &&
+          scrollPos < sec.offsetTop + sec.offsetHeight
+        ) {
+          document.querySelectorAll(".menu-item").forEach(i => i.classList.remove("active"));
+          const id = sec.getAttribute("id");
+          const activeBtn = document.querySelector(`.menu-item[onclick*="${id}"]`);
+          if (activeBtn) activeBtn.classList.add("active");
+        }
+      });
+    });
 
     /* ── Mail viewer ── */
     function openMail(id) {
