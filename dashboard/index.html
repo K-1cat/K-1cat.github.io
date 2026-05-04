@@ -204,27 +204,18 @@
 
   <script src="/layout.js"></script>
   <script>
-    /* Wait for layout.js to inject the topbar, then patch it */
-    window.addEventListener('load', function () {
-      const brand = document.querySelector('#vai-topbar .topbar > div:first-child');
-      const portalLink = document.querySelector('#vai-topbar #portal-link');
-      if (brand) brand.textContent = 'VAI | Student Access';
-      if (portalLink) {
-        portalLink.textContent = user + '｜ポータル';
-        portalLink.href = '/dashboard/';
-      }
-    });
-
     function scrollToSection(id, el) {
+      const main = document.querySelector(".main");
       const target = document.getElementById(id);
     
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
+      main.scrollTo({
+        top: target.offsetTop,
+        behavior: "smooth"
       });
     
-      // update active menu
-      document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+      document.querySelectorAll('.menu-item')
+        .forEach(item => item.classList.remove('active'));
+    
       if (el) el.classList.add('active');
     }
 
@@ -232,16 +223,21 @@
 
     main.addEventListener("scroll", () => {
       const sections = document.querySelectorAll(".section");
-      const scrollPos = main.scrollY + 100;
+      const scrollPos = main.scrollTop + 100;
     
       sections.forEach(sec => {
         if (
           scrollPos >= sec.offsetTop &&
           scrollPos < sec.offsetTop + sec.offsetHeight
         ) {
-          document.querySelectorAll(".menu-item").forEach(i => i.classList.remove("active"));
+          document.querySelectorAll(".menu-item")
+            .forEach(i => i.classList.remove("active"));
+    
           const id = sec.getAttribute("id");
-          const activeBtn = document.querySelector(`.menu-item[onclick*="${id}"]`);
+          const activeBtn = document.querySelector(
+            `.menu-item[onclick*="${id}"]`
+          );
+    
           if (activeBtn) activeBtn.classList.add("active");
         }
       });
