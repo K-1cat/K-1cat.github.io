@@ -4,12 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VAI - 学部・プログラム</title>
-  <style>
-    body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
 
-    .page-header { padding: 40px 50px 10px; }
-    .page-header h1 { margin: 0 0 8px; font-size: 2em; }
-    .page-header p { color: #666; margin: 0; }
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: white;
+      color: #333;
+    }
+
+    .page-header {
+      padding: 40px 50px 10px;
+    }
+
+    .page-header h1 {
+      margin: 0 0 8px;
+      font-size: 2em;
+    }
+
+    .page-header p {
+      color: #666;
+      margin: 0;
+    }
 
     .programs-grid {
       display: grid;
@@ -23,6 +39,13 @@
       border-radius: 12px;
       padding: 24px;
       background: #f9f9ff;
+      position: relative;
+      transition: 0.2s;
+    }
+
+    .program-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(74, 91, 220, 0.08);
     }
 
     .course-id {
@@ -37,55 +60,120 @@
       letter-spacing: 0.05em;
     }
 
-    .program-card h3 { margin: 0 0 10px; font-size: 1.1em; color: #222; }
-    .program-card p { margin: 0; font-size: 0.95em; color: #555; line-height: 1.6; }
+    .program-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.1em;
+      color: #222;
+    }
+
+    .program-card p {
+      margin: 0;
+      font-size: 0.95em;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* subtle hidden text */
+    .hidden-note {
+      font-size: 0.75em;
+      color: #aaa;
+      margin-top: 10px;
+    }
+
+    .restricted {
+      color: #b33;
+      font-weight: bold;
+    }
   </style>
 </head>
+
 <body data-page="programs">
+
   <div id="vai-topbar"></div>
+
   <div id="main-content">
     <div id="vai-navbar"></div>
-
+    
     <div class="page-header">
       <h1>📚 学部・プログラム</h1>
       <p>VAIでは、VTuber活動に必要なスキルを体系的に学ぶことができます。</p>
     </div>
-
+    
     <div class="programs-grid">
+    
       <div class="program-card">
         <span class="course-id">VAI-101</span>
         <h3>VTuber基礎</h3>
-        <p>配信の基本、アバター設定、機材の扱い方など、VTuberとしての基盤を総合的に学びます。</p>
+        <p>配信環境の構築、アバター制御、基本的な視聴者対応など、活動の基盤を学習します。</p>
       </div>
+    
       <div class="program-card">
         <span class="course-id">VAI-178</span>
-        <h3>キャラクターデザイン</h3>
-        <p>VTuberアバターのビジュアル設計やブランドイメージの構築を学びます。</p>
+        <h3>キャラクター設計</h3>
+        <p>人格設計・視覚的印象・長期運用を前提としたキャラクターの最適化を行います。</p>
       </div>
+    
       <div class="program-card">
         <span class="course-id">VAI-203</span>
         <h3>パフォーマンス理論</h3>
-        <p>配信中の表現力やキャラクター性、視聴者との関係構築について理論的に理解を深めます。</p>
+        <p>視聴維持率、感情誘導、リアクション設計などを分析し、配信パフォーマンスを向上させます。</p>
       </div>
+    
       <div class="program-card">
         <span class="course-id">VAI-214</span>
         <h3>コラボ配信実習</h3>
-        <p>複数人での配信企画・進行を実践し、チームワークや連携スキルを習得します。</p>
+        <p>複数配信者間での同期、役割分担、リアルタイム相互作用の最適化を実践します。</p>
+        <div class="hidden-note">※ 一部ログは非公開処理されています</div>
       </div>
+    
       <div class="program-card">
         <span class="course-id">VAI-250</span>
-        <h3>映像編集・制作</h3>
-        <p>配信映像の編集や演出技術を学び、より魅力的なコンテンツ制作を目指します。</p>
+        <h3>映像演出・編集</h3>
+        <p>配信演出、視覚効果、編集による没入感の強化技術を習得します。</p>
       </div>
+    
       <div class="program-card">
         <span class="course-id">VAI-310</span>
-        <h3>音声表現・朗読/歌唱</h3>
-        <p>発声、間の取り方、リズム構成を通して、視覚に頼らない表現力を高めます。</p>
+        <h3>音声表現・歌唱</h3>
+        <p>発声、抑揚、リズム設計を通じ、音声のみでも成立する表現力を構築します。</p>
       </div>
+    
+      <!-- suspicious zone -->
+    
+      <div class="program-card">
+        <span class="course-id">VAI-241</span>
+        <h3>行動解析・視聴者同期</h3>
+        <p>視聴者の行動パターンを解析し、最適な反応タイミングを自動化します。</p>
+        <div class="hidden-note">※ 同期精度：98.2%</div>
+      </div>
+    
+      <div class="program-card">
+        <span class="course-id">VAI-301</span>
+        <h3>意識投影インターフェース</h3>
+        <p>配信者の思考とアバター挙動を直接接続し、操作遅延を排除します。</p>
+        <div class="hidden-note">※ テスト段階</div>
+      </div>
+    
+      <div class="program-card">
+        <span class="course-id">VAI-399</span>
+        <h3 class="restricted">認識拡張プロトコル</h3>
+        <p>配信中の認知領域を拡張し、複数の視点処理を同時に実行します。</p>
+        <div class="hidden-note">※ 閲覧制限：学生アクセス不可</div>
+      </div>
+    
+      <div class="program-card">
+        <span class="course-id">VAI-404</span>
+        <h3 class="restricted">— データ未検出 —</h3>
+        <p>このプログラムの詳細は取得できません。</p>
+        <div class="hidden-note">※ VAULTリンク参照不可</div>
+      </div>
+    
     </div>
 
-    <div id="vai-footer"></div>
-  </div>
-  <script src="/layout.js"></script>
+  <div id="vai-footer"></div>
+</div>
+
+<script src="/layout.js"></script>
+
 </body>
 </html>
