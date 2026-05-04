@@ -258,10 +258,8 @@
       <div id="email" class="section">
         <h2>📩 メール （at4607@students.vai.ac）</h2>
         <div class="card">
-          <div class="email" onclick="openMail(1)">【運営】評価更新のお知らせ - 5月26日</div>
-          <div class="email" onclick="openMail(4)">【VAI-214】最終課題の評価 - 5月25日</div>
-          <div class="email" onclick="openMail(2)">【システム】予定されていたメンテナンスの実施 - 5月25日</div>
-          <div class="email" onclick="openMail(3)">【VAI-214】最終課題の内容について - 5月23日</div>
+          <div class="email" onclick="openMail(1)">【サポート】ディスコ称号＋誕生日 - 5月26日</div>
+          <div class="email" onclick="openMail(2)">【VAI-399】第14回の授業について - 5月26日</div>
         </div>
 
         <div id="bottom-mail-box" class="bottom-mail-box">
@@ -328,44 +326,21 @@
       let fullText = '';
 
       if (id === 1) {
-        title = '【運営】評価更新のお知らせ';
+        title = '【サポート】ディスコ称号＋誕生日 - 5月26日';
         fullText = `
-          <p><strong>送信日:</strong> 2026年5月26日</p>
-          <p>赤井 瀧魔琉様</p>
-          <p>おめでとうございます！あなたの総合評価が <strong>A+</strong> に更新されました。</p>
-          <p>今月の活躍が非常に優秀でした。特にVAI-214でのコラボ配信が高評価です。</p>
-          <hr>
-          <p>至急、本キャンパスまでお越しください。</p>
-          <p style="color:#888;">※以降の対応は現地で実施されます。</p>`;
+          <p><strong>From:</strong> support@noreply.vai.ac</p>
+          <p>以下、パスワード設定時に記録されたヒント</p>
+          <p>ディスコ称号＋誕生日</p>`;
       }
       else if (id === 2) {
-        title = '【システム】予定されていたメンテナンスの実施';
+        title = '【VAI-399】第14回の授業について - 5月26日';
         fullText = `
-          <p><strong>送信日:</strong> 2026年5月25日</p>
-          <p><strong>予定されておりましたシステムメンテナンスが完了しました。</strong></p>
-          <p><b>実施時間</b>: 2026年5月25日 9時00分 ～ 22時00分</p>
-          <p><b>影響</b>: 一時的に学生ポータルおよび配信機能が利用不可となっておりました。</p><br>
-          <p>メンテナンスにご協力いただきありがとうございました。</p>
-          <p>現在はすべてのサービスが正常にご利用いただけます。</p>`;
-      }
-      else if (id === 3) {
-        title = '【VAI-214】最終課題の内容について';
-        fullText = `
-          <p><strong>送信日:</strong> 2026年5月23日</p>
-          <p><b>課題テーマ</b>: 「視聴者とのインタラクションを最大化する配信設計」</p>
-          <p><b>提出期限</b>: 2026年5月31日 23:59</p><br>
-          <p>詳細な課題内容・評価基準・提出ファイル形式は、</p>
-          <p>VAI-214コースページよりご確認ください。</p>
-          <p>提出をお待ちしております。</p>`;
-      }
-      else if (id === 4) {
-        title = '【VAI-214】最終課題の評価';
-        fullText = `
-          <p><strong>送信日:</strong> 2026年5月25日</p>
-          <p>最終課題の早期提出、ありがとうございました。</p>
-          <p>最終的な評価は<b>A+</b>となりました。</p><br>
-          <p>これからも仲間と連携し、視聴者を楽しませることを心より祈っております。</p>
-          <p>VAI-214の履行、お疲れさまでした。</p>`;
+          <p><strong>From:</strong> kuroda@vai.ac</p>
+          <p>第14回、VAI-399の授業内容が決まりました。</p>
+          <p><strong>赤井 瀧魔琉 様</strong> の優秀な成績を称え、特別生徒枠をご用意いたしました。</p>
+          <p>持ち物は必要ございません。</p>
+          <p>当日、本キャンパス地下1階まで<strong>必ず</strong>お越しください。</p>
+          <p>以降の対応は現地で実施されます。</p>`;
       }
 
       bottomTitle.textContent = title;
