@@ -30,10 +30,44 @@
     .section { padding: 40px 50px; }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
+      padding: 30px 50px 50px;
     }
-    .card { background: #f5f5f5; padding: 20px; border-radius: 12px; }
+    .program-card {
+      border: 1px solid #e0e4f8;
+      border-radius: 12px;
+      padding: 24px;
+      background: #f9f9ff;
+      position: relative;
+      transition: 0.2s;
+    }
+    .program-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(74, 91, 220, 0.08);
+    }
+    .course-id {
+      display: inline-block;
+      font-size: 0.75em;
+      font-weight: 600;
+      color: #4a5bdc;
+      background: #e8ebff;
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+    .program-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.1em;
+      color: #222;
+    }
+    .program-card p {
+      margin: 0;
+      font-size: 0.95em;
+      color: #555;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body data-page="home">
@@ -61,17 +95,20 @@
     <div class="section">
       <h2>🌟 注目プログラム</h2>
       <div class="grid">
-        <div class="card">
+        <div class="program-card">
+          <span class="course-id">VAI-101</span>
           <h3>VTuber基礎</h3>
-          <p>配信の基本やアバター設定、視聴者とのコミュニケーションを学び、VTuberとしての基盤をしっかりと築きます。</p>
+          <p>配信の基本や視聴者とのコミュニケーションを学び、VTuberとしての基盤をしっかりと築きます。</p>
         </div>
-        <div class="card">
-          <h3>ボイスアクティング</h3>
+        <div class="program-card">
+          <span class="course-id">VAI-310</span>
+          <h3>音声表現・朗読 / 歌唱</h3>
           <p>指導とフィードバックを通じて、表現力豊かな演技やキャラクターボイスを身につけます。</p>
         </div>
-        <div class="card">
-          <h3>コンテンツ戦略</h3>
-          <p>魅力的なコンテンツの企画方法や視聴者の増やし方、個性あるブランド作りを学びます。</p>
+        <div class="program-card">
+          <span class="course-id">VAI-399</span>
+          <h3>観測と存在（上級）</h3>
+          <p>存在証明と観測の関係を扱う特別プログラム。観測されるとは何かを哲学的な視点から学びます。</p>
         </div>
       </div>
     </div>
