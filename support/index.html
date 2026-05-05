@@ -155,6 +155,7 @@
       const msg   = document.getElementById('contact-msg').value.trim();
       if (!name || !email || !msg) { alert('すべての項目をご記入ください。'); return; }
       document.getElementById('sent-msg').style.display = 'block';
+      localStorage.setItem("hint_mail_sent", "true");
     }
   </script>
 </body>
