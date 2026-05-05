@@ -1,177 +1,89 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAI - Redvil 配信</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAI - Redvil 配信</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: white;
+      color: #333;
+    }
 
-<style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: #ffffff;
-    color: #333;
-}
+    .container { padding: 40px 50px; }
 
-body {
-    transition: opacity 0.5s;
-}
+    .stream-nav {
+      padding: 10px 30px;
+      font-size: 0.85em;
+      color: #888;
+      border-bottom: 1px solid #eee;
+    }
+    .stream-box {
+      background: #000;
+      color: #fff;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .stream-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
 
-/* NAV */
-.navbar {
-    padding: 15px 30px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-}
+    .meta {
+      color: #777;
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
 
-.logo {
-    font-weight: bold;
-    color: #4a5bdc;
-}
-
-/* CONTAINER */
-.container {
-    padding: 40px 50px;
-}
-
-/* STREAM BOX */
-.stream-box {
-    background: #000;
-    color: #0f0;
-    height: 300px;
-    border-radius: 12px;
-    padding: 15px;
-    font-family: monospace;
-    overflow-y: auto;
-}
-
-/* META */
-.meta {
-    color: #777;
-    font-size: 0.9em;
-    margin-bottom: 15px;
-}
-
-/* CHAT */
-.chat {
-    margin-top: 30px;
-    background: #f5f5f5;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-.chat p {
-    margin: 8px 0;
-}
-
-/* subtle glitch */
-.glitch {
-    animation: flicker 2s infinite;
-}
-
-@keyframes flicker {
-    0% { opacity: 1; }
-    48% { opacity: 1; }
-    50% { opacity: 0.6; }
-    52% { opacity: 1; }
-    100% { opacity: 1; }
-}
-</style>
+    .chat {
+      background: #f5f5f5;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .chat p { margin: 8px 0; }
+  </style>
 </head>
+<body data-page="">
 
-<body>
-
-<div class="navbar">
-    <div class="logo">VAI</div>
-    <div>非公開配信</div>
-</div>
-
-<div class="container">
-
-    <h1 class="glitch">🔴 Redvil - 個人配信</h1>
-
-    <div class="meta">
+  <div id="vai-topbar"></div>
+  <div id="main-content">
+    <div class="stream-nav">VAI &rsaquo; 在校生配信</div>
+    
+    <div class="container">
+      <h1>💻 VAI-399 授業中継</h1>
+      <div class="meta">
         配信メディア: VAI.sys<br>
-        配信開始：05/27　10:52<br>
-        Stream ID：0241
+        配信開始：05/26　19:03<br>
+        Stream ID：RV-0214
+      </div>
+      <div class="stream-box">
+        <img src="redvil-stream.jpg" alt="Redvil stream">
+      </div>
+      <p>非公開</p>
+
+      <h2>💬 チャット</h2>
+      <div class="chat">
+        <p><b>system:</b> この配信は非公開です。</p>
+        <p><b>system:</b> 外部アクセスは記録されます。</p>
+      </div>
     </div>
 
-    <div class="stream-box" id="log"></div>
-
-    <div class="chat">
-        <h2>💬 チャット</h2>
-        <p><b>system:</b> この配信は非公開です</p>
-        <p><b>system:</b> 外部アクセスは記録されます</p>
-    </div>
-
-</div>
-
-<script>
-/* optional: slowly add text for realism */
-const log = document.getElementById("log");
-
-setTimeout(() => {
-    log.innerHTML += "<br>▶ 接続中...";
-}, 2000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>▶ 映像信号なし";
-}, 5000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>▶ 音声のみ受信中...<br>";
-}, 6000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>「……あれ？」";
-}, 9000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>「誰かいる？」<br>";
-}, 12000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>「助けて！」";
-}, 16000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>「俺のア…ウントにログイ…し…！」<br>";
-}, 19000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>▶ ノイズ検出";
-}, 21000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>▶ 信号不安定<br>";
-}, 23000);
-    
-setTimeout(() => {
-    log.innerHTML += "<br>「…ス……ドはTo…o0…2…」<br>";
-}, 26000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>▶ 不審なアクセスを検知";
-}, 28000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>▶ 強制再起動を行います<br>";
-}, 31000);
-
-setTimeout(() => {
-    log.innerHTML += "<br>▶ セッションを終了します<br>";
-}, 33000);
-
-setTimeout(() => {
-    document.body.style.opacity = "0";
-}, 35000);
-    
-setTimeout(() => {
-    localStorage.setItem("vai_site_down", "true");
-    window.location.href = "/";
-}, 35350);
-</script>
-
+  </div>
+  <div id="vai-footer"></div>
+  <script src="/layout.js"></script>
+  <script>
+    /* Replace the nav-links with the simple label, matching the original */
+    const navLinks = document.querySelector('#vai-navbar .nav-links');
+    if (navLinks) navLinks.textContent = '在校生配信';
+  </script>
 </body>
 </html>
