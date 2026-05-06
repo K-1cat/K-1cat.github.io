@@ -179,16 +179,16 @@
         <div class="grid">
           <div class="card">
             <div class="thumb"><img src="/dashboard/redvil-stream-1.jpg" alt="配信１"></div>
-            <p>コラボ配信（VAI-214）- 5月24日</p>
+            <p>コラボ配信（VAI-214）- <span class="rel-date" data-offset="-2"></span></p>
             <p style="color:#888; font-size:0.85em;">分類：最終セッション</p>
           </div>
           <div class="card">
             <div class="thumb"><img src="/dashboard/redvil-stream-2.jpg" alt="配信２"></div>
-            <p>実験配信ログ - 5月23日</p>
+            <p>実験配信ログ - <span class="rel-date" data-offset="-3"></span></p>
           </div>
           <div class="card">
             <div class="thumb"><img src="/dashboard/redvil-stream-3.jpg" alt="配信３"></div>
-            <p>深夜雑談 - 5月22日</p>
+            <p>深夜雑談 - <span class="rel-date" data-offset="-4"></span></p>
           </div>
         </div>
       </div>
@@ -258,11 +258,11 @@
       <div id="email" class="section">
         <h2>📩 メール （at4607@students.vai.ac）</h2>
         <div class="card">
-          <div class="email" onclick="openMail(1)">【サポート】ディスコ称号＋誕生日 - 5月26日</div>
-          <div class="email" onclick="openMail(2)">【VAI-399】第14回の授業について - 5月26日</div>
-          <div class="email" onclick="openMail(3)">【学生サービス】前期履修登録期間のご案内 - 5月22日</div>
-          <div class="email" onclick="openMail(4)">【学生サービス】図書館・機材貸出システム更新のお知らせ - 5月19日</div>
-          <div class="email" onclick="openMail(5)">【学生サービス】定期健康診断のご案内 - 5月14日</div>
+          <div id="hint-emails"></div>
+          <div class="email" onclick="openMail(2)">【VAI-399】第14回の授業について - <span class="rel-date" data-offset="0"></span></div>
+          <div class="email" onclick="openMail(3)">【学生サービス】前期履修登録期間のご案内 - <span class="rel-date" data-offset="-4"></span></div>
+          <div class="email" onclick="openMail(4)">【学生サービス】図書館・機材貸出システム更新のお知らせ - <span class="rel-date" data-offset="-7"></span></div>
+          <div class="email" onclick="openMail(5)">【学生サービス】定期健康診断のご案内 - <span class="rel-date" data-offset="-12"></span></div>
         </div>
 
         <div id="bottom-mail-box" class="bottom-mail-box">
@@ -319,6 +319,53 @@
       });
     });
 
+    /* ── Date helpers ── */
+    const WEEKDAYS = ['日','月','火','水','木','金','土'];
+    function relDate(offset) {
+      const d = new Date();
+      d.setDate(d.getDate() + offset);
+      return `${d.getMonth() + 1}月${d.getDate()}日`;
+    }
+    function relDateW(offset) {
+      const d = new Date();
+      d.setDate(d.getDate() + offset);
+      return `${d.getMonth() + 1}月${d.getDate()}日（${WEEKDAYS[d.getDay()]}）`;
+    }
+    document.querySelectorAll('.rel-date').forEach(el => {
+      el.textContent = relDate(parseInt(el.dataset.offset));
+    });
+
+    /* ── Hint mail renderer ── */
+    function renderHintEmails() {
+      const requests = JSON.parse(localStorage.getItem('hint_mail_requests') || '[]');
+      const container = document.getElementById('hint-emails');
+      container.innerHTML = '';
+      requests.slice().reverse().forEach((ts, i) => {
+        const d = new Date(ts);
+        const label = `${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+        const div = document.createElement('div');
+        div.className = 'email';
+        div.textContent = `【サポート】パスワードヒントのご案内 - ${label}`;
+        div.onclick = () => openHintMail(label);
+        container.appendChild(div);
+      });
+    }
+
+    function openHintMail(label) {
+      const bottomBox   = document.getElementById('bottom-mail-box');
+      const bottomTitle = document.getElementById('bottom-mail-title');
+      const bottomBody  = document.getElementById('bottom-mail-body');
+      bottomTitle.textContent = `【サポート】パスワードヒントのご案内 - ${label}`;
+      bottomBody.innerHTML = `
+        <p><strong>From:</strong> support@noreply.vai.ac</p>
+        <p>以下、パスワード設定時に記録されたヒント</p>
+        <p>ディスコ称号＋誕生日</p>`;
+      bottomBox.style.display = 'block';
+      bottomBox.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    renderHintEmails();
+
     /* ── Mail viewer ── */
     function openMail(id) {
       const bottomBox   = document.getElementById('bottom-mail-box');
@@ -328,15 +375,8 @@
       let title = '';
       let fullText = '';
 
-      if (id === 1) {
-        title = '【サポート】ディスコ称号＋誕生日 - 5月26日';
-        fullText = `
-          <p><strong>From:</strong> support@noreply.vai.ac</p>
-          <p>以下、パスワード設定時に記録されたヒント</p>
-          <p>ディスコ称号＋誕生日</p>`;
-      }
-      else if (id === 2) {
-        title = '【VAI-399】第14回の授業について - 5月26日';
+      if (id === 2) {
+        title = `【VAI-399】第14回の授業について - ${relDate(0)}`;
         fullText = `
           <p><strong>From:</strong> kuroda@vai.ac</p>
           <p>第14回、VAI-399の授業内容が決まりました。</p>
@@ -346,17 +386,17 @@
           <p>以降の対応は現地で実施されます。</p>`;
       }
       else if (id === 3) {
-        title = '【学生サービス】前期履修登録期間のご案内 - 5月22日';
+        title = `【学生サービス】前期履修登録期間のご案内 - ${relDate(-4)}`;
         fullText = `
           <p><strong>From:</strong> gakusei@vai.ac</p>
           <p>在学生の皆さまへ</p>
-          <p>前期の履修登録期間は <strong>6月1日（月）〜 6月7日（日）</strong> です。</p>
+          <p>前期の履修登録期間は <strong>${relDateW(6)}〜 ${relDateW(12)}</strong> です。</p>
           <p>学生ポータルよりログインのうえ、受講希望科目をご登録ください。</p>
           <p>期間外の登録変更は受け付けておりませんのでご注意ください。</p>
           <p>ご不明な点は学生サービス窓口までお問い合わせください。</p>`;
       }
       else if (id === 4) {
-        title = '【学生サービス】図書館・機材貸出システム更新のお知らせ - 5月19日';
+        title = `【学生サービス】図書館・機材貸出システム更新のお知らせ - ${relDate(-7)}`;
         fullText = `
           <p><strong>From:</strong> gakusei@vai.ac</p>
           <p>在学生の皆さまへ</p>
@@ -365,12 +405,12 @@
           <p>貸出可能な機材一覧は図書館ページよりご確認いただけます。</p>`;
       }
       else if (id === 5) {
-        title = '【学生サービス】定期健康診断のご案内 - 5月14日';
+        title = `【学生サービス】定期健康診断のご案内 - ${relDate(-12)}`;
         fullText = `
           <p><strong>From:</strong> gakusei@vai.ac</p>
           <p>在学生の皆さまへ</p>
           <p>今年度の定期健康診断を下記の日程で実施いたします。</p>
-          <p><strong>日時：</strong>6月12日（金）10:00〜16:00</p>
+          <p><strong>日時：</strong>${relDateW(17)} 10:00〜16:00</p>
           <p><strong>場所：</strong>本キャンパス 2階 保健室</p>
           <p>受診は任意ですが、可能な限りご参加ください。当日は学生証をご持参ください。</p>`;
       }

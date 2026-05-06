@@ -118,17 +118,17 @@
       <div class="grid">
         <div class="card">
           <span class="course-id">VAI-203</span>
-          <h3>6月3日：パフォーマンス理論講義（第8回）</h3>
+          <h3><span class="rel-date" data-offset="8"></span>：パフォーマンス理論講義（第8回）</h3>
           <p>「演じること」と「存在すること」の差異を扱う講義。即興配信演習を含む。</p>
         </div>
         <div class="card">
           <span class="course-id">VAI-214</span>
-          <h3>6月5日：コラボ配信実習（最終セッション）</h3>
+          <h3><span class="rel-date" data-offset="10"></span>：コラボ配信実習（最終セッション）</h3>
           <p>グループ単位での最終コラボ配信。視聴者参加型企画の設計・実施。</p>
         </div>
         <div class="card">
           <span class="course-id">VAI-178</span>
-          <h3>6月10日：キャラクターデザイン最終講評</h3>
+          <h3><span class="rel-date" data-offset="15"></span>：キャラクターデザイン最終講評</h3>
           <p>提出されたアバターデザインの講評。外見と内面の一致性を重点的に評価。</p>
         </div>
       </div>
@@ -439,5 +439,15 @@
   </div>
   <div id="vai-footer"></div>
   <script src="/layout.js"></script>
+  <script>
+    function relDate(offset) {
+      const d = new Date();
+      d.setDate(d.getDate() + offset);
+      return `${d.getMonth() + 1}月${d.getDate()}日`;
+    }
+    document.querySelectorAll('.rel-date').forEach(el => {
+      el.textContent = relDate(parseInt(el.dataset.offset));
+    });
+  </script>
 </body>
 </html>

@@ -43,7 +43,11 @@
       transition: 0.2s;
     }
 
-    .program-card:hover {
+    .program-card.linked {
+      cursor: pointer;
+    }
+
+    .program-card.linked:hover {
       transform: translateY(-3px);
       box-shadow: 0 8px 20px rgba(74, 91, 220, 0.08);
     }
@@ -102,7 +106,7 @@
     <div class="programs-grid">
 
       <!-- VAI-101 -->
-      <div class="program-card">
+      <div class="program-card" data-href="/programs/vai-101/">
         <span class="course-id">VAI-101</span>
         <h3>VTuber基礎</h3>
         <p><b>担当：</b>橘 恵介</p>
@@ -114,7 +118,7 @@
       </div>
     
       <!-- VAI-178 -->
-      <div class="program-card">
+      <div class="program-card" data-href="/programs/vai-178/">
         <span class="course-id">VAI-178</span>
         <h3>キャラクターデザイン</h3>
         <p><b>担当：</b>藤本 梨沙</p>
@@ -126,7 +130,7 @@
       </div>
     
       <!-- VAI-203 -->
-      <div class="program-card">
+      <div class="program-card" data-href="/programs/vai-203/">
         <span class="course-id">VAI-203</span>
         <h3>パフォーマンス理論</h3>
         <p><b>担当：</b>水野 明</p>
@@ -138,7 +142,7 @@
       </div>
     
       <!-- VAI-214 -->
-      <div class="program-card">
+      <div class="program-card" data-href="/programs/vai-214/">
         <span class="course-id">VAI-214</span>
         <h3>コラボ配信実習</h3>
         <p><b>担当：</b>田中 恒一</p>
@@ -150,7 +154,7 @@
       </div>
     
       <!-- VAI-241 -->
-      <div class="program-card">
+      <div class="program-card" data-href="/programs/vai-241/">
         <span class="course-id">VAI-241</span>
         <h3>視聴者心理学</h3>
         <p><b>担当：</b>黒田 進</p>
@@ -162,7 +166,7 @@
       </div>
 
       <!-- VAI-301 -->
-      <div class="program-card">
+      <div class="program-card" data-href="/programs/vai-301/">
         <span class="course-id">VAI-301</span>
         <h3>クロスチャンネル戦略</h3>
         <p><b>担当：</b>田中 恒一</p>
@@ -174,7 +178,7 @@
       </div>
     
       <!-- VAI-310 -->
-      <div class="program-card">
+      <div class="program-card" data-href="/programs/vai-310/">
         <span class="course-id">VAI-310</span>
         <h3>音声表現・朗読 / 歌唱</h3>
         <p><b>担当：</b>音無 零</p>
@@ -186,7 +190,7 @@
       </div>
     
       <!-- VAI-399 -->
-      <div class="program-card">
+      <div class="program-card" data-href="/programs/vai-399/">
         <span class="course-id">VAI-399</span>
         <h3>観測と存在（上級）</h3>
         <p><b>担当：</b>黒田 進</p>
@@ -203,6 +207,16 @@
   </div>
   <div id="vai-footer"></div>
   <script src="/layout.js"></script>
+  <script>
+    if (localStorage.getItem('vai_role') === 'student') {
+      document.querySelectorAll('.program-card').forEach(card => {
+        card.classList.add('linked');
+        card.addEventListener('click', () => {
+          window.location.href = card.dataset.href;
+        });
+      });
+    }
+  </script>
 
 </body>
 </html>

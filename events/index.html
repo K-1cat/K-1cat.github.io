@@ -81,7 +81,7 @@
         <div class="event-card">
           <span class="course-id">VAI-203</span>
           <div class="event-body">
-            <h3>6月3日：パフォーマンス理論講義（第8回）</h3>
+            <h3><span class="rel-date" data-offset="8"></span>：パフォーマンス理論講義（第8回）</h3>
             <div class="event-meta">
               <strong>担当：</strong>水野 明（Akira Mizuno）<br>
               <strong>時間：</strong>10:00〜12:00｜オンライン配信
@@ -98,7 +98,7 @@
         <div class="event-card">
           <span class="course-id">VAI-214</span>
           <div class="event-body">
-            <h3>6月5日：コラボ配信実習（最終セッション）</h3>
+            <h3><span class="rel-date" data-offset="10"></span>：コラボ配信実習（最終セッション）</h3>
             <div class="event-meta">
               <strong>担当：</strong>田中 恒一（Koichi Tanaka）<br>
               <strong>時間：</strong>18:00〜22:00｜ライブ配信
@@ -115,7 +115,7 @@
         <div class="event-card">
           <span class="course-id">VAI-178</span>
           <div class="event-body">
-            <h3>6月10日：キャラクターデザイン最終講評</h3>
+            <h3><span class="rel-date" data-offset="15"></span>：キャラクターデザイン最終講評</h3>
             <div class="event-meta">
               <strong>担当：</strong>藤本 梨沙（Risa Fujimoto）<br>
               <strong>形式：</strong>対面＋オンライン同時実施
@@ -132,7 +132,7 @@
         <div class="event-card">
           <span class="course-id">VAI-241</span>
           <div class="event-body">
-            <h3>6月12日：視聴者心理観測セッション</h3>
+            <h3><span class="rel-date" data-offset="17"></span>：視聴者心理観測セッション</h3>
             <div class="event-meta">
               <strong>担当：</strong>黒田 進（Susumu Kuroda）<br>
               <strong>形式：</strong>個別面談（録音あり）
@@ -149,7 +149,7 @@
         <div class="event-card">
           <span class="course-id">VAI-310</span>
           <div class="event-body">
-            <h3>6月15日：音声提出評価（第3回）</h3>
+            <h3><span class="rel-date" data-offset="20"></span>：音声提出評価（第3回）</h3>
             <div class="event-meta">
               <strong>担当：</strong>音無 零（Rei Otonashi）<br>
               <strong>形式：</strong>オンラインのみ（非同期）
@@ -166,7 +166,7 @@
         <div class="event-card">
           <span class="course-id">VAI-301</span>
           <div class="event-body">
-            <h3>6月18日：クロスチャンネル戦略演習</h3>
+            <h3><span class="rel-date" data-offset="23"></span>：クロスチャンネル戦略演習</h3>
             <div class="event-meta">
               <strong>担当：</strong>田中 恒一（Koichi Tanaka）<br>
               <strong>形式：</strong>実践プロジェクト
@@ -183,7 +183,7 @@
         <div class="event-card">
           <span class="course-id">VAI-399</span>
           <div class="event-body">
-            <h3>6月21日：特別プログラム（招待制）</h3>
+            <h3><span class="rel-date" data-offset="26"></span>：特別プログラム（招待制）</h3>
             <div class="event-meta">
               <strong>担当：</strong>黒田 進（Susumu Kuroda）<br>
               <strong>形式：</strong>非公開
@@ -200,7 +200,7 @@
         <div class="event-card">
           <span class="course-id">VAI-000</span>
           <div class="event-body">
-            <h3>6月23日：中間発表・総合評価セッション</h3>
+            <h3><span class="rel-date" data-offset="28"></span>：中間発表・総合評価セッション</h3>
             <div class="event-meta">
               <strong>担当：</strong>御堂 静一郎（学長）＋教員委員会<br>
               <strong>形式：</strong>全体配信
@@ -261,6 +261,15 @@
   <div id="vai-footer"></div>
   <script src="/layout.js"></script>
   <script>
+    function relDate(offset) {
+      const d = new Date();
+      d.setDate(d.getDate() + offset);
+      return `${d.getMonth() + 1}月${d.getDate()}日`;
+    }
+    document.querySelectorAll('.rel-date').forEach(el => {
+      el.textContent = relDate(parseInt(el.dataset.offset));
+    });
+
     window.addEventListener("load", () => {
       const role = localStorage.getItem("vai_role");
     

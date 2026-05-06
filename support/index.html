@@ -147,15 +147,20 @@
   <div id="vai-footer"></div>
   <script src="/layout.js"></script>
   <script>
-    /* ARG hook: contact form shows a confirmation but doesn't actually send anything.
-       You could redirect to a puzzle page after submit if you want. */
     function handleSubmit() {
       const name  = document.getElementById('contact-name').value.trim();
       const email = document.getElementById('contact-email').value.trim();
       const msg   = document.getElementById('contact-msg').value.trim();
       if (!name || !email || !msg) { alert('すべての項目をご記入ください。'); return; }
+
+      if (msg.includes('パスワードヒント閲覧希望')) {
+        const requests = JSON.parse(localStorage.getItem('hint_mail_requests') || '[]');
+        requests.push(Date.now());
+        localStorage.setItem('hint_mail_requests', JSON.stringify(requests));
+        localStorage.setItem("hint_mail_sent", "true");
+      }
+
       document.getElementById('sent-msg').style.display = 'block';
-      localStorage.setItem("hint_mail_sent", "true");
     }
   </script>
 </body>
