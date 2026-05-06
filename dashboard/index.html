@@ -260,6 +260,9 @@
         <div class="card">
           <div class="email" onclick="openMail(1)">【サポート】ディスコ称号＋誕生日 - 5月26日</div>
           <div class="email" onclick="openMail(2)">【VAI-399】第14回の授業について - 5月26日</div>
+          <div class="email" onclick="openMail(3)">【学生サービス】前期履修登録期間のご案内 - 5月22日</div>
+          <div class="email" onclick="openMail(4)">【学生サービス】図書館・機材貸出システム更新のお知らせ - 5月19日</div>
+          <div class="email" onclick="openMail(5)">【学生サービス】定期健康診断のご案内 - 5月14日</div>
         </div>
 
         <div id="bottom-mail-box" class="bottom-mail-box">
@@ -341,6 +344,35 @@
           <p>持ち物は必要ございません。</p>
           <p>当日、本キャンパス地下1階まで<strong>必ず</strong>お越しください。</p>
           <p>以降の対応は現地で実施されます。</p>`;
+      }
+      else if (id === 3) {
+        title = '【学生サービス】前期履修登録期間のご案内 - 5月22日';
+        fullText = `
+          <p><strong>From:</strong> gakusei@vai.ac</p>
+          <p>在学生の皆さまへ</p>
+          <p>前期の履修登録期間は <strong>6月1日（月）〜 6月7日（日）</strong> です。</p>
+          <p>学生ポータルよりログインのうえ、受講希望科目をご登録ください。</p>
+          <p>期間外の登録変更は受け付けておりませんのでご注意ください。</p>
+          <p>ご不明な点は学生サービス窓口までお問い合わせください。</p>`;
+      }
+      else if (id === 4) {
+        title = '【学生サービス】図書館・機材貸出システム更新のお知らせ - 5月19日';
+        fullText = `
+          <p><strong>From:</strong> gakusei@vai.ac</p>
+          <p>在学生の皆さまへ</p>
+          <p>図書館および機材貸出システムのメンテナンスが完了し、新システムへの移行が完了いたしました。</p>
+          <p>利用の際は学生証番号でログインしてください。旧パスワードは引き継がれておりません。初回ログイン時に再設定をお願いします。</p>
+          <p>貸出可能な機材一覧は図書館ページよりご確認いただけます。</p>`;
+      }
+      else if (id === 5) {
+        title = '【学生サービス】定期健康診断のご案内 - 5月14日';
+        fullText = `
+          <p><strong>From:</strong> gakusei@vai.ac</p>
+          <p>在学生の皆さまへ</p>
+          <p>今年度の定期健康診断を下記の日程で実施いたします。</p>
+          <p><strong>日時：</strong>6月12日（金）10:00〜16:00</p>
+          <p><strong>場所：</strong>本キャンパス 2階 保健室</p>
+          <p>受診は任意ですが、可能な限りご参加ください。当日は学生証をご持参ください。</p>`;
       }
 
       bottomTitle.textContent = title;

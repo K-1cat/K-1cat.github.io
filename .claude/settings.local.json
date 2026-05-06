@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\kanoa\\\\Documents\\\\K-1cat.github.io\" -Recurse | ForEach-Object { $_.FullName })"
+    ]
+  }
+}
