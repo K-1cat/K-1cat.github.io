@@ -259,10 +259,10 @@
         <h2>📩 メール （at4607@students.vai.ac）</h2>
         <div class="card">
           <div id="hint-emails"></div>
-          <div class="email" onclick="openMail(2)">【VAI-399】第14回の授業について - <span class="rel-date" data-offset="0"></span></div>
-          <div class="email" onclick="openMail(3)">【学生サービス】前期履修登録期間のご案内 - <span class="rel-date" data-offset="-4"></span></div>
-          <div class="email" onclick="openMail(4)">【学生サービス】図書館・機材貸出システム更新のお知らせ - <span class="rel-date" data-offset="-7"></span></div>
-          <div class="email" onclick="openMail(5)">【学生サービス】定期健康診断のご案内 - <span class="rel-date" data-offset="-12"></span></div>
+          <div class="email" onclick="openMail(2)">【VAI-399】第14回の授業について - <span class="rel-date" data-offset="0" data-time="08:47"></span></div>
+          <div class="email" onclick="openMail(3)">【学生サービス】前期履修登録期間のご案内 - <span class="rel-date" data-offset="-4" data-time="10:00"></span></div>
+          <div class="email" onclick="openMail(4)">【学生サービス】図書館・機材貸出システム更新のお知らせ - <span class="rel-date" data-offset="-7" data-time="14:23"></span></div>
+          <div class="email" onclick="openMail(5)">【学生サービス】定期健康診断のご案内 - <span class="rel-date" data-offset="-12" data-time="09:05"></span></div>
         </div>
 
         <div id="bottom-mail-box" class="bottom-mail-box">
@@ -332,7 +332,8 @@
       return `${d.getMonth() + 1}月${d.getDate()}日（${WEEKDAYS[d.getDay()]}）`;
     }
     document.querySelectorAll('.rel-date').forEach(el => {
-      el.textContent = relDate(parseInt(el.dataset.offset));
+      const base = relDate(parseInt(el.dataset.offset));
+      el.textContent = el.dataset.time ? `${base} ${el.dataset.time}` : base;
     });
 
     /* ── Hint mail renderer ── */
