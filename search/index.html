@@ -48,6 +48,36 @@
     .result-item p { margin: 2px 0 0; font-size: 0.9em; color: #666; }
 
     .no-results { color: #888; font-size: 0.95em; }
+
+    .result-locked {
+      border-bottom: 1px solid #eee;
+      padding: 12px 0;
+      opacity: 0.7;
+    }
+    .result-locked .locked-title {
+      font-weight: 600;
+      color: #999;
+      cursor: default;
+      user-select: none;
+    }
+    .result-locked .locked-path {
+      font-size: 0.85em;
+      color: #bbb;
+      font-family: monospace;
+      margin: 2px 0 0;
+    }
+    .result-locked .locked-badge {
+      display: inline-block;
+      font-size: 0.75em;
+      background: #f5e0e0;
+      color: #a00;
+      border: 1px solid #e0b0b0;
+      border-radius: 4px;
+      padding: 1px 7px;
+      margin-left: 8px;
+      vertical-align: middle;
+      letter-spacing: 0.03em;
+    }
   </style>
 </head>
 <body>
@@ -90,21 +120,33 @@
       const out = document.getElementById('search-results');
       if (!q) { out.innerHTML = ''; return; }
 
+      let html = '';
+
+      if (q.includes('vault')) {
+        html += `
+          <div class="result-locked">
+            <span class="locked-title">🔒 VAULT<span class="locked-badge">アクセス権限未達</span></span>
+            <p class="locked-path">このリソースへのアクセスは許可されていません。</p>
+          </div>`;
+      }
+
       const results = PAGES.filter(p =>
         p.title.toLowerCase().includes(q) || p.text.toLowerCase().includes(q)
       );
 
-      if (results.length === 0) {
+      if (results.length === 0 && !html) {
         out.innerHTML = `<p class="no-results">「${q}」に一致するページは見つかりませんでした。</p>`;
         return;
       }
 
-      out.innerHTML = results.map(r => `
+      html += results.map(r => `
         <div class="result-item">
           <a href="${r.href}">${r.title}</a>
           <p>${r.href}</p>
         </div>
       `).join('');
+
+      out.innerHTML = html;
     }
 
     // Support ?q= in URL
