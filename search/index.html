@@ -115,6 +115,10 @@
       { title: '教員',                  href: '/faculty/',                text: '教員 スタッフ 講師 先生' },
     ];
 
+    const STUDENT_PAGES = [
+      { title: '学長講演資料 — 「存在証明」国際シンポジウム2024', href: '/events/expo2024/', trigger: '存在証明' },
+    ];
+
     function doSearch() {
       const q = document.getElementById('search-input').value.trim().toLowerCase();
       const out = document.getElementById('search-results');
@@ -130,9 +134,25 @@
           </div>`;
       }
 
+      const isStudent = localStorage.getItem('vai_role') === 'student';
+
       const results = PAGES.filter(p =>
         p.title.toLowerCase().includes(q) || p.text.toLowerCase().includes(q)
       );
+
+      const lockedResults = STUDENT_PAGES.filter(p => q === p.trigger);
+
+      if (!isStudent) {
+        lockedResults.forEach(p => {
+          html += `
+            <div class="result-locked">
+              <span class="locked-title">🔒 ${p.title}<span class="locked-badge">アクセス権限未達</span></span>
+              <p class="locked-path">このリソースへのアクセスは許可されていません。</p>
+            </div>`;
+        });
+      } else {
+        lockedResults.forEach(p => results.push(p));
+      }
 
       if (results.length === 0 && !html) {
         out.innerHTML = `<p class="no-results">「${q}」に一致するページは見つかりませんでした。</p>`;

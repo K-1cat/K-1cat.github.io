@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAI - 学長発表資料 | 「存在証明」国際シンポジウム2024</title>
+  <style>
+    body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
+
+    .page-header {
+      padding: 40px 50px 20px;
+      border-bottom: 1px solid #e0e4f8;
+      margin-bottom: 36px;
+    }
+    .page-header .breadcrumb {
+      font-size: 0.8em;
+      color: #888;
+      margin-bottom: 14px;
+    }
+    .page-header .breadcrumb a { color: #4a5bdc; text-decoration: none; }
+    .page-header .breadcrumb a:hover { text-decoration: underline; }
+    .page-header h1 { margin: 0 0 8px; font-size: 1.8em; color: #1a1a2e; }
+    .page-header .subtitle { color: #555; font-size: 0.95em; margin: 0 0 18px; }
+
+    .meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.85em;
+      color: #666;
+    }
+    .meta-strip span strong { color: #333; }
+
+    .content-wrapper {
+      padding: 0 50px 60px;
+      max-width: 900px;
+    }
+
+    /* Abstract */
+    .abstract-box {
+      background: #f4f5ff;
+      border: 1px solid #d8dbf5;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+    }
+    .abstract-box h2 {
+      margin: 0 0 10px;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #4a5bdc;
+    }
+    .abstract-box p { margin: 0; font-size: 0.92em; color: #444; line-height: 1.8; }
+
+    /* Slides */
+    .slides-section h2 {
+      font-size: 1.1em;
+      color: #333;
+      margin: 0 0 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0e4f8;
+    }
+
+    .slide-card {
+      border: 1px solid #e0e4f8;
+      border-radius: 10px;
+      padding: 20px 24px;
+      background: #f9f9ff;
+      margin-bottom: 16px;
+    }
+
+    .slide-card.redacted {
+      background: #f7f7f7;
+      border-color: #ddd;
+      opacity: 0.75;
+    }
+
+    .slide-num {
+      display: inline-block;
+      font-size: 0.72em;
+      font-weight: 700;
+      color: white;
+      background: #4a5bdc;
+      border-radius: 5px;
+      padding: 2px 9px;
+      margin-bottom: 10px;
+      letter-spacing: 0.06em;
+    }
+
+    .slide-card.redacted .slide-num { background: #aaa; }
+
+    .slide-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.05em;
+      color: #222;
+    }
+
+    .slide-card.redacted h3 { color: #888; }
+
+    .slide-card ul {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.9em;
+      color: #555;
+      line-height: 1.9;
+    }
+
+    .slide-card.redacted ul { color: #999; }
+
+    .redact-bar {
+      display: inline-block;
+      background: #ccc;
+      color: transparent;
+      user-select: none;
+      border-radius: 2px;
+    }
+
+    /* Quote block */
+    .pull-quote {
+      border-left: 4px solid #4a5bdc;
+      margin: 30px 0;
+      padding: 12px 20px;
+      background: #f4f5ff;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: #444;
+      font-size: 0.95em;
+      line-height: 1.8;
+    }
+    .pull-quote cite {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.82em;
+      color: #888;
+      font-style: normal;
+    }
+
+    /* Download bar */
+    .resource-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 36px 0 0;
+      padding: 20px 0;
+      border-top: 1px solid #e0e4f8;
+    }
+    .resource-btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.88em;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid #c0c6f0;
+      background: #f4f5ff;
+      color: #4a5bdc;
+    }
+    .resource-btn:hover { background: #e8ebff; }
+    .resource-btn.locked {
+      color: #aaa;
+      border-color: #ddd;
+      background: #f7f7f7;
+      cursor: default;
+    }
+    .resource-btn .lock-icon { margin-right: 5px; }
+
+    .access-note {
+      font-size: 0.8em;
+      color: #999;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body data-page="events">
+  <div id="vai-topbar"></div>
+  <div id="main-content">
+    <div id="vai-navbar"></div>
+
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="/events/">イベント一覧</a> › 学長発表資料 › 「存在証明」国際シンポジウム2024
+      </div>
+      <h1>「存在証明」国際シンポジウム2024 — 学長基調講演資料</h1>
+      <p class="subtitle">
+        International Symposium on Proof of Existence 2024 &mdash; Presidential Keynote: <em>「観測される存在：デジタル同一性の形成と収束」</em>
+      </p>
+      <div class="meta-strip">
+        <span><strong>発表者：</strong>御堂 静一郎（VAI学長）</span>
+        <span><strong>開催地：</strong>東京国際フォーラム（2024年11月14日）</span>
+        <span><strong>形式：</strong>基調講演 60分＋質疑応答</span>
+        <span><strong>言語：</strong>日本語（英語スライド併記）</span>
+        <span><strong>参加者：</strong>約1,400名</span>
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+
+      <div class="abstract-box">
+        <h2>概要 — Abstract</h2>
+        <p>
+          VTuberという現象は、単なるエンターテインメントを超え、「観測される自己」と「観測する他者」の境界を再定義しつつある。
+          本講演では、デジタル同一性の形成過程における「観測圧力」の作用と、アバターを媒介とした自己同一性の段階的収束について、
+          VAIにおける3年間の実践データをもとに論じる。
+          また、次世代クリエイター育成機関としてのVAIが取り組む教育モデルと、
+          そのモデルが示す「人間とデジタル存在の共進化」の可能性について提言する。
+        </p>
+      </div>
+
+      <div class="slides-section">
+        <h2>📊 スライド構成 — Slide Overview</h2>
+
+        <!-- Slide 1 -->
+        <div class="slide-card">
+          <span class="slide-num">SLIDE 01</span>
+          <h3>VTuberという「観測される存在」 — The Observed Being</h3>
+          <ul>
+            <li>世界のVTuber人口：推定18,000名以上（2024年Q3時点）</li>
+            <li>視聴者総時間：前年比+34%、累計220億時間/年</li>
+            <li>「観測」とは何か：視聴行為が配信者のアイデンティティに与える影響</li>
+            <li>従来のメディア研究との断絶点：リアルタイム双方向観測の特異性</li>
+          </ul>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide-card">
+          <span class="slide-num">SLIDE 02</span>
+          <h3>アバターと操作者の同一性収束モデル</h3>
+          <ul>
+            <li>「仮面」から「第二の皮膚」へ：6〜18ヶ月の収束曲線</li>
+            <li>自己報告データ（n=412）：87%が「アバターを自己の延長」と認識</li>
+            <li>収束の3段階：分離期 → 浸透期 → 統合期</li>
+            <li>統合期以降の逆行困難性について</li>
+          </ul>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide-card">
+          <span class="slide-num">SLIDE 03</span>
+          <h3>観測圧力と同一性の形成 — The Observer Effect</h3>
+          <ul>
+            <li>観測される頻度・規模が自己認知に与える定量的影響</li>
+            <li>「観測されることで存在が確定する」：量子観測論的アナロジー</li>
+            <li>配信頻度と自己同一性の安定度：正の相関（r=0.71）</li>
+            <li>配信停止後の「存在感の空白」とその心理的影響</li>
+          </ul>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide-card">
+          <span class="slide-num">SLIDE 04</span>
+          <h3>VAIの教育モデル：観測と育成の統合 — The VAI Framework</h3>
+          <ul>
+            <li>VAIカリキュラム概要：基礎から高度専門まで8課程</li>
+            <li>「観測される環境での学習」：教員・学生・視聴者の三者構造</li>
+            <li>評価指標：パフォーマンス指標だけでなく「観測データ」を統合</li>
+            <li>2023年度卒業生追跡調査：活動継続率91%（業界平均比+38pt）</li>
+          </ul>
+        </div>
+
+        <!-- Pull quote -->
+        <div class="pull-quote">
+          「観測される存在は、観測者との相互作用によってのみ完全な輪郭を得る。
+          VAIが育てるのはクリエイターではなく、観測を通じて完成する存在である。」
+          <cite>— 御堂 静一郎, 国際VTuberサミット2024 基調講演より</cite>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide-card">
+          <span class="slide-num">SLIDE 05</span>
+          <h3>対象追跡プロトコルと長期観測研究</h3>
+          <ul>
+            <li>3年間にわたる在籍学生の縦断的追跡：行動・発話・視聴者反応の相関分析</li>
+            <li>追跡対象者数：現在152名（同意取得済み）</li>
+            <li>観測ポイント：配信中の生理指標・発話パターン・チャット応答行動</li>
+            <li>データ保管：VAI内部サーバー（外部機関との共有に関しては別途協議中）</li>
+          </ul>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide-card">
+          <span class="slide-num">SLIDE 06</span>
+          <h3>共進化の可能性 — Human-Avatar Co-Evolution</h3>
+          <ul>
+            <li>デジタル存在と生物的存在の境界の曖昧化：文化人類学的見地から</li>
+            <li>「存在証明としての配信」：自己開示と匿名性の逆説的共存</li>
+            <li>次世代プラットフォームにおける観測強度の予測モデル</li>
+            <li>VAIが目指す「観測された存在の体系的育成」</li>
+          </ul>
+        </div>
+
+        <!-- Slide 7 — redacted -->
+        <div class="slide-card redacted">
+          <span class="slide-num">SLIDE 07</span>
+          <h3>位相II研究の現状と今後の展開 <span style="font-size:0.75em;color:#c00;">[非公開・配布資料より除外]</span></h3>
+          <ul>
+            <li><span class="redact-bar">████████████████████████████████████████</span></li>
+            <li><span class="redact-bar">██████████████████████████████████████████████</span></li>
+            <li><span class="redact-bar">████████████████████████████████</span></li>
+            <li>本スライドの内容は参加者への口頭説明のみ。資料請求不可。</li>
+          </ul>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide-card">
+          <span class="slide-num">SLIDE 08</span>
+          <h3>結論と提言 — Conclusions</h3>
+          <ul>
+            <li>VTuber現象は「デジタル同一性の社会実験場」として機能している</li>
+            <li>育成機関の責務：観測データの倫理的利活用と学習者保護の両立</li>
+            <li>国際的な研究ネットワーク構築の必要性：VAIは窓口として機能する意向</li>
+            <li>次年度：共同研究機関との正式な連携協定を締結予定</li>
+          </ul>
+        </div>
+
+      </div><!-- /slides-section -->
+
+      <!-- Resources -->
+      <div class="resource-bar">
+        <a class="resource-btn" href="#" onclick="return false;">📄 スライド</a>
+        <span class="resource-btn locked" id="recording-btn">
+          <span class="lock-icon">🔒</span> 講演録画（学生限定）
+        </span>
+      </div>
+      <p class="access-note" id="access-note">録画・完全版資料はVAIポータルにログインした在校生のみ閲覧可能です。</p>
+
+    </div><!-- /content-wrapper -->
+
+  </div>
+  <div id="vai-footer"></div>
+  <script src="/layout.js"></script>
+  <script>
+    window.addEventListener("load", () => {
+      const role = localStorage.getItem("vai_role");
+      if (role === "student") {
+        const btn = document.getElementById("recording-btn");
+        btn.className = "resource-btn";
+        btn.innerHTML = "🎥 講演録画（再生）";
+        btn.onclick = () => {
+          document.getElementById("access-note").textContent = "録画は現在エンコード処理中です。準備が整い次第、ダッシュボードへ通知されます。";
+        };
+      }
+    });
+  </script>
+</body>
+</html>
