@@ -43,6 +43,7 @@
     topbarEl.innerHTML = `
       <div class="topbar">
         <div>VAI | Virtual Academy Institution</div>
+        <div id="vai-clock" class="topbar-clock"></div>
         <div>
           <a href="/">ホーム</a>
           <a href="${portalHref}" id="portal-link">${portalLabel}</a>
@@ -51,6 +52,27 @@
         </div>
       </div>`;
   }
+
+  /* ----------------------------------------------------------
+     GAME CLOCK
+  ---------------------------------------------------------- */
+  const CLOCK_LOGIN_TIME = parseInt(localStorage.getItem('vai_login_time') || Date.now());
+  const _loginMinute     = String(new Date(CLOCK_LOGIN_TIME).getMinutes()).padStart(2, '0');
+  const CLOCK_GAME_START = new Date(`2026-05-02T21:${_loginMinute}:00`).getTime();
+
+  function tickClock() {
+    const el = document.getElementById('vai-clock');
+    if (!el) return;
+    const gameNow = new Date(CLOCK_GAME_START + (Date.now() - CLOCK_LOGIN_TIME));
+    const m  = gameNow.getMonth() + 1;
+    const d  = gameNow.getDate();
+    const hh = String(gameNow.getHours()).padStart(2, '0');
+    const mm = String(gameNow.getMinutes()).padStart(2, '0');
+    el.textContent = `${m}月${d}日 ${hh}:${mm}`;
+  }
+
+  tickClock();
+  setInterval(tickClock, 60 * 1000);
 
   /* ----------------------------------------------------------
      MAIN NAVBAR
@@ -119,6 +141,10 @@
     style.id = 'vai-layout-styles';
     style.textContent = `
       /* TOPBAR */
+      #vai-topbar {
+        height: 50px;
+        flex-shrink: 0;
+      }
       .topbar {
         background: #4a5bdc;
         color: white;
@@ -126,6 +152,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        box-sizing: border-box;
+        z-index: 1000;
       }
       .topbar a {
         color: white;
@@ -134,6 +167,12 @@
         font-size: 0.9em;
       }
       .topbar a:hover { text-decoration: underline; }
+      .topbar-clock {
+        font-size: 0.85em;
+        letter-spacing: 0.06em;
+        opacity: 0.9;
+        font-variant-numeric: tabular-nums;
+      }
 
       /* NAVBAR */
       .navbar {

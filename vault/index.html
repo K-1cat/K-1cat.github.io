@@ -167,7 +167,7 @@
         <tr class="in-progress">
           <td class="id">VAULT-006</td>
           <td class="name">赤井 瀧魔琉</td>
-          <td class="note">転送中 — 67.3%。転送完了後、在籍記録は削除される。</td>
+          <td class="note">転送中 — <span id="vault-transfer-pct">67.3%</span>。転送完了後、在籍記録は削除される。</td>
         </tr>
       </table>
     </div>
@@ -192,5 +192,23 @@
     </div>
 
   </div>
+  <script>
+    const BASE_PCT = 67.3;
+    const RATE     = 0.1 / 60;
+
+    function getCurrentPct() {
+      const start = parseInt(localStorage.getItem('vault_transfer_start') || '0');
+      if (!start) return BASE_PCT;
+      return Math.min(BASE_PCT + (Date.now() - start) / 1000 * RATE, 99.9);
+    }
+
+    function updateVaultPct() {
+      const el = document.getElementById('vault-transfer-pct');
+      if (el) el.textContent = getCurrentPct().toFixed(1) + '%';
+    }
+
+    updateVaultPct();
+    setInterval(updateVaultPct, 1000);
+  </script>
 </body>
 </html>

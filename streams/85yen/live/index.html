@@ -89,12 +89,7 @@
     const navLinks = document.querySelector('#vai-navbar .nav-links');
     if (navLinks) navLinks.textContent = '在校生配信';
 
-    const start = new Date(Date.now() - 2 * 60 * 60 * 1000);
-    const mm = String(start.getMonth() + 1).padStart(2, '0');
-    const dd = String(start.getDate()).padStart(2, '0');
-    const hh = String(start.getHours()).padStart(2, '0');
-    const mi = String(start.getMinutes()).padStart(2, '0');
-    document.getElementById('stream-start').textContent = `${mm}/${dd}　${hh}:${mi}`;
+    document.getElementById('stream-start').textContent = '05/02　19:03';
   </script>
 </body>
 </html>

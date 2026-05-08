@@ -25,6 +25,20 @@
     .hero-text p { font-size: 1.1em; color: #555; }
     .hero-text .line { width: 50px; height: 4px; background: #7a84ff; margin: 15px 0; }
     .hero img { width: 100%; border-radius: 10px; }
+    .hero-image-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .map-btn {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 8px 16px;
+      background: #f4f5ff;
+      border: 1px solid #c0c6f0;
+      border-radius: 8px;
+      color: #4a5bdc;
+      font-size: 0.88em;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .map-btn:hover { background: #e8ebff; }
 
     /* SECTIONS */
     .section { padding: 40px 50px; }
@@ -87,7 +101,10 @@
           実践的なワークショップやメンタープログラム、実際の配信経験を通して、技術力と創造力の両方を育てます。
         </p>
       </div>
-      <img src="/vai-campus.jpg" alt="VAIキャンパス" loading="lazy">
+      <div class="hero-image-wrap">
+        <img src="/vai-campus.jpg" alt="VAIキャンパス" loading="lazy">
+        <a href="/campus-map/" class="map-btn" id="campus-map-btn" style="display:none;">🗺 キャンパスマップ</a>
+      </div>
     </div>
 
     <!-- FEATURED PROGRAMS -->
@@ -440,8 +457,12 @@
   <div id="vai-footer"></div>
   <script src="/layout.js"></script>
   <script>
+    if (localStorage.getItem('vai_role') === 'student') {
+      document.getElementById('campus-map-btn').style.display = 'inline-block';
+    }
+
     function relDate(offset) {
-      const d = new Date();
+      const d = new Date('2026-05-02');
       d.setDate(d.getDate() + offset);
       return `${d.getMonth() + 1}月${d.getDate()}日`;
     }

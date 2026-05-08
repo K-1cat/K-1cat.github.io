@@ -148,7 +148,8 @@
 
     <div class="term-header">
       VAI SECURE ZONE // B1-TERMINAL<br>
-      LOCAL ACCESS ONLY — EXTERNAL CONNECTIONS ARE LOGGED
+      LOCAL ACCESS ONLY — EXTERNAL CONNECTIONS ARE LOGGED<br>
+      <a href="/search/" style="color:#555; text-decoration:none;">← 検索に戻る</a>
     </div>
 
     <div class="term-title">地下1階 — アクセス制限エリア</div>
@@ -156,9 +157,9 @@
 
     <!-- GATE -->
     <div class="gate" id="gate-view">
-      <p>認証コードを入力してください。<br>コードは転送対象の記録番号に記載されています。</p>
+      <p>認証コードを入力してください。<br>全アクセスは記録されます。</p>
       <div class="code-row">
-        <input type="text" id="b1-input" placeholder="______" maxlength="6">
+        <input type="text" id="b1-input" placeholder="________" maxlength="8">
         <button onclick="checkB1()">認証</button>
       </div>
       <div class="err" id="b1-err"></div>
@@ -172,7 +173,7 @@
         <div class="status-row"><span class="key">対象ID</span><span class="val">RV-0214</span></div>
         <div class="status-row"><span class="key">氏名</span><span class="val">赤井 瀧魔琉</span></div>
         <div class="status-row"><span class="key">担当科目</span><span class="val">VAI-399</span></div>
-        <div class="status-row"><span class="key">転送開始</span><span class="val">2026-05-26 19:03</span></div>
+        <div class="status-row"><span class="key">転送開始</span><span class="val">2026-05-02 07:21</span></div>
         <div class="status-row"><span class="key">転送完了予測</span><span class="val active">算出不可</span></div>
         <div class="status-row"><span class="key">現在のステータス</span><span class="val live" id="transfer-pct">転送中 — 67.3%</span></div>
       </div>
@@ -244,16 +245,16 @@
   </div>
 
   <script>
-    const CORRECT   = 'RV0214';
+    const CORRECT   = 'vaultkey';
     const BASE_PCT  = 67.3;
-    const RATE      = 0.1 / 60; // 0.1% per minute
+    const RATE      = 0.1 / 5; // 0.1% per 5 seconds
 
     document.getElementById('b1-input').addEventListener('keydown', e => {
       if (e.key === 'Enter') checkB1();
     });
 
     function checkB1() {
-      const val = document.getElementById('b1-input').value.trim().toUpperCase();
+      const val = document.getElementById('b1-input').value.trim().toLowerCase();
       if (val === CORRECT) {
         document.getElementById('gate-view').style.display = 'none';
         document.getElementById('transfer-log').style.display = 'block';

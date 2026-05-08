@@ -102,11 +102,41 @@
     .email-unread { font-weight: bold; background: #f0f2ff; }
     .email-unread:hover { background: #e6e9ff; }
 
+    @keyframes pulse-red {
+      0%, 100% { color: #333; }
+      50% { color: #c0392b; }
+    }
+
     @keyframes mail-arrive {
       from { opacity: 0; transform: translateY(-6px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     .email-arriving { animation: mail-arrive 0.4s ease; }
+
+    /* MAIL TABS */
+    .mail-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .mail-tab {
+      padding: 6px 16px;
+      border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      font-size: 0.88em;
+      font-weight: 600;
+      background: #e8ebff;
+      color: #4a5bdc;
+      border: 1px solid #d0d4f0;
+      border-bottom: none;
+    }
+    .mail-tab.active {
+      background: white;
+      border-color: #d0d4f0;
+      color: #333;
+    }
+    .mail-pane { display: none; }
+    .mail-pane.active { display: block; }
 
     /* COMPOSE */
     .compose-btn {
@@ -223,8 +253,6 @@
           <div>
             <p><b>名前：</b>赤井 瀧魔琉</p>
             <p><b>VTuber名：</b>Redvil</p>
-            <p><b>性別：</b>男</p>
-            <p><b>年齢：</b>非公開</p>
             <p><b>状態：</b>VAULT転送中</p>
           </div>
         </div>
@@ -234,29 +262,24 @@
       <div id="stream" class="section">
         <h2>📊 配信データ</h2>
         <div class="grid">
-          <div class="card"><b>総配信数</b><br>58</div>
-          <div class="card"><b>総時間</b><br>142h</div>
-          <div class="card"><b>総視聴数</b><br>48,210</div>
-          <div class="card"><b>総いいね</b><br>9,420</div>
-          <div class="card"><b>フォロワー</b><br>6,120</div>
-          <div class="card"><b>総合スコア</b><br><span style="font-size:1.5em;">91</span></div>
+          <div class="card"><b>総配信数</b><br>295<br><span style="font-size:0.72em;color:#bbb;">最終記録</span></div>
+          <div class="card"><b>総時間</b><br>631h</div>
+          <div class="card"><b>総視聴数</b><br>2,310</div>
+          <div class="card"><b>総いいね</b><br>42</div>
+          <div class="card"><b>フォロワー</b><br>258<br><span style="font-size:0.72em;color:#bbb;">更新停止中</span></div>
+          <div class="card" style="border:1px solid #fcc;">
+            <b>総合スコア</b><br>
+            <span style="font-size:1.5em;animation:pulse-red 2s infinite;">91</span><br>
+            <span style="font-size:0.72em;color:#c0392b;">選抜閾値超過 — VAI-399 選定済み</span>
+          </div>
         </div>
 
         <h3 style="margin-top:20px;">最近の配信</h3>
-        <div class="grid">
-          <div class="card">
-            <div class="thumb"><img src="/dashboard/redvil-stream-1.jpg" alt="配信１"></div>
-            <p>コラボ配信（VAI-214）- <span class="rel-date" data-offset="-2"></span></p>
-            <p style="color:#888; font-size:0.85em;">分類：最終セッション</p>
-          </div>
-          <div class="card">
-            <div class="thumb"><img src="/dashboard/redvil-stream-2.jpg" alt="配信２"></div>
-            <p>実験配信ログ - <span class="rel-date" data-offset="-3"></span></p>
-          </div>
-          <div class="card">
-            <div class="thumb"><img src="/dashboard/redvil-stream-3.jpg" alt="配信３"></div>
-            <p>深夜雑談 - <span class="rel-date" data-offset="-4"></span></p>
-          </div>
+        <div class="card" style="color:#999; font-size:0.9em; line-height:2; font-family:monospace;">
+          配信記録を取得しています...<br>
+          <span style="color:#c0392b;">ERROR: データの取得に失敗しました。</span><br>
+          対象ファイルはシステムによって上書き済みです。<br>
+          <span style="color:#c0392b;">記録は存在しません。</span>
         </div>
       </div>
 
@@ -341,14 +364,31 @@
           </div>
         </div>
 
-        <div class="card">
-          <div id="otonashi-email"></div>
-          <div id="composed-emails"></div>
-          <div id="hint-emails"></div>
-          <div class="email" onclick="openMail(2)">【VAI-399】第14回の授業について - <span class="rel-date" data-offset="0" data-time="08:47"></span></div>
-          <div class="email" onclick="openMail(3)">【学生サービス】前期履修登録期間のご案内 - <span class="rel-date" data-offset="-4" data-time="10:00"></span></div>
-          <div class="email" onclick="openMail(4)">【学生サービス】図書館・機材貸出システム更新のお知らせ - <span class="rel-date" data-offset="-7" data-time="14:23"></span></div>
-          <div class="email" onclick="openMail(5)">【学生サービス】定期健康診断のご案内 - <span class="rel-date" data-offset="-12" data-time="09:05"></span></div>
+        <!-- TABS -->
+        <div class="mail-tabs">
+          <div class="mail-tab active" onclick="switchMailTab('inbox', this)">📥 受信トレイ</div>
+          <div class="mail-tab" onclick="switchMailTab('outbox', this)">📤 送信済み</div>
+        </div>
+
+        <!-- INBOX -->
+        <div id="mail-pane-inbox" class="mail-pane active">
+          <div class="card">
+            <div id="otonashi-reply2"></div>
+            <div id="otonashi-reply"></div>
+            <div id="hint-emails"></div>
+            <div id="otonashi-email"></div>
+            <div class="email" id="static-mail-2" onclick="markEmailRead('static_2',this);openMail(2)">【VAI-399】第14回の授業について - <span class="rel-date" data-offset="0" data-time="08:47"></span></div>
+            <div class="email" id="static-mail-3" onclick="markEmailRead('static_3',this);openMail(3)">【学生サービス】前期履修登録期間のご案内 - <span class="rel-date" data-offset="-4" data-time="10:00"></span></div>
+            <div class="email" id="static-mail-4" onclick="markEmailRead('static_4',this);openMail(4)">【学生サービス】図書館・機材貸出システム更新のお知らせ - <span class="rel-date" data-offset="-7" data-time="14:23"></span></div>
+            <div class="email" id="static-mail-5" onclick="markEmailRead('static_5',this);openMail(5)">【学生サービス】定期健康診断のご案内 - <span class="rel-date" data-offset="-12" data-time="09:05"></span></div>
+          </div>
+        </div>
+
+        <!-- OUTBOX -->
+        <div id="mail-pane-outbox" class="mail-pane">
+          <div class="card">
+            <div id="composed-emails"></div>
+          </div>
         </div>
 
         <div id="bottom-mail-box" class="bottom-mail-box">
@@ -366,6 +406,14 @@
   <div id="vai-footer"></div>
   <script src="/layout.js"></script>
   <script>
+    function switchMailTab(tab, el) {
+      document.querySelectorAll('.mail-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.mail-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('mail-pane-' + tab).classList.add('active');
+      el.classList.add('active');
+      document.getElementById('bottom-mail-box').style.display = 'none';
+    }
+
     function scrollToSection(id, el) {
       const main = document.querySelector(".main");
       const target = document.getElementById(id);
@@ -405,15 +453,41 @@
       });
     });
 
+    /* ── Read state ── */
+    function getReadSet() {
+      return new Set(JSON.parse(localStorage.getItem('vai_read_emails') || '[]'));
+    }
+    function markEmailRead(key, el) {
+      const read = getReadSet();
+      read.add(key);
+      localStorage.setItem('vai_read_emails', JSON.stringify([...read]));
+      if (el) { el.classList.remove('email-unread'); el.style.background = 'white'; }
+    }
+    function restoreStaticRead() {
+      ['static_2','static_3','static_4','static_5'].forEach(key => {
+        if (getReadSet().has(key)) {
+          const el = document.getElementById('static-mail-' + key.split('_')[1]);
+          if (el) el.style.background = 'white';
+        }
+      });
+    }
+
     /* ── Date helpers ── */
+    const GAME_START = new Date('2026-05-02T21:03:00').getTime();
     const WEEKDAYS = ['日','月','火','水','木','金','土'];
+
+    function toGameTime(realTs) {
+      const login = parseInt(localStorage.getItem('vai_login_time') || Date.now());
+      return GAME_START + (realTs - login);
+    }
+
     function relDate(offset) {
-      const d = new Date();
+      const d = new Date(GAME_START);
       d.setDate(d.getDate() + offset);
       return `${d.getMonth() + 1}月${d.getDate()}日`;
     }
     function relDateW(offset) {
-      const d = new Date();
+      const d = new Date(GAME_START);
       d.setDate(d.getDate() + offset);
       return `${d.getMonth() + 1}月${d.getDate()}日（${WEEKDAYS[d.getDay()]}）`;
     }
@@ -428,12 +502,14 @@
       const container = document.getElementById('hint-emails');
       container.innerHTML = '';
       requests.slice().reverse().forEach((ts, i) => {
-        const d = new Date(ts);
+        const d = new Date(toGameTime(ts));
         const label = `${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
         const div = document.createElement('div');
-        div.className = 'email';
+        const hintKey = `hint_${i}`;
+        div.className = getReadSet().has(hintKey) ? 'email' : 'email';
+        if (getReadSet().has(hintKey)) div.style.background = 'white';
         div.textContent = `【サポート】ディスコ称号＋誕生日 - ${label}`;
-        div.onclick = () => openHintMail(label);
+        div.onclick = () => { markEmailRead(hintKey, div); openHintMail(label); };
         container.appendChild(div);
       });
     }
@@ -479,6 +555,27 @@
       document.getElementById('compose-panel').style.display = 'none';
 
       renderComposedEmails();
+
+      if (to.toLowerCase().includes('otonashi@vai.ac')) {
+        if (!localStorage.getItem('otonashi_reply_sent')) {
+          setTimeout(() => {
+            localStorage.setItem('otonashi_reply_sent', Date.now());
+            localStorage.setItem('otonashi_reply_subject', subject);
+            renderOtonashiReply(true);
+          }, 5 * 1000);
+        } else if (localStorage.getItem('otonashi_reply2_has_password') !== '1') {
+          const combined = body + ' ' + subject;
+          const mentionsB1       = combined.toLowerCase().includes('b1-access');
+          const mentionsPassword = /password/i.test(combined) || combined.includes('パスワード') || combined.includes('認証');
+          const hasPassword = mentionsB1 && mentionsPassword;
+          setTimeout(() => {
+            localStorage.setItem('otonashi_reply2_sent', Date.now());
+            localStorage.setItem('otonashi_reply2_subject', subject);
+            localStorage.setItem('otonashi_reply2_has_password', hasPassword ? '1' : '0');
+            renderOtonashiReply2(true);
+          }, 5 * 1000);
+        }
+      }
     }
 
     function renderComposedEmails() {
@@ -486,12 +583,13 @@
       const container = document.getElementById('composed-emails');
       container.innerHTML = '';
       mails.slice().reverse().forEach((m, i) => {
-        const d = new Date(m.ts);
+        const d = new Date(toGameTime(m.ts));
         const label = `${d.getMonth()+1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
         const div = document.createElement('div');
-        div.className = 'email email-unread';
+        const composedKey = `composed_${m.ts}`;
+        div.className = getReadSet().has(composedKey) ? 'email' : 'email email-unread';
         div.textContent = `${m.subject} - ${label}`;
-        div.onclick = () => openComposedMail(m, label);
+        div.onclick = () => { markEmailRead(composedKey, div); openComposedMail(m, label); };
         container.appendChild(div);
       });
     }
@@ -511,16 +609,99 @@
 
     renderComposedEmails();
 
+    /* ── Otonashi reply ── */
+    function renderOtonashiReply(animate) {
+      const container = document.getElementById('otonashi-reply');
+      if (!localStorage.getItem('otonashi_reply_sent')) return;
+      const ts      = parseInt(localStorage.getItem('otonashi_reply_sent'));
+      const subject = localStorage.getItem('otonashi_reply_subject') || '';
+      const d       = new Date(toGameTime(ts));
+      const label   = `${d.getMonth()+1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+      const div = document.createElement('div');
+      div.className = (getReadSet().has('otonashi_reply') ? 'email' : 'email email-unread') + (animate ? ' email-arriving' : '');
+      div.textContent = `Re: ${subject} — ${label}`;
+      div.onclick = () => { markEmailRead('otonashi_reply', div); openOtonashiReply(subject, label); };
+      container.innerHTML = '';
+      container.appendChild(div);
+    }
+
+    function openOtonashiReply(subject, label) {
+      const bottomBox   = document.getElementById('bottom-mail-box');
+      const bottomTitle = document.getElementById('bottom-mail-title');
+      const bottomBody  = document.getElementById('bottom-mail-body');
+      bottomTitle.textContent = `Re: ${subject} — ${label}`;
+      bottomBody.innerHTML = `
+        <p><strong>From:</strong> otonashi@vai.ac</p>
+        <p>このアドレスは。。。</p>
+        <p>
+          赤井 瀧魔琉 様 は現在、転送中のはず、
+        </p>
+        <p>
+          お前は誰だ？ 何の目的で連絡してきた？<br>
+        </p>`;
+      bottomBox.style.display = 'block';
+      bottomBox.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    renderOtonashiReply(false);
+
+    /* ── Otonashi second reply ── */
+    function renderOtonashiReply2(animate) {
+      const container = document.getElementById('otonashi-reply2');
+      if (!localStorage.getItem('otonashi_reply2_sent')) return;
+      const ts      = parseInt(localStorage.getItem('otonashi_reply2_sent'));
+      const subject = localStorage.getItem('otonashi_reply2_subject') || '';
+      const d       = new Date(toGameTime(ts));
+      const label   = `${d.getMonth()+1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+      const div = document.createElement('div');
+      div.className = (getReadSet().has('otonashi_reply2') ? 'email' : 'email email-unread') + (animate ? ' email-arriving' : '');
+      div.textContent = `Re: ${subject} — ${label}`;
+      div.onclick = () => { markEmailRead('otonashi_reply2', div); openOtonashiReply2(subject, label); };
+      container.innerHTML = '';
+      container.appendChild(div);
+    }
+
+    function openOtonashiReply2(subject, label) {
+      const bottomBox   = document.getElementById('bottom-mail-box');
+      const bottomTitle = document.getElementById('bottom-mail-title');
+      const bottomBody  = document.getElementById('bottom-mail-body');
+      const hasPassword = localStorage.getItem('otonashi_reply2_has_password') === '1';
+      bottomTitle.textContent = `Re: ${subject} — ${label}`;
+      if (hasPassword) {
+        bottomBody.innerHTML = `
+          <p><strong>From:</strong> otonashi@vai.ac</p>
+          <p>分かりました。</p>
+          <p>赤井 瀧魔琉 様 はまだ転送中です。</p>
+          <p style="color:#c0392b;">
+          <span style="display:inline-block;background:#c0392b;color:transparent;border-radius:2px;letter-spacing:0.05em;user-select:none;padding:0 2px;">████</span>されてしまう前に、救い出してあげてください。<br>
+            地下へのパスワードはこれです。—— vaultkey<br>
+          </p>`;
+      } else {
+        bottomBody.innerHTML = `
+          <p><strong>From:</strong> otonashi@vai.ac</p>
+          <br>
+          <p>ご連絡いただきましたが、何をお求めなのかわかりかねます。</p>
+          <p>
+            正確に、何が必要なのかをお伝えください。<br>
+            何の何が。
+          </p>`;
+      }
+      bottomBox.style.display = 'block';
+      bottomBox.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    renderOtonashiReply2(false);
+
     /* ── Otonashi mail — sent 7 min after Redvil's stream started ── */
     function renderOtonashiMail() {
       const container = document.getElementById('otonashi-email');
-      const streamStart = Date.now() - (13 * 60 + 42) * 60 * 1000;
-      const mailTime    = new Date(streamStart + 7 * 60 * 1000);
+      const kurodasMail = new Date('2026-05-02T08:47:00').getTime();
+      const mailTime    = new Date(kurodasMail + 15 * 60 * 1000);
       const label = `${mailTime.getMonth()+1}月${mailTime.getDate()}日 ${String(mailTime.getHours()).padStart(2,'0')}:${String(mailTime.getMinutes()).padStart(2,'0')}`;
       const div = document.createElement('div');
-      div.className = 'email email-unread';
+      div.className = getReadSet().has('otonashi_warning') ? 'email' : 'email email-unread';
       div.textContent = `【音無 零】逃げろ — ${label}`;
-      div.onclick = () => openOtonashiMail(label);
+      div.onclick = () => { markEmailRead('otonashi_warning', div); openOtonashiMail(label); };
       container.innerHTML = '';
       container.appendChild(div);
     }
@@ -532,25 +713,22 @@
       bottomTitle.textContent = `【音無 零】逃げろ — ${label}`;
       bottomBody.innerHTML = `
         <p><strong>From:</strong> otonashi@vai.ac</p>
-        <br>
-        <p>赤井 瀧魔琉</p>
-        <p>時間がない。</p>
+        <p>赤井 瀧魔琉 様、</p>
         <p>
           黒田には会うな。<br>
           地下には絶対に行くな。<br>
           VAI-399は選別だ——授業ではない。
         </p>
         <p>
-          彼らはお前の全てを記録している。<br>
-          声も、反応も、存在の輪郭も。<br>
-          転送が完了すれば、お前は残らない。
+          あなたの声も、反応も、すべて記録されています。<br>
+          転送が完了すれば、残るものはありません。<br>
+          今すぐキャンパスをお離れになってください。
         </p>
-        <p>今すぐキャンパスを出ろ。</p>
         <p style="color:#c0392b;">
-          このメールの送信者を信じるな——<br>
-          私自身がすでに手遅れだった証拠だ。
+          地下へのパスワードは私が隠した。——<br>
+          地下には絶対に行くな。
         </p>
-        <p>— 音無</p>`;
+        <p>— 音無 零</p>`;
       bottomBox.style.display = 'block';
       bottomBox.scrollIntoView({ behavior: 'smooth' });
     }
@@ -570,7 +748,7 @@
         title = `【VAI-399】第14回の授業について - ${relDate(0)}`;
         fullText = `
           <p><strong>From:</strong> kuroda@vai.ac</p>
-          <p>第14回、VAI-399の授業内容が決まりました。</p>
+          <p>第14回、VAI-399の授業の準備が整いました。</p>
           <p><strong>赤井 瀧魔琉 様</strong> の優秀な成績を称え、特別生徒枠をご用意いたしました。</p>
           <p>持ち物は必要ございません。</p>
           <p>本キャンパス地下1階まで<strong>必ず</strong>お越しください。</p>
@@ -602,7 +780,7 @@
           <p>在学生の皆さまへ</p>
           <p>今年度の定期健康診断を下記の日程で実施いたします。</p>
           <p><strong>日時：</strong>${relDateW(17)} 10:00〜16:00</p>
-          <p><strong>場所：</strong>本キャンパス 2階 保健室</p>
+          <p><strong>場所：</strong>本キャンパス 1階 保健室</p>
           <p>受診は任意ですが、可能な限りご参加ください。当日は学生証をご持参ください。</p>`;
       }
 
@@ -615,6 +793,8 @@
     function closeBottomBox() {
       document.getElementById('bottom-mail-box').style.display = 'none';
     }
+
+    restoreStaticRead();
 
     function logout() {
       // clear login state (adjust depending on your auth system)
