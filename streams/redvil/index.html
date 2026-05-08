@@ -26,6 +26,15 @@
     .stream-wrap h1 { font-size: 1.5em; margin: 0 0 8px; }
     .stream-wrap p { color: #666; font-size: 0.95em; margin: 0 0 28px; }
 
+    .step-label {
+      font-size: 0.75em;
+      font-weight: 600;
+      color: #4a5bdc;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
     .code-input {
       display: flex;
       gap: 10px;
@@ -78,6 +87,9 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
     }
+
+    .gate { display: none; }
+    .gate.active { display: block; }
   </style>
 </head>
 <body>
@@ -88,13 +100,40 @@
     <div class="stream-wrap">
       <div class="lock-icon">🔒</div>
       <h1>配信アクセス制限</h1>
-      <p>この配信は非公開に設定されています。<br>アクセスするには認証コードが必要です。</p>
+      <p>この配信は非公開に設定されています。<br>アクセスするには段階的な本人確認が必要です。</p>
 
-      <div class="code-input">
-        <input type="text" id="code-input" placeholder="認証コード" maxlength="12">
-        <button onclick="checkCode()">接続</button>
+      <!-- STAGE 1: Program code -->
+      <div class="gate" id="gate-1">
+        <div class="step-label">ステップ 1 / 3 — プログラム確認</div>
+        <p style="margin-bottom:16px;">この配信が属するVAIプログラムのコード番号を入力してください。</p>
+        <div class="code-input">
+          <input type="text" id="input-1" placeholder="VAI-???">
+          <button onclick="checkStage1()">確認</button>
+        </div>
+        <div class="error-msg" id="err-1">コードが正しくありません。</div>
       </div>
-      <div class="error-msg" id="error-msg">認証コードが正しくありません。</div>
+
+      <!-- STAGE 2: Instructor -->
+      <div class="gate" id="gate-2">
+        <div class="step-label">ステップ 2 / 3 — 担当教員確認</div>
+        <p style="margin-bottom:16px;">そのプログラムの担当教員の苗字を入力してください。</p>
+        <div class="code-input">
+          <input type="text" id="input-2" placeholder="担当教員">
+          <button onclick="checkStage2()">確認</button>
+        </div>
+        <div class="error-msg" id="err-2">正しくありません。</div>
+      </div>
+
+      <!-- STAGE 3: Access code -->
+      <div class="gate" id="gate-3">
+        <div class="step-label">ステップ 3 / 3 — 認証コード</div>
+        <p style="margin-bottom:16px;">この配信にアクセスするには認証コードが必要です。</p>
+        <div class="code-input">
+          <input type="text" id="input-3" placeholder="認証コード" maxlength="12">
+          <button onclick="checkStage3()">接続</button>
+        </div>
+        <div class="error-msg" id="err-3">認証コードが正しくありません。</div>
+      </div>
 
       <div class="stream-meta">
         Stream ID: RV-0214<br>
@@ -111,22 +150,66 @@
   </script>
   <script src="/layout.js"></script>
   <script>
+    const STAGE_KEY = 'redvil_stream_stage';
+
+    function showStage(n) {
+      document.querySelectorAll('.gate').forEach(g => g.classList.remove('active'));
+      const el = document.getElementById('gate-' + n);
+      if (el) el.classList.add('active');
+    }
+
+    function getStage() {
+      const val = localStorage.getItem(STAGE_KEY);
+      if (val === 'done') return 3;
+      return parseInt(val || '1');
+    }
+
+    // Stage 1 — program code: VAI-399 or just 399
+    document.getElementById('input-1').addEventListener('keydown', e => { if (e.key === 'Enter') checkStage1(); });
+    function checkStage1() {
+      const val = document.getElementById('input-1').value.trim().toUpperCase().replace('VAI-', '');
+      if (val === '399') {
+        localStorage.setItem(STAGE_KEY, '2');
+        showStage(2);
+      } else {
+        document.getElementById('err-1').style.display = 'block';
+        document.getElementById('input-1').value = '';
+      }
+    }
+
+    // Stage 2 — instructor surname: 黒田 or kuroda
+    document.getElementById('input-2').addEventListener('keydown', e => { if (e.key === 'Enter') checkStage2(); });
+    function checkStage2() {
+      const val = document.getElementById('input-2').value.trim().toLowerCase();
+      if (val === '黒田' || val === '黒田進' || val === 'kuroda') {
+        localStorage.setItem(STAGE_KEY, '3');
+        showStage(3);
+      } else {
+        document.getElementById('err-2').style.display = 'block';
+        document.getElementById('input-2').value = '';
+      }
+    }
+
+    // Stage 3 — access code
     const CORRECT_CODE = '3990214';
-
-    document.getElementById('code-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') checkCode();
-    });
-
-    function checkCode() {
-      const input = document.getElementById('code-input').value.trim().toUpperCase();
-      const err   = document.getElementById('error-msg');
-      if (input === CORRECT_CODE) {
-        err.style.display = 'none';
+    document.getElementById('input-3').addEventListener('keydown', e => { if (e.key === 'Enter') checkStage3(); });
+    function checkStage3() {
+      const val = document.getElementById('input-3').value.trim().toUpperCase();
+      if (val === CORRECT_CODE) {
+        localStorage.setItem(STAGE_KEY, 'done');
         setTimeout(() => { location.href = '/streams/redvil/live/'; }, 400);
       } else {
-        err.style.display = 'block';
-        document.getElementById('code-input').value = '';
+        document.getElementById('err-3').style.display = 'block';
+        document.getElementById('input-3').value = '';
       }
+    }
+
+    // Restore progress
+    const stage = getStage();
+    if (stage === 'done' || stage >= 3) {
+      showStage(3);
+    } else {
+      showStage(stage);
     }
   </script>
 </body>

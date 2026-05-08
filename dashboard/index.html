@@ -378,7 +378,7 @@
             <div id="hint-emails"></div>
             <div id="otonashi-email"></div>
             <div class="email" id="static-mail-2" onclick="markEmailRead('static_2',this);openMail(2)">【VAI-399】特別生徒枠のご案内 - <span class="rel-date" data-offset="0" data-time="08:47"></span></div>
-            <div class="email" id="static-mail-3" onclick="markEmailRead('static_3',this);openMail(3)">【学生サービス】前期履修登録期間のご案内 - <span class="rel-date" data-offset="-4" data-time="10:00"></span></div>
+            <div class="email" id="static-mail-3" onclick="markEmailRead('static_3',this);openMail(3)">【学生サービス】前期末試験のご案内 - <span class="rel-date" data-offset="-4" data-time="10:00"></span></div>
             <div class="email" id="static-mail-4" onclick="markEmailRead('static_4',this);openMail(4)">【学生サービス】図書館・機材貸出システム更新のお知らせ - <span class="rel-date" data-offset="-7" data-time="14:23"></span></div>
             <div class="email" id="static-mail-5" onclick="markEmailRead('static_5',this);openMail(5)">【学生サービス】定期健康診断のご案内 - <span class="rel-date" data-offset="-12" data-time="09:05"></span></div>
           </div>
@@ -566,7 +566,7 @@
         } else if (localStorage.getItem('otonashi_reply2_has_password') !== '1') {
           const combined = body + ' ' + subject;
           const mentionsB1       = combined.toLowerCase().includes('b1-access');
-          const mentionsPassword = /password/i.test(combined) || combined.includes('パスワード') || combined.includes('認証');
+          const mentionsPassword = /password/i.test(combined) || combined.includes('パスワード') || combined.includes('認証') || combined.includes('コード');
           const hasPassword = mentionsB1 && mentionsPassword;
           setTimeout(() => {
             localStorage.setItem('otonashi_reply2_sent', Date.now());
@@ -725,8 +725,8 @@
           今すぐキャンパスをお離れになってください。
         </p>
         <p style="color:#c0392b;">
-          地下へのパスワードは私が隠した。——<br>
-          地下には絶対に行くな。
+          地下へのパスワードは俺が隠した。——<br>
+          まずは返信してくれ。
         </p>
         <p>— 音無 零</p>`;
       bottomBox.style.display = 'block';
@@ -754,13 +754,14 @@
           <p>以降の対応は現地で実施されます。</p>`;
       }
       else if (id === 3) {
-        title = `【学生サービス】前期履修登録期間のご案内 - ${relDate(-4)}`;
+        title = `【学生サービス】前期末試験のご案内 - ${relDate(-4)}`;
         fullText = `
           <p><strong>From:</strong> gakusei@vai.ac</p>
           <p>在学生の皆さまへ</p>
-          <p>前期の履修登録期間は <strong>${relDateW(6)}〜 ${relDateW(12)}</strong> です。</p>
-          <p>学生ポータルよりログインのうえ、受講希望科目をご登録ください。</p>
-          <p>期間外の登録変更は受け付けておりませんのでご注意ください。</p>
+          <p>前期の試験期間まで残りわずかとなりました。</p>
+          <p>各科目の最終評価・提出物の締め切りは <strong>${relDateW(28)}</strong> を目安にご確認ください。担当教員からの個別連絡がある場合はそちらを優先してください。</p>
+          <p>この時期は体調を崩しやすくなります。無理をせず、しっかりと準備を進めてください。皆さんのこれまでの努力は必ず結果につながります。</p>
+          <p>VAIスタッフ一同、皆さんを応援しています。全力で臨んでください。</p>
           <p>ご不明な点は学生サービス窓口までお問い合わせください。</p>`;
       }
       else if (id === 4) {
