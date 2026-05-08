@@ -104,13 +104,13 @@
 
   </div>
   <div id="vai-footer"></div>
+  <script>
+    if (localStorage.getItem('vai_role') === 'student') {
+      location.replace('/streams/redvil/live/');
+    }
+  </script>
   <script src="/layout.js"></script>
   <script>
-    /*
-      ARG: Set the correct code below.
-      On success, redirect to wherever the ARG should go next.
-      Could be a dashboard, a hidden page, an external link, etc.
-    */
     const CORRECT_CODE = '3990214';
 
     document.getElementById('code-input').addEventListener('keydown', function(e) {

@@ -162,6 +162,8 @@
         errorEl.style.display = 'none';
         localStorage.setItem('vai_user', inputUser);
         localStorage.setItem('vai_role', 'student');
+        localStorage.setItem('vai_login_time', Date.now());
+        localStorage.removeItem('otonashi_mail_sent');
         // Small delay so it feels like a real auth round-trip
         setTimeout(() => { location.href = '/dashboard/'; }, 600);
       } else {

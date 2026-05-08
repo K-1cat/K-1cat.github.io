@@ -119,6 +119,17 @@
       { title: '学長講演資料 — 「存在証明」国際シンポジウム2024', href: '/events/expo2024/', trigger: '存在証明' },
     ];
 
+    const CLASS_PAGES = [
+      { title: 'VAI-101 — VTuber基礎',           href: '/programs/vai-101/', text: 'vai-101 vtuber基礎 橘 恵介 配信 必修 1年次' },
+      { title: 'VAI-178 — キャラクターデザイン', href: '/programs/vai-178/', text: 'vai-178 キャラクター デザイン 藤本 梨沙 アバター 選択必修' },
+      { title: 'VAI-203 — パフォーマンス理論',   href: '/programs/vai-203/', text: 'vai-203 パフォーマンス 理論 水野 明 演技 演じる 必修' },
+      { title: 'VAI-214 — コラボ配信実習',        href: '/programs/vai-214/', text: 'vai-214 コラボ 配信 実習 田中 恒一 グループ 必修' },
+      { title: 'VAI-241 — 視聴者心理学',          href: '/programs/vai-241/', text: 'vai-241 視聴者 心理学 黒田 進 観測 依存' },
+      { title: 'VAI-301 — クロスチャンネル戦略', href: '/programs/vai-301/', text: 'vai-301 クロスチャンネル 戦略 田中 恒一 プラットフォーム' },
+      { title: 'VAI-310 — 音声表現・朗読/歌唱',  href: '/programs/vai-310/', text: 'vai-310 音声 朗読 歌唱 音無 零 オンライン' },
+      { title: 'VAI-399 — 観測と存在（上級）',   href: '/programs/vai-399/', text: 'vai-399 観測 存在 黒田 進 選抜 上級' },
+    ];
+
     function doSearch() {
       const q = document.getElementById('search-input').value.trim().toLowerCase();
       const out = document.getElementById('search-results');
@@ -152,6 +163,22 @@
         });
       } else {
         lockedResults.forEach(p => results.push(p));
+      }
+
+      const matchingClasses = CLASS_PAGES.filter(p =>
+        p.title.toLowerCase().includes(q) || p.text.toLowerCase().includes(q)
+      );
+
+      if (!isStudent) {
+        matchingClasses.forEach(p => {
+          html += `
+            <div class="result-locked">
+              <span class="locked-title">🔒 ${p.title}<span class="locked-badge">学生専用</span></span>
+              <p class="locked-path">ログインが必要です。</p>
+            </div>`;
+        });
+      } else {
+        matchingClasses.forEach(p => results.push(p));
       }
 
       if (results.length === 0 && !html) {

@@ -104,6 +104,11 @@
 
   </div>
   <div id="vai-footer"></div>
+  <script>
+    if (localStorage.getItem('vai_role') === 'student') {
+      location.replace('/streams/85yen/live/');
+    }
+  </script>
   <script src="/layout.js"></script>
   <script>
     const CORRECT_CODE = '2141572';
