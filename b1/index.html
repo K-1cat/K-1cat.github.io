@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B1 — アクセス制限エリア</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: monospace;
+      background: #0d0d0d;
+      color: #c0c0c0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .terminal {
+      width: 100%;
+      max-width: 640px;
+    }
+
+    .term-header {
+      font-size: 0.75em;
+      color: #555;
+      margin-bottom: 30px;
+      line-height: 2;
+    }
+
+    .term-title {
+      font-size: 1.1em;
+      color: #ff4444;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+
+    .term-sub {
+      font-size: 0.8em;
+      color: #666;
+      margin-bottom: 28px;
+    }
+
+    .gate { text-align: center; }
+
+    .gate p { color: #888; font-size: 0.85em; margin-bottom: 20px; line-height: 1.8; }
+
+    .code-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .code-row input {
+      padding: 10px 16px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: #c0c0c0;
+      font-family: monospace;
+      font-size: 1em;
+      width: 180px;
+      text-align: center;
+      letter-spacing: 0.15em;
+    }
+    .code-row input:focus { outline: none; border-color: #ff4444; }
+    .code-row button {
+      padding: 10px 20px;
+      background: #1e1e1e;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #c0c0c0;
+      font-family: monospace;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+    .code-row button:hover { border-color: #ff4444; color: #ff4444; }
+
+    .err { color: #ff4444; font-size: 0.8em; min-height: 1.2em; text-align: center; margin-bottom: 6px; }
+
+    /* Transfer log — shown after unlock */
+    #transfer-log { display: none; }
+
+    .log-section { margin-bottom: 28px; }
+    .log-label { color: #ff4444; font-size: 0.75em; letter-spacing: 0.1em; margin-bottom: 10px; }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid #1e1e1e;
+      font-size: 0.82em;
+    }
+    .status-row:last-child { border-bottom: none; }
+    .status-row .key { color: #666; }
+    .status-row .val { color: #c0c0c0; }
+    .status-row .val.active { color: #ff9900; }
+    .status-row .val.archived { color: #555; }
+    .status-row .val.live { color: #ff4444; }
+
+    .manifest-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8em;
+      margin-top: 8px;
+    }
+    .manifest-table th {
+      text-align: left;
+      color: #555;
+      padding: 6px 0;
+      border-bottom: 1px solid #222;
+      font-weight: normal;
+      letter-spacing: 0.05em;
+    }
+    .manifest-table td {
+      padding: 7px 0;
+      border-bottom: 1px solid #1a1a1a;
+      color: #888;
+    }
+    .manifest-table td.id-col { color: #444; }
+    .manifest-table td.archived { color: #444; }
+    .manifest-table td.active-transfer { color: #ff9900; }
+    .manifest-table td.redacted { color: #2a2a2a; user-select: none; }
+
+    .vault-link-box {
+      margin-top: 36px;
+      padding: 16px 20px;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      background: #111;
+      font-size: 0.8em;
+      line-height: 2;
+      color: #555;
+    }
+    .vault-link-box a {
+      color: #ff4444;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .vault-link-box a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="terminal">
+
+    <div class="term-header">
+      VAI SECURE ZONE // B1-TERMINAL<br>
+      LOCAL ACCESS ONLY — EXTERNAL CONNECTIONS ARE LOGGED
+    </div>
+
+    <div class="term-title">地下1階 — アクセス制限エリア</div>
+    <div class="term-sub">このターミナルは認証済み関係者のみが使用できます。</div>
+
+    <!-- GATE -->
+    <div class="gate" id="gate-view">
+      <p>認証コードを入力してください。<br>コードは転送対象の記録番号に記載されています。</p>
+      <div class="code-row">
+        <input type="text" id="b1-input" placeholder="______" maxlength="6">
+        <button onclick="checkB1()">認証</button>
+      </div>
+      <div class="err" id="b1-err"></div>
+    </div>
+
+    <!-- TRANSFER LOG (revealed after auth) -->
+    <div id="transfer-log">
+
+      <div class="log-section">
+        <div class="log-label">// 現在の転送対象</div>
+        <div class="status-row"><span class="key">対象ID</span><span class="val">RV-0214</span></div>
+        <div class="status-row"><span class="key">氏名</span><span class="val">赤井 瀧魔琉</span></div>
+        <div class="status-row"><span class="key">担当科目</span><span class="val">VAI-399</span></div>
+        <div class="status-row"><span class="key">転送開始</span><span class="val">2026-05-26 19:03</span></div>
+        <div class="status-row"><span class="key">転送完了予測</span><span class="val active">算出不可</span></div>
+        <div class="status-row"><span class="key">現在のステータス</span><span class="val live" id="transfer-pct">転送中 — 67.3%</span></div>
+      </div>
+
+      <div class="log-section">
+        <div class="log-label">// VAULT アーカイブ一覧</div>
+        <table class="manifest-table">
+          <tr>
+            <th>VAULT-ID</th>
+            <th>記録名</th>
+            <th>完了日</th>
+            <th>ステータス</th>
+          </tr>
+          <tr>
+            <td class="id-col">VAULT-001</td>
+            <td class="archived">音白夜鏡花</td>
+            <td class="archived">2023-11-14</td>
+            <td class="archived">アーカイブ済み</td>
+          </tr>
+          <tr>
+            <td class="id-col">VAULT-002</td>
+            <td class="archived">無限寿</td>
+            <td class="archived">2024-03-07</td>
+            <td class="archived">アーカイブ済み</td>
+          </tr>
+          <tr>
+            <td class="id-col">VAULT-003</td>
+            <td class="archived">零夜</td>
+            <td class="archived">2024-08-22</td>
+            <td class="archived">アーカイブ済み</td>
+          </tr>
+          <tr>
+            <td class="id-col">VAULT-004</td>
+            <td class="archived">今北産豹</td>
+            <td class="archived">2025-01-19</td>
+            <td class="archived">アーカイブ済み</td>
+          </tr>
+          <tr>
+            <td class="id-col">VAULT-005</td>
+            <td class="redacted">████████</td>
+            <td class="archived">2025-06-30</td>
+            <td class="archived">アーカイブ済み</td>
+          </tr>
+          <tr>
+            <td class="id-col">VAULT-006</td>
+            <td class="active-transfer">赤井 瀧魔琉</td>
+            <td class="active-transfer">—</td>
+            <td class="active-transfer" id="transfer-pct-table">転送中</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="log-section">
+        <div class="log-label">// システムエンティティ</div>
+        <div class="status-row"><span class="key">entity_id</span><span class="val">otonashi@vai.ac</span></div>
+        <div class="status-row"><span class="key">種別</span><span class="val">VAULT生成 — 合成エンティティ</span></div>
+        <div class="status-row"><span class="key">生成元</span><span class="val archived">VAULT-001 / VAULT-002 / VAULT-003</span></div>
+        <div class="status-row"><span class="key">用途</span><span class="val">自動応答 / 課題評価 / 対学生インターフェース</span></div>
+        <div class="status-row"><span class="key">実体</span><span class="val archived">存在しない</span></div>
+      </div>
+
+      <div class="vault-link-box">
+        VAULT SYSTEM ACCESS<br>
+        完全なアーカイブおよびシステム詳細は以下から参照できます。<br>
+        → <a href="/vault/">/vault/</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const CORRECT   = 'RV0214';
+    const BASE_PCT  = 67.3;
+    const RATE      = 0.1 / 60; // 0.1% per minute
+
+    document.getElementById('b1-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkB1();
+    });
+
+    function checkB1() {
+      const val = document.getElementById('b1-input').value.trim().toUpperCase();
+      if (val === CORRECT) {
+        document.getElementById('gate-view').style.display = 'none';
+        document.getElementById('transfer-log').style.display = 'block';
+        localStorage.setItem('vai_b1_accessed', '1');
+        if (!localStorage.getItem('vault_transfer_start')) {
+          localStorage.setItem('vault_transfer_start', Date.now());
+        }
+        startPctTick();
+      } else {
+        document.getElementById('b1-err').textContent = '認証コードが正しくありません。';
+        document.getElementById('b1-input').value = '';
+      }
+    }
+
+    function getCurrentPct() {
+      const start = parseInt(localStorage.getItem('vault_transfer_start') || '0');
+      if (!start) return BASE_PCT;
+      const elapsed = (Date.now() - start) / 1000;
+      return Math.min(BASE_PCT + elapsed * RATE, 99.9);
+    }
+
+    function updatePctDisplay() {
+      const pct = getCurrentPct().toFixed(1);
+      const pctEl = document.getElementById('transfer-pct');
+      const tableEl = document.getElementById('transfer-pct-table');
+      if (pctEl) pctEl.textContent = `転送中 — ${pct}%`;
+      if (tableEl) tableEl.textContent = `転送中 — ${pct}%`;
+    }
+
+    function startPctTick() {
+      updatePctDisplay();
+      setInterval(updatePctDisplay, 1000);
+    }
+
+    if (localStorage.getItem('vai_b1_accessed')) {
+      document.getElementById('gate-view').style.display = 'none';
+      document.getElementById('transfer-log').style.display = 'block';
+      if (!localStorage.getItem('vault_transfer_start')) {
+        localStorage.setItem('vault_transfer_start', Date.now());
+      }
+      startPctTick();
+    }
+  </script>
+</body>
+</html>

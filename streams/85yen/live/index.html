@@ -62,7 +62,7 @@
       <h1>👥 85Yen - コラボ配信 （w/ たんばりん）</h1>
       <div class="meta">
         配信メディア: VAI.sys<br>
-        配信開始：06/03　19:52<br>
+        配信開始：<span id="stream-start"></span><br>
         Stream ID：YN-1572
       </div>
       <div class="stream-box">
@@ -86,9 +86,15 @@
   <div id="vai-footer"></div>
   <script src="/layout.js"></script>
   <script>
-    /* Replace the nav-links with the simple label, matching the original */
     const navLinks = document.querySelector('#vai-navbar .nav-links');
     if (navLinks) navLinks.textContent = '在校生配信';
+
+    const start = new Date(Date.now() - 2 * 60 * 60 * 1000);
+    const mm = String(start.getMonth() + 1).padStart(2, '0');
+    const dd = String(start.getDate()).padStart(2, '0');
+    const hh = String(start.getHours()).padStart(2, '0');
+    const mi = String(start.getMinutes()).padStart(2, '0');
+    document.getElementById('stream-start').textContent = `${mm}/${dd}　${hh}:${mi}`;
   </script>
 </body>
 </html>

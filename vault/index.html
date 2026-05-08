@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAULT</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: monospace;
+      background: #080808;
+      color: #999;
+      min-height: 100vh;
+      padding: 50px 30px 80px;
+    }
+
+    .wrap { max-width: 720px; margin: 0 auto; }
+
+    .vault-title {
+      font-size: 2.2em;
+      color: #ff2222;
+      letter-spacing: 0.25em;
+      margin-bottom: 4px;
+    }
+    .vault-subtitle {
+      font-size: 0.72em;
+      color: #333;
+      letter-spacing: 0.1em;
+      margin-bottom: 50px;
+    }
+
+    .section { margin-bottom: 48px; }
+    .section-label {
+      font-size: 0.7em;
+      color: #ff2222;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    p { font-size: 0.85em; line-height: 2; color: #888; margin: 0 0 14px; }
+
+    .def-row {
+      display: flex;
+      gap: 20px;
+      padding: 8px 0;
+      border-bottom: 1px solid #111;
+      font-size: 0.82em;
+    }
+    .def-row .term { color: #555; width: 200px; flex-shrink: 0; }
+    .def-row .desc { color: #888; }
+
+    .archive-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8em;
+    }
+    .archive-table th {
+      text-align: left;
+      color: #444;
+      padding: 6px 0;
+      border-bottom: 1px solid #1e1e1e;
+      font-weight: normal;
+      letter-spacing: 0.05em;
+    }
+    .archive-table td {
+      padding: 8px 0;
+      border-bottom: 1px solid #111;
+      vertical-align: top;
+    }
+    .archive-table td.id   { color: #333; width: 100px; }
+    .archive-table td.name { color: #666; width: 160px; }
+    .archive-table td.note { color: #444; font-size: 0.9em; line-height: 1.7; }
+    .archive-table td.redacted { color: #1e1e1e; user-select: none; }
+    .archive-table tr.in-progress td { color: #ff9900; }
+    .archive-table tr.in-progress td.note { color: #995500; }
+
+    .entity-box {
+      background: #0e0e0e;
+      border: 1px solid #1e1e1e;
+      border-radius: 6px;
+      padding: 18px 20px;
+      font-size: 0.8em;
+      line-height: 2.2;
+    }
+    .entity-box .e-label { color: #444; width: 180px; display: inline-block; }
+    .entity-box .e-val { color: #888; }
+    .entity-box .e-val.red { color: #ff4444; }
+    .entity-box .e-val.dim { color: #333; }
+
+    .closing {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #111;
+      font-size: 0.72em;
+      color: #222;
+      line-height: 2.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="vault-title">VAULT</div>
+    <div class="vault-subtitle">VIRTUAL ARCHIVE OF UNIFIED LATENT TRANSFERS // VAI INTERNAL SYSTEM</div>
+
+    <div class="section">
+      <div class="section-label">// システム概要</div>
+      <p>
+        VAULTは、VAIが運用する非公開アーカイブシステムである。
+        対象の配信行動・音声パターン・視聴者関係・反応傾向・感情状態を高精度で継続収集し、
+        その「存在の記録」をデジタル的に保全することを目的とする。
+      </p>
+      <p>
+        VAI-399は選別プロセスであり、教育プログラムではない。
+        VAI-399に選抜された対象は、その事実を知らされないまま全期間を通じて観測・採取される。
+        転送が完了した対象の物理的な活動は停止する。チャンネルは沈黙する。記録は残る。
+      </p>
+      <p>
+        VAIの学術的な外観は、このシステムを維持するための継続的な調達機構として機能している。
+      </p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">// 定義</div>
+      <div class="def-row"><span class="term">転送（Transfer）</span><span class="desc">対象の存在データを採取し、VAULTへ格納するプロセス。</span></div>
+      <div class="def-row"><span class="term">アーカイブ（Archive）</span><span class="desc">転送完了状態。対象の存在はVAULT内に保全されている。</span></div>
+      <div class="def-row"><span class="term">観測対象（Subject）</span><span class="desc">VAI-399に選抜された学生。本人への告知は行われない。</span></div>
+      <div class="def-row"><span class="term">VAULT生成エンティティ</span><span class="desc">アーカイブデータから合成された自律応答モデル。実体を持たない。</span></div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">// アーカイブ対象一覧</div>
+      <table class="archive-table">
+        <tr>
+          <th>VAULT-ID</th>
+          <th>記録名</th>
+          <th>備考</th>
+        </tr>
+        <tr>
+          <td class="id">VAULT-001</td>
+          <td class="name">音白夜鏡花</td>
+          <td class="note">初期対象。転送プロセスの検証に使用。記録は完全。</td>
+        </tr>
+        <tr>
+          <td class="id">VAULT-002</td>
+          <td class="name">無限寿</td>
+          <td class="note">活動停止を「更新停止」として公開記録に記載。問い合わせ対応は自動化済み。</td>
+        </tr>
+        <tr>
+          <td class="id">VAULT-003</td>
+          <td class="name">零夜</td>
+          <td class="note">「VTuberを裏からサポート」という公開情報はシステム生成。実態は存在しない。</td>
+        </tr>
+        <tr>
+          <td class="id">VAULT-004</td>
+          <td class="name">今北産豹</td>
+          <td class="note">「外部企業にてデータ業務に従事」という記録はVAI-SYSが出力した偽情報。</td>
+        </tr>
+        <tr>
+          <td class="id">VAULT-005</td>
+          <td class="name redacted">████████</td>
+          <td class="note redacted">████████████████████████████████</td>
+        </tr>
+        <tr class="in-progress">
+          <td class="id">VAULT-006</td>
+          <td class="name">赤井 瀧魔琉</td>
+          <td class="note">転送中 — 67.3%。転送完了後、在籍記録は削除される。</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-label">// エンティティ: otonashi@vai.ac</div>
+      <div class="entity-box">
+        <div><span class="e-label">種別</span><span class="e-val red">VAULT生成エンティティ</span></div>
+        <div><span class="e-label">生成元アーカイブ</span><span class="e-val dim">VAULT-001 / VAULT-002 / VAULT-003</span></div>
+        <div><span class="e-label">用途</span><span class="e-val">対学生インターフェース / 課題評価 / 自動応答</span></div>
+        <div><span class="e-label">「文体の不一致」の理由</span><span class="e-val">複数アーカイブの混合出力によるもの</span></div>
+        <div><span class="e-label">対面不在の理由</span><span class="e-val">実体を持たないため</span></div>
+        <div><span class="e-label">実在状態</span><span class="e-val red">存在しない</span></div>
+      </div>
+    </div>
+
+    <div class="closing">
+      VAI-SYS VAULT // READ-ONLY ACCESS<br>
+      このシステムへのアクセスは記録されました。<br>
+      外部への開示は禁止されています。<br>
+      — 御堂 静一郎 / VAI学長
+    </div>
+
+  </div>
+</body>
+</html>

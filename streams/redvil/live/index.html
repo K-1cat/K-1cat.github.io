@@ -62,7 +62,7 @@
       <h1>💻 VAI-399 授業中継</h1>
       <div class="meta">
         配信メディア: VAI.sys<br>
-        配信開始：05/26　19:03<br>
+        配信開始：<span id="stream-start"></span><br>
         Stream ID：RV-0214
       </div>
       <div class="stream-box">
@@ -81,9 +81,15 @@
   <div id="vai-footer"></div>
   <script src="/layout.js"></script>
   <script>
-    /* Replace the nav-links with the simple label, matching the original */
     const navLinks = document.querySelector('#vai-navbar .nav-links');
     if (navLinks) navLinks.textContent = '在校生配信';
+
+    const start = new Date(Date.now() - (13 * 60 + 42) * 60 * 1000);
+    const mm = String(start.getMonth() + 1).padStart(2, '0');
+    const dd = String(start.getDate()).padStart(2, '0');
+    const hh = String(start.getHours()).padStart(2, '0');
+    const mi = String(start.getMinutes()).padStart(2, '0');
+    document.getElementById('stream-start').textContent = `${mm}/${dd}　${hh}:${mi}`;
   </script>
 </body>
 </html>

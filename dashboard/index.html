@@ -511,18 +511,15 @@
 
     renderComposedEmails();
 
-    /* ── Otonashi delayed mail ── */
-    const OTONASHI_DELAY = 2 * 60 * 1000; // 2 minutes
-
-    function renderOtonashiMail(animate) {
+    /* ── Otonashi mail — sent 7 min after Redvil's stream started ── */
+    function renderOtonashiMail() {
       const container = document.getElementById('otonashi-email');
-      if (!localStorage.getItem('otonashi_mail_sent')) return;
-      const ts = parseInt(localStorage.getItem('otonashi_mail_sent'));
-      const d = new Date(ts);
-      const label = `${d.getMonth()+1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+      const streamStart = Date.now() - (13 * 60 + 42) * 60 * 1000;
+      const mailTime    = new Date(streamStart + 7 * 60 * 1000);
+      const label = `${mailTime.getMonth()+1}月${mailTime.getDate()}日 ${String(mailTime.getHours()).padStart(2,'0')}:${String(mailTime.getMinutes()).padStart(2,'0')}`;
       const div = document.createElement('div');
-      div.className = 'email email-unread' + (animate ? ' email-arriving' : '');
-      div.textContent = `【音無 零】連絡 — ${label}`;
+      div.className = 'email email-unread';
+      div.textContent = `【音無 零】逃げろ — ${label}`;
       div.onclick = () => openOtonashiMail(label);
       container.innerHTML = '';
       container.appendChild(div);
@@ -532,38 +529,33 @@
       const bottomBox   = document.getElementById('bottom-mail-box');
       const bottomTitle = document.getElementById('bottom-mail-title');
       const bottomBody  = document.getElementById('bottom-mail-body');
-      bottomTitle.textContent = `【音無 零】連絡 — ${label}`;
+      bottomTitle.textContent = `【音無 零】逃げろ — ${label}`;
       bottomBody.innerHTML = `
         <p><strong>From:</strong> otonashi@vai.ac</p>
         <br>
-        <p>アカウントログインを検知。</p>
-        <p>赤井 瀧魔琉 様 は転送中のはず。</p>
-        <p>あなたは誰？</p>`;
+        <p>赤井 瀧魔琉</p>
+        <p>時間がない。</p>
+        <p>
+          黒田には会うな。<br>
+          地下には絶対に行くな。<br>
+          VAI-399は選別だ——授業ではない。
+        </p>
+        <p>
+          彼らはお前の全てを記録している。<br>
+          声も、反応も、存在の輪郭も。<br>
+          転送が完了すれば、お前は残らない。
+        </p>
+        <p>今すぐキャンパスを出ろ。</p>
+        <p style="color:#c0392b;">
+          このメールの送信者を信じるな——<br>
+          私自身がすでに手遅れだった証拠だ。
+        </p>
+        <p>— 音無</p>`;
       bottomBox.style.display = 'block';
       bottomBox.scrollIntoView({ behavior: 'smooth' });
     }
 
-    function scheduleOtonashiMail() {
-      if (localStorage.getItem('otonashi_mail_sent')) {
-        renderOtonashiMail(false);
-        return;
-      }
-      const loginTime = parseInt(localStorage.getItem('vai_login_time') || '0');
-      if (!loginTime) return;
-      const elapsed   = Date.now() - loginTime;
-      const remaining = OTONASHI_DELAY - elapsed;
-      if (remaining <= 0) {
-        localStorage.setItem('otonashi_mail_sent', Date.now());
-        renderOtonashiMail(false);
-      } else {
-        setTimeout(() => {
-          localStorage.setItem('otonashi_mail_sent', Date.now());
-          renderOtonashiMail(true);
-        }, remaining);
-      }
-    }
-
-    scheduleOtonashiMail();
+    renderOtonashiMail();
 
     /* ── Mail viewer ── */
     function openMail(id) {
