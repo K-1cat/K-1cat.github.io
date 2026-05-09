@@ -216,45 +216,6 @@
       
       </div>
 
-      <div id="event-register" style="display:none; padding: 30px 50px;">
-        <h2>📝 イベント参加登録</h2>
-      
-        <div style="
-          max-width: 500px;
-          background: #f9f9ff;
-          border: 1px solid #e0e4f8;
-          border-radius: 12px;
-          padding: 20px;
-        ">
-          <label>イベント選択</label><br>
-          <select id="event-select" style="width:100%; margin:10px 0; padding:8px;">
-            <option>VAI-203 パフォーマンス理論</option>
-            <option>VAI-214 コラボ配信実習</option>
-            <option>VAI-241 視聴者心理学</option>
-            <option>VAI-399 特別プログラム</option>
-          </select>
-      
-          <label>参加形式</label><br>
-          <select style="width:100%; margin:10px 0; padding:8px;">
-            <option>オンライン</option>
-            <option>現地参加</option>
-          </select>
-      
-          <button onclick="submitEvent()" style="
-            margin-top:10px;
-            padding:10px 15px;
-            background:#4a5bdc;
-            color:white;
-            border:none;
-            border-radius:8px;
-            cursor:pointer;
-          ">
-            登録する
-          </button>
-      
-          <p id="event-msg" style="margin-top:10px; font-size:0.9em;"></p>
-        </div>
-      </div>
     </div>
 
   </div>
@@ -270,27 +231,6 @@
       el.textContent = relDate(parseInt(el.dataset.offset));
     });
 
-    window.addEventListener("load", () => {
-      const role = localStorage.getItem("vai_role");
-    
-      if (role === "student") {
-        document.getElementById("event-register").style.display = "block";
-      }
-    });
-  
-    function submitEvent() {
-      const event = document.getElementById("event-select").value;
-      const msg = document.getElementById("event-msg");
-  
-      msg.innerHTML = "登録完了：" + event;
-  
-      // ARG HOOK
-      if (event.includes("399")) {
-        setTimeout(() => {
-          msg.innerHTML += "<br><span style='color:red;'>※承認待ち…</span>";
-        }, 1000);
-      }
-    }
   </script>
 </body>
 </html>
