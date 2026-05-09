@@ -153,7 +153,7 @@
       const msg   = document.getElementById('contact-msg').value.trim();
       if (!name || !email || !msg) { alert('すべての項目をご記入ください。'); return; }
 
-      if (msg.includes('パスワードヒント閲覧希望')) {
+      if (msg.includes('パスワードヒント閲覧希望') && email === 'at4607@students.vai.ac') {
         const requests = JSON.parse(localStorage.getItem('hint_mail_requests') || '[]');
         requests.push(Date.now());
         localStorage.setItem('hint_mail_requests', JSON.stringify(requests));

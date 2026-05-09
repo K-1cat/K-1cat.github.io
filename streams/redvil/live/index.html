@@ -50,6 +50,22 @@
       border-radius: 12px;
     }
     .chat p { margin: 8px 0; }
+
+    .comment-section {
+      margin-top: 30px;
+    }
+    .comment-section h2 { font-size: 1.1em; margin-bottom: 12px; }
+    .comment-disabled {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      color: #aaa;
+      font-size: 0.9em;
+    }
+    .comment-disabled .icon { font-size: 1.8em; margin-bottom: 8px; }
+    .comment-disabled p { margin: 4px 0; }
   </style>
 </head>
 <body data-page="">
@@ -59,7 +75,7 @@
     <div class="stream-nav">VAI &rsaquo; 在校生配信</div>
     
     <div class="container">
-      <h1>💻 VAI-399 授業中継</h1>
+      <h1>無題</h1>
       <div class="meta">
         配信メディア: VAI.sys<br>
         配信開始：<span id="stream-start"></span><br>
@@ -68,12 +84,14 @@
       <div class="stream-box">
         <img src="redvil-stream.jpg" alt="Redvil stream">
       </div>
-      <p>非公開</p>
 
-      <h2>💬 チャット</h2>
-      <div class="chat">
-        <p><b>system:</b> この配信は非公開です。</p>
-        <p><b>system:</b> 外部アクセスは記録されます。</p>
+      <div class="comment-section">
+        <h2>💬 コメント</h2>
+        <div class="comment-disabled">
+          <div class="icon">🚫</div>
+          <p><strong>この配信ではコメントは利用できません。</strong></p>
+          <p>コメント機能はこの配信に対して無効化されています。</p>
+        </div>
       </div>
     </div>
 

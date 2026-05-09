@@ -265,7 +265,7 @@
           <div class="card"><b>総配信数</b><br>295<br><span style="font-size:0.72em;color:#bbb;">最終記録</span></div>
           <div class="card"><b>総時間</b><br>631h</div>
           <div class="card"><b>総視聴数</b><br>2,310</div>
-          <div class="card"><b>総いいね</b><br>42</div>
+          <div class="card"><b>総いいね</b><br>1,232</div>
           <div class="card"><b>フォロワー</b><br>258<br><span style="font-size:0.72em;color:#bbb;">更新停止中</span></div>
           <div class="card" style="border:1px solid #fcc;">
             <b>総合スコア</b><br>
@@ -506,7 +506,7 @@
         const label = `${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
         const div = document.createElement('div');
         const hintKey = `hint_${i}`;
-        div.className = getReadSet().has(hintKey) ? 'email' : 'email';
+        div.className = getReadSet().has(hintKey) ? 'email' : 'email email-unread';
         if (getReadSet().has(hintKey)) div.style.background = 'white';
         div.textContent = `【サポート】ディスコ称号＋誕生日 - ${label}`;
         div.onclick = () => { markEmailRead(hintKey, div); openHintMail(label); };
@@ -542,6 +542,11 @@
 
       if (!to || !subject) {
         alert('宛先と件名を入力してください。');
+        return;
+      }
+
+      if (!to.endsWith('@vai.ac')) {
+        alert('このシステムはVAI内部アドレス（@vai.ac）のみ送信可能です。');
         return;
       }
 
