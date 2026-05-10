@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VAI - 配信アクセス</title>
+  <title>VAI - Redvil 配信</title>
   <style>
     body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
 
@@ -14,18 +14,16 @@
       border-bottom: 1px solid #eee;
     }
 
+    /* ── Gate styles ── */
     .stream-wrap {
       max-width: 500px;
       margin: 80px auto;
       padding: 0 20px;
       text-align: center;
     }
-
     .lock-icon { font-size: 3em; margin-bottom: 16px; }
-
     .stream-wrap h1 { font-size: 1.5em; margin: 0 0 8px; }
     .stream-wrap p { color: #666; font-size: 0.95em; margin: 0 0 28px; }
-
     .step-label {
       font-size: 0.75em;
       font-weight: 600;
@@ -34,7 +32,6 @@
       margin-bottom: 14px;
       text-transform: uppercase;
     }
-
     .code-input {
       display: flex;
       gap: 10px;
@@ -63,9 +60,7 @@
       cursor: pointer;
     }
     .code-input button:hover { background: #3a4bc8; }
-
     .error-msg { color: #c0392b; font-size: 0.85em; display: none; margin-bottom: 10px; }
-
     .stream-meta {
       margin-top: 40px;
       font-size: 0.8em;
@@ -73,7 +68,6 @@
       font-family: monospace;
       line-height: 1.8;
     }
-
     .status-dot {
       display: inline-block;
       width: 8px;
@@ -87,70 +81,136 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
     }
-
     .gate { display: none; }
     .gate.active { display: block; }
+
+    /* ── Live stream styles ── */
+    .container { padding: 40px 50px; }
+    .stream-box {
+      background: #000;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      border: 3px solid #333;
+      box-shadow: 0 0 0 1px #555, 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .stream-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+    .meta {
+      color: #777;
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+    .comment-section { margin-top: 30px; }
+    .comment-section h2 { font-size: 1.1em; margin-bottom: 12px; }
+    .comment-disabled {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      color: #aaa;
+      font-size: 0.9em;
+    }
+    .comment-disabled .icon { font-size: 1.8em; margin-bottom: 8px; }
+    .comment-disabled p { margin: 4px 0; }
   </style>
 </head>
-<body>
+<body data-page="">
   <div id="vai-topbar"></div>
   <div id="main-content">
     <div class="stream-nav">VAI &rsaquo; 在校生配信</div>
 
-    <div class="stream-wrap">
-      <div class="lock-icon">🔒</div>
-      <h1>配信アクセス制限</h1>
-      <p>この配信は非公開に設定されています。<br>アクセスするには段階的な本人確認が必要です。</p>
+    <!-- GATE VIEW -->
+    <div id="gate-view">
+      <div class="stream-wrap">
+        <div class="lock-icon">🔒</div>
+        <h1>配信アクセス制限</h1>
+        <p>この配信は非公開に設定されています。<br>アクセスするには段階的な本人確認が必要です。</p>
 
-      <!-- STAGE 1: Program code -->
-      <div class="gate" id="gate-1">
-        <div class="step-label">ステップ 1 / 3 — プログラム確認</div>
-        <p style="margin-bottom:16px;">この配信が属するVAIプログラムのコード番号を入力してください。</p>
-        <div class="code-input">
-          <input type="text" id="input-1" placeholder="VAI-???">
-          <button onclick="checkStage1()">確認</button>
+        <!-- STAGE 1 -->
+        <div class="gate" id="gate-1">
+          <div class="step-label">ステップ 1 / 3 — プログラム確認</div>
+          <p style="margin-bottom:16px;">この配信が属するVAIプログラムのコード番号を入力してください。</p>
+          <div class="code-input">
+            <input type="text" id="input-1" placeholder="VAI-???">
+            <button onclick="checkStage1()">確認</button>
+          </div>
+          <div class="error-msg" id="err-1">コードが正しくありません。</div>
         </div>
-        <div class="error-msg" id="err-1">コードが正しくありません。</div>
-      </div>
 
-      <!-- STAGE 2: Instructor -->
-      <div class="gate" id="gate-2">
-        <div class="step-label">ステップ 2 / 3 — 担当教員確認</div>
-        <p style="margin-bottom:16px;">そのプログラムの担当教員の苗字を入力してください。</p>
-        <div class="code-input">
-          <input type="text" id="input-2" placeholder="担当教員">
-          <button onclick="checkStage2()">確認</button>
+        <!-- STAGE 2 -->
+        <div class="gate" id="gate-2">
+          <div class="step-label">ステップ 2 / 3 — 担当教員確認</div>
+          <p style="margin-bottom:16px;">そのプログラムの担当教員の苗字を入力してください。</p>
+          <div class="code-input">
+            <input type="text" id="input-2" placeholder="担当教員">
+            <button onclick="checkStage2()">確認</button>
+          </div>
+          <div class="error-msg" id="err-2">正しくありません。</div>
         </div>
-        <div class="error-msg" id="err-2">正しくありません。</div>
-      </div>
 
-      <!-- STAGE 3: Access code -->
-      <div class="gate" id="gate-3">
-        <div class="step-label">ステップ 3 / 3 — 認証コード</div>
-        <p style="margin-bottom:16px;">この配信にアクセスするには認証コードが必要です。</p>
-        <div class="code-input">
-          <input type="text" id="input-3" placeholder="認証コード" maxlength="12">
-          <button onclick="checkStage3()">接続</button>
+        <!-- STAGE 3 -->
+        <div class="gate" id="gate-3">
+          <div class="step-label">ステップ 3 / 3 — 認証コード</div>
+          <p style="margin-bottom:16px;">この配信にアクセスするには認証コードが必要です。</p>
+          <div class="code-input">
+            <input type="text" id="input-3" placeholder="認証コード" maxlength="12">
+            <button onclick="checkStage3()">接続</button>
+          </div>
+          <div class="error-msg" id="err-3">認証コードが正しくありません。</div>
         </div>
-        <div class="error-msg" id="err-3">認証コードが正しくありません。</div>
-      </div>
 
-      <div class="stream-meta">
-        Stream ID: RV-0214<br>
-        <span class="status-dot"></span>Status: ACTIVE
+        <div class="stream-meta">
+          Stream ID: RV-0214<br>
+          <span class="status-dot"></span>Status: ACTIVE
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE VIEW -->
+    <div id="live-view" style="display:none;">
+      <div class="container">
+        <h1>無題 <span style="display:inline-block;background:#c0392b;color:white;font-size:0.45em;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:0.1em;vertical-align:middle;margin-left:8px;">● LIVE</span></h1>
+        <div class="meta">
+          配信メディア: VAI.sys<br>
+          配信開始：05/02　07:21<br>
+          Stream ID：RV-0214
+        </div>
+        <div class="stream-box">
+          <img id="stream-img" src="stream.jpg" alt="Redvil stream">
+        </div>
+
+        <div class="comment-section">
+          <h2>💬 コメント</h2>
+          <div class="comment-disabled">
+            <div class="icon">🚫</div>
+            <p><strong>この配信ではコメントは利用できません。</strong></p>
+            <p>コメント機能はこの配信に対して無効化されています。</p>
+          </div>
+        </div>
       </div>
     </div>
 
   </div>
   <div id="vai-footer"></div>
-  <script>
-    if (localStorage.getItem('vai_role') === 'student') {
-      location.replace('/streams/redvil/live/');
-    }
-  </script>
   <script src="/layout.js"></script>
   <script>
     const STAGE_KEY = 'redvil_stream_stage';
+
+    function showLive() {
+      document.getElementById('gate-view').style.display = 'none';
+      document.getElementById('live-view').style.display = 'block';
+      const hintSent = localStorage.getItem('hint_mail_sent') ||
+                       (JSON.parse(localStorage.getItem('hint_mail_requests') || '[]').length > 0);
+      if (hintSent) {
+        document.getElementById('stream-img').src = 'stream-hint.jpg';
+      }
+    }
 
     function showStage(n) {
       document.querySelectorAll('.gate').forEach(g => g.classList.remove('active'));
@@ -160,11 +220,18 @@
 
     function getStage() {
       const val = localStorage.getItem(STAGE_KEY);
-      if (val === 'done') return 3;
+      if (val === 'done') return 'done';
       return parseInt(val || '1');
     }
 
-    // Stage 1 — program code: VAI-399 or just 399
+    // Bypass gate for logged-in students or already-unlocked players
+    if (localStorage.getItem('vai_role') === 'student' || localStorage.getItem(STAGE_KEY) === 'done') {
+      showLive();
+    } else {
+      showStage(getStage());
+    }
+
+    // Stage 1 — program code
     document.getElementById('input-1').addEventListener('keydown', e => { if (e.key === 'Enter') checkStage1(); });
     function checkStage1() {
       const val = document.getElementById('input-1').value.trim().toUpperCase().replace('VAI-', '');
@@ -177,7 +244,7 @@
       }
     }
 
-    // Stage 2 — instructor surname: 黒田 or kuroda
+    // Stage 2 — instructor surname
     document.getElementById('input-2').addEventListener('keydown', e => { if (e.key === 'Enter') checkStage2(); });
     function checkStage2() {
       const val = document.getElementById('input-2').value.trim().toLowerCase();
@@ -197,19 +264,11 @@
       const val = document.getElementById('input-3').value.trim().toUpperCase();
       if (val === CORRECT_CODE) {
         localStorage.setItem(STAGE_KEY, 'done');
-        setTimeout(() => { location.href = '/streams/redvil/live/'; }, 400);
+        setTimeout(showLive, 400);
       } else {
         document.getElementById('err-3').style.display = 'block';
         document.getElementById('input-3').value = '';
       }
-    }
-
-    // Restore progress
-    const stage = getStage();
-    if (stage === 'done' || stage >= 3) {
-      showStage(3);
-    } else {
-      showStage(stage);
     }
   </script>
 </body>

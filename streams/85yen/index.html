@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VAI - 配信アクセス</title>
+  <title>VAI - 85Yen 配信</title>
   <style>
     body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #333; }
 
@@ -14,18 +14,16 @@
       border-bottom: 1px solid #eee;
     }
 
+    /* ── Gate styles ── */
     .stream-wrap {
       max-width: 500px;
       margin: 80px auto;
       padding: 0 20px;
       text-align: center;
     }
-
     .lock-icon { font-size: 3em; margin-bottom: 16px; }
-
     .stream-wrap h1 { font-size: 1.5em; margin: 0 0 8px; }
     .stream-wrap p { color: #666; font-size: 0.95em; margin: 0 0 28px; }
-
     .code-input {
       display: flex;
       gap: 10px;
@@ -54,9 +52,7 @@
       cursor: pointer;
     }
     .code-input button:hover { background: #3a4bc8; }
-
     .error-msg { color: #c0392b; font-size: 0.85em; display: none; margin-bottom: 10px; }
-
     .stream-meta {
       margin-top: 40px;
       font-size: 0.8em;
@@ -64,7 +60,6 @@
       font-family: monospace;
       line-height: 1.8;
     }
-
     .status-dot {
       display: inline-block;
       width: 8px;
@@ -78,53 +73,116 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
     }
+
+    /* ── Live stream styles ── */
+    .container { padding: 40px 50px; }
+    .stream-box {
+      background: #000;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      border: 3px solid #333;
+      box-shadow: 0 0 0 1px #555, 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .stream-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+    .meta {
+      color: #777;
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+    .chat {
+      background: #f5f5f5;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .chat p { margin: 8px 0; }
   </style>
 </head>
-<body>
+<body data-page="">
   <div id="vai-topbar"></div>
   <div id="main-content">
     <div class="stream-nav">VAI &rsaquo; 在校生配信</div>
 
-    <div class="stream-wrap">
-      <div class="lock-icon">🔒</div>
-      <h1>配信アクセス制限</h1>
-      <p>この配信は非公開に設定されています。<br>アクセスするには認証コードが必要です。</p>
+    <!-- GATE VIEW -->
+    <div id="gate-view">
+      <div class="stream-wrap">
+        <div class="lock-icon">🔒</div>
+        <h1>配信アクセス制限</h1>
+        <p>この配信は非公開に設定されています。<br>アクセスするには認証コードが必要です。</p>
 
-      <div class="code-input">
-        <input type="text" id="code-input" placeholder="認証コード" maxlength="12">
-        <button onclick="checkCode()">接続</button>
+        <div class="code-input">
+          <input type="text" id="code-input" placeholder="認証コード" maxlength="12">
+          <button onclick="checkCode()">接続</button>
+        </div>
+        <div class="error-msg" id="error-msg">認証コードが正しくありません。</div>
+
+        <div class="stream-meta">
+          Stream ID: YN-1572<br>
+          <span class="status-dot"></span>Status: ACTIVE
+        </div>
       </div>
-      <div class="error-msg" id="error-msg">認証コードが正しくありません。</div>
+    </div>
 
-      <div class="stream-meta">
-        Stream ID: YN-1572<br>
-        <span class="status-dot"></span>Status: ACTIVE
+    <!-- LIVE VIEW -->
+    <div id="live-view" style="display:none;">
+      <div class="container">
+        <h1>👥 85Yen - コラボ配信 （w/ たんばりん） <span style="display:inline-block;background:#c0392b;color:white;font-size:0.45em;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:0.1em;vertical-align:middle;margin-left:8px;">● LIVE</span></h1>
+        <div class="meta">
+          配信メディア: VAI.sys<br>
+          配信開始：05/02　19:03<br>
+          Stream ID：YN-1572
+        </div>
+        <div class="stream-box">
+          <img src="85Yen-stream.jpg" alt="85Yen stream">
+        </div>
+        <p>たんばりんとスプラしてます！視聴者参加型！！強者カモン！🦑</p>
+
+        <h2>💬 チャット</h2>
+        <div class="chat">
+          <p><b>viewer_04:</b> 58ha~</p>
+          <p><b>viewer_12:</b> こん～</p>
+          <p><b>viewer_03:</b> コラボ最高！</p>
+          <p><b>viewer_08:</b> たんばりんさんから来ました</p>
+          <p><b>viewer_26:</b> めっちゃ上手いですね。</p>
+          <p><b>viewer_20:</b> チャンネル登録しました！</p>
+          <p><b>viewer_12:</b> 次のコラボ配信いつですか？</p>
+        </div>
       </div>
     </div>
 
   </div>
   <div id="vai-footer"></div>
-  <script>
-    if (localStorage.getItem('vai_role') === 'student') {
-      location.replace('/streams/85yen/live/');
-    }
-  </script>
   <script src="/layout.js"></script>
   <script>
     const CORRECT_CODE = '2141572';
+    const UNLOCKED_KEY = '85yen_stream_unlocked';
 
-    document.getElementById('code-input').addEventListener('keydown', function(e) {
+    function showLive() {
+      document.getElementById('gate-view').style.display = 'none';
+      document.getElementById('live-view').style.display = 'block';
+    }
+
+    // Bypass gate for logged-in students or already-unlocked players
+    if (localStorage.getItem('vai_role') === 'student' || localStorage.getItem(UNLOCKED_KEY)) {
+      showLive();
+    }
+
+    document.getElementById('code-input').addEventListener('keydown', e => {
       if (e.key === 'Enter') checkCode();
     });
 
     function checkCode() {
       const input = document.getElementById('code-input').value.trim().toUpperCase();
-      const err   = document.getElementById('error-msg');
       if (input === CORRECT_CODE) {
-        err.style.display = 'none';
-        setTimeout(() => { location.href = '/streams/85yen/live/'; }, 400);
+        localStorage.setItem(UNLOCKED_KEY, '1');
+        setTimeout(showLive, 400);
       } else {
-        err.style.display = 'block';
+        document.getElementById('error-msg').style.display = 'block';
         document.getElementById('code-input').value = '';
       }
     }
