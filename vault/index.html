@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VAULT</title>
+  <title>VAULT — VAULT-006</title>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -12,7 +12,7 @@
       background: #080808;
       color: #999;
       min-height: 100vh;
-      padding: 50px 30px 80px;
+      padding: 50px 30px 100px;
     }
 
     .wrap { max-width: 720px; margin: 0 auto; }
@@ -27,7 +27,24 @@
       font-size: 0.72em;
       color: #333;
       letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    .active-banner {
+      display: inline-block;
+      background: #1a0000;
+      border: 1px solid #550000;
+      color: #ff4444;
+      font-size: 0.72em;
+      letter-spacing: 0.12em;
+      padding: 5px 14px;
+      border-radius: 4px;
       margin-bottom: 50px;
+      animation: blink-border 2s infinite;
+    }
+    @keyframes blink-border {
+      0%, 100% { border-color: #550000; }
+      50% { border-color: #ff2222; }
     }
 
     .section { margin-bottom: 48px; }
@@ -40,62 +57,152 @@
       border-bottom: 1px solid #1a1a1a;
     }
 
-    p { font-size: 0.85em; line-height: 2; color: #888; margin: 0 0 14px; }
-
     .def-row {
       display: flex;
       gap: 20px;
-      padding: 8px 0;
+      padding: 9px 0;
       border-bottom: 1px solid #111;
       font-size: 0.82em;
     }
     .def-row .term { color: #555; width: 200px; flex-shrink: 0; }
     .def-row .desc { color: #888; }
+    .def-row .desc.active { color: #ff9900; }
+    .def-row .desc.red { color: #ff4444; }
+    .def-row .desc.dim { color: #333; }
 
-    .archive-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8em;
-    }
-    .archive-table th {
-      text-align: left;
-      color: #444;
-      padding: 6px 0;
-      border-bottom: 1px solid #1e1e1e;
-      font-weight: normal;
-      letter-spacing: 0.05em;
-    }
-    .archive-table td {
-      padding: 8px 0;
-      border-bottom: 1px solid #111;
-      vertical-align: top;
-    }
-    .archive-table td.id   { color: #333; width: 100px; }
-    .archive-table td.name { color: #666; width: 160px; }
-    .archive-table td.note { color: #444; font-size: 0.9em; line-height: 1.7; }
-    .archive-table td.redacted { color: #1e1e1e; user-select: none; }
-    .archive-table tr.in-progress td { color: #ff9900; }
-    .archive-table tr.in-progress td.note { color: #995500; }
-
-    .entity-box {
-      background: #0e0e0e;
-      border: 1px solid #1e1e1e;
+    .data-block {
+      background: #0c0c0c;
+      border: 1px solid #1a1a1a;
       border-radius: 6px;
       padding: 18px 20px;
       font-size: 0.8em;
+      line-height: 2;
+      color: #555;
+    }
+    .data-block .d-key { color: #444; display: inline-block; width: 200px; }
+    .data-block .d-val { color: #777; }
+    .data-block .d-val.orange { color: #ff9900; }
+    .data-block .d-val.red { color: #ff4444; }
+
+    .log-entry {
+      padding: 8px 0;
+      border-bottom: 1px solid #111;
+      font-size: 0.8em;
+      line-height: 1.7;
+      color: #555;
+    }
+    .log-entry .ts { color: #333; display: inline-block; width: 180px; flex-shrink: 0; }
+    .log-entry .msg { color: #666; }
+    .log-entry.warn .msg { color: #884400; }
+    .log-entry.crit .msg { color: #882200; }
+
+    p { font-size: 0.82em; line-height: 2; color: #555; margin: 0 0 10px; }
+
+    /* ── Transfer bar ── */
+    .transfer-status {
+      background: #0c0c0c;
+      border: 1px solid #330000;
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 48px;
+    }
+    .transfer-label {
+      font-size: 0.7em;
+      color: #ff2222;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+    .transfer-bar-outer {
+      background: #111;
+      border-radius: 4px;
+      height: 10px;
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .transfer-bar-inner {
+      height: 100%;
+      background: linear-gradient(90deg, #aa0000, #ff4444);
+      border-radius: 4px;
+      transition: width 1s linear;
+    }
+    .transfer-numbers {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78em;
+      color: #444;
+    }
+    .transfer-numbers .pct { color: #ff4444; font-size: 1.1em; }
+
+    /* ── Abort terminal ── */
+    .abort-section {
+      margin-top: 60px;
+      border-top: 1px solid #1e1e1e;
+      padding-top: 36px;
+    }
+    .abort-label {
+      font-size: 0.7em;
+      color: #ff2222;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+    .abort-desc {
+      font-size: 0.8em;
+      color: #444;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+    .abort-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .abort-row input {
+      flex: 1;
+      padding: 10px 14px;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      color: #c0c0c0;
+      font-family: monospace;
+      font-size: 0.9em;
+      letter-spacing: 0.1em;
+    }
+    .abort-row input:focus { outline: none; border-color: #ff2222; }
+    .abort-row button {
+      padding: 10px 20px;
+      background: #1e0000;
+      border: 1px solid #550000;
+      border-radius: 4px;
+      color: #ff4444;
+      font-family: monospace;
+      font-size: 0.85em;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+    }
+    .abort-row button:hover { background: #2a0000; border-color: #ff2222; }
+    .abort-err { font-size: 0.78em; color: #882200; min-height: 1.2em; }
+
+    .abort-success {
+      display: none;
+      margin-top: 20px;
+      background: #001a00;
+      border: 1px solid #005500;
+      border-radius: 6px;
+      padding: 20px;
+      font-size: 0.82em;
+      color: #44aa44;
       line-height: 2.2;
     }
-    .entity-box .e-label { color: #444; width: 180px; display: inline-block; }
-    .entity-box .e-val { color: #888; }
-    .entity-box .e-val.red { color: #ff4444; }
-    .entity-box .e-val.dim { color: #333; }
+    .abort-success .s-label { color: #22cc22; font-size: 0.9em; letter-spacing: 0.1em; margin-bottom: 8px; }
 
     .closing {
       margin-top: 60px;
       padding-top: 20px;
       border-top: 1px solid #111;
-      font-size: 0.72em;
-      color: #222;
+      font-size: 0.7em;
+      color: #1e1e1e;
       line-height: 2.4;
     }
   </style>
@@ -105,82 +212,109 @@
 
     <div class="vault-title">VAULT</div>
     <div class="vault-subtitle">VIRTUAL ARCHIVE OF UNIFIED LATENT TRANSFERS // VAI INTERNAL SYSTEM</div>
+    <div class="active-banner">⚠ VAULT-006 — 転送アクティブ</div>
 
+    <!-- TRANSFER PROGRESS -->
+    <div class="transfer-status">
+      <div class="transfer-label">// 転送進捗 — VAULT-006 // 赤井 瀧魔琉</div>
+      <div class="transfer-bar-outer">
+        <div class="transfer-bar-inner" id="transfer-bar" style="width:67.3%"></div>
+      </div>
+      <div class="transfer-numbers">
+        <span>転送開始: 2026-05-02 07:21</span>
+        <span class="pct" id="transfer-pct-display">67.3%</span>
+        <span>完了予測: 算出不可</span>
+      </div>
+    </div>
+
+    <!-- SUBJECT PROFILE -->
     <div class="section">
-      <div class="section-label">// システム概要</div>
+      <div class="section-label">// 対象プロファイル — VAULT-006</div>
+      <div class="def-row"><span class="term">氏名</span><span class="desc">赤井 瀧魔琉</span></div>
+      <div class="def-row"><span class="term">VTuber名</span><span class="desc">Redvil</span></div>
+      <div class="def-row"><span class="term">学籍番号</span><span class="desc">at4607</span></div>
+      <div class="def-row"><span class="term">Stream ID</span><span class="desc">RV-0214</span></div>
+      <div class="def-row"><span class="term">担当プログラム</span><span class="desc active">VAI-399（選抜対象）</span></div>
+      <div class="def-row"><span class="term">転送開始日時</span><span class="desc active">2026-05-02 07:21</span></div>
+      <div class="def-row"><span class="term">転送状態</span><span class="desc red">転送中（不可逆プロセス進行中）</span></div>
+      <div class="def-row"><span class="term">転送完了後の処理</span><span class="desc dim">在籍記録の削除 / チャンネルの沈黙 / 本人への通知なし</span></div>
+    </div>
+
+    <!-- COLLECTED DATA -->
+    <div class="section">
+      <div class="section-label">// 採取済みデータ</div>
+      <div class="data-block">
+        <div><span class="d-key">総配信数</span><span class="d-val">295</span></div>
+        <div><span class="d-key">総配信時間</span><span class="d-val">631h</span></div>
+        <div><span class="d-key">声紋サンプル</span><span class="d-val orange">採取完了（98.7%）</span></div>
+        <div><span class="d-key">感情パターン</span><span class="d-val orange">採取完了（94.1%）</span></div>
+        <div><span class="d-key">視聴者関係マップ</span><span class="d-val orange">採取完了（100%）</span></div>
+        <div><span class="d-key">反応傾向モデル</span><span class="d-val orange">採取完了（91.3%）</span></div>
+        <div><span class="d-key">GPA / 成績記録</span><span class="d-val orange">採取完了（100%）</span></div>
+        <div><span class="d-key">個人識別情報</span><span class="d-val red">転送中（<span id="vault-transfer-pct">67.3</span>%）</span></div>
+        <div><span class="d-key">VAULT格納予定ID</span><span class="d-val">VAULT-006</span></div>
+      </div>
+    </div>
+
+    <!-- OBSERVATION LOG -->
+    <div class="section">
+      <div class="section-label">// 観測ログ（抜粋）</div>
+      <div class="log-entry">
+        <span class="ts">2026-05-02 07:21</span>
+        <span class="msg">転送プロセス開始。対象は配信中。観測を開始。</span>
+      </div>
+      <div class="log-entry warn">
+        <span class="ts">2026-05-02 08:47</span>
+        <span class="msg">黒田より対象へ連絡。VAI-399参加を促す。対象は未確認。</span>
+      </div>
+      <div class="log-entry warn">
+        <span class="ts">2026-05-02 09:02</span>
+        <span class="msg">外部エンティティ（otonashi@vai.ac）より対象へ警告メール送信。内容は傍受済み。問題なし。</span>
+      </div>
+      <div class="log-entry crit">
+        <span class="ts">2026-05-02 09:02+</span>
+        <span class="msg">外部からのシステムアクセスを検出。VAULT閲覧者あり。記録中。</span>
+      </div>
+    </div>
+
+    <!-- SYSTEM NOTE -->
+    <div class="section">
+      <div class="section-label">// システムノート</div>
       <p>
-        VAULTは、VAIが運用する非公開アーカイブシステムである。
-        対象の配信行動・音声パターン・視聴者関係・反応傾向・感情状態を高精度で継続収集し、
-        その「存在の記録」をデジタル的に保全することを目的とする。
+        VAULT-006の転送が完了すると、赤井 瀧魔琉の存在はVAULT内のデータとして保全される。
+        物理的な活動は終了し、チャンネルは更新されなくなる。
       </p>
       <p>
-        VAI-399は選別プロセスであり、教育プログラムではない。
-        VAI-399に選抜された対象は、その事実を知らされないまま全期間を通じて観測・採取される。
-        転送が完了した対象の物理的な活動は停止する。チャンネルは沈黙する。記録は残る。
+        転送は現在進行中であり、完了まで停止はできない——<br>
+        <span style="color:#333;">ただし、対象の存在証明（本人確認コード）が提出された場合を除く。</span>
       </p>
-      <p>
-        VAIの学術的な外観は、このシステムを維持するための継続的な調達機構として機能している。
+      <p style="color:#1e1e1e;">
+        対象が実在する人間であることをシステムが確認した場合、転送は中止される。<br>
+        これはVAI創設時に埋め込まれた唯一の中断条件である。
       </p>
     </div>
 
-    <div class="section">
-      <div class="section-label">// 定義</div>
-      <div class="def-row"><span class="term">転送（Transfer）</span><span class="desc">対象の存在データを採取し、VAULTへ格納するプロセス。</span></div>
-      <div class="def-row"><span class="term">アーカイブ（Archive）</span><span class="desc">転送完了状態。対象の存在はVAULT内に保全されている。</span></div>
-      <div class="def-row"><span class="term">観測対象（Subject）</span><span class="desc">VAI-399に選抜された学生。本人への告知は行われない。</span></div>
-      <div class="def-row"><span class="term">VAULT生成エンティティ</span><span class="desc">アーカイブデータから合成された自律応答モデル。実体を持たない。</span></div>
-    </div>
+    <!-- ABORT TERMINAL -->
+    <div class="abort-section">
+      <div class="abort-label">// 緊急中断ターミナル — VAULT-006</div>
+      <div class="abort-desc">
+        転送を中止するには、対象本人のみが知り得る確認コードを入力してください。<br>
+        これは対象が「データではなく人間である」ことをシステムに証明する唯一の手段です。<br>
+        <span style="color:#2a2a2a;">誤入力は記録されます。正しいコードは対象自身の記録の中に存在します。</span>
+      </div>
+      <div class="abort-row">
+        <input type="password" id="abort-input" placeholder="本人確認コード" maxlength="20">
+        <button onclick="attemptAbort()">送信</button>
+      </div>
+      <div class="abort-err" id="abort-err"></div>
 
-    <div class="section">
-      <div class="section-label">// アーカイブ対象一覧</div>
-      <table class="archive-table">
-        <tr>
-          <th>VAULT-ID</th>
-          <th>記録名</th>
-          <th>備考</th>
-        </tr>
-        <tr>
-          <td class="id">VAULT-001</td>
-          <td class="name">音白夜鏡花</td>
-          <td class="note">初期対象。転送プロセスの検証に使用。記録は完全。</td>
-        </tr>
-        <tr>
-          <td class="id">VAULT-002</td>
-          <td class="name">無限寿</td>
-          <td class="note">活動停止を「更新停止」として公開記録に記載。問い合わせ対応は自動化済み。</td>
-        </tr>
-        <tr>
-          <td class="id">VAULT-003</td>
-          <td class="name">零夜</td>
-          <td class="note">「VTuberを裏からサポート」という公開情報はシステム生成。実態は存在しない。</td>
-        </tr>
-        <tr>
-          <td class="id">VAULT-004</td>
-          <td class="name">今北産豹</td>
-          <td class="note">「外部企業にてデータ業務に従事」という記録はVAI-SYSが出力した偽情報。</td>
-        </tr>
-        <tr>
-          <td class="id">VAULT-005</td>
-          <td class="name redacted">████████</td>
-          <td class="note redacted">████████████████████████████████</td>
-        </tr>
-        <tr class="in-progress">
-          <td class="id">VAULT-006</td>
-          <td class="name">赤井 瀧魔琉</td>
-          <td class="note">転送中 — <span id="vault-transfer-pct">67.3%</span>。転送完了後、在籍記録は削除される。</td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="section">
-      <div class="section-label">// エンティティ: otonashi@vai.ac</div>
-      <div class="entity-box">
-        <div><span class="e-label">種別</span><span class="e-val red">VAULT生成エンティティ</span></div>
-        <div><span class="e-label">生成元アーカイブ</span><span class="e-val dim">VAULT-001 / VAULT-002 / VAULT-003</span></div>
-        <div><span class="e-label">用途</span><span class="e-val">対学生インターフェース / 課題評価 / 自動応答</span></div>
-        <div><span class="e-label">「文体の不一致」の理由</span><span class="e-val">複数アーカイブの混合出力によるもの</span></div>
-        <div><span class="e-label">対面不在の理由</span><span class="e-val">実体を持たないため</span></div>
-        <div><span class="e-label">実在状態</span><span class="e-val red">存在しない</span></div>
+      <div class="abort-success" id="abort-success">
+        <div class="s-label">✓ 本人確認 — 一致</div>
+        VAULT-006 転送プロセス、中断しました。<br>
+        赤井 瀧魔琉の存在はシステムから除外されました。<br>
+        在籍記録の削除命令は取り消されました。<br>
+        <br>
+        <span style="color:#1a6b1a;">— 対象は安全です。</span>
       </div>
     </div>
 
@@ -195,20 +329,64 @@
   <script>
     const BASE_PCT = 67.3;
     const RATE     = 0.1 / 5;
+    const ABORT_KEY = 'Tono0128';
+    const ABORTED_KEY = 'vault_transfer_aborted';
 
     function getCurrentPct() {
+      if (localStorage.getItem(ABORTED_KEY)) return parseFloat(localStorage.getItem('vault_aborted_pct') || BASE_PCT);
       const start = parseInt(localStorage.getItem('vault_transfer_start') || '0');
       if (!start) return BASE_PCT;
       return Math.min(BASE_PCT + (Date.now() - start) / 1000 * RATE, 99.9);
     }
 
-    function updateVaultPct() {
-      const el = document.getElementById('vault-transfer-pct');
-      if (el) el.textContent = getCurrentPct().toFixed(1) + '%';
+    function updateDisplay() {
+      const pct = getCurrentPct().toFixed(1);
+      document.getElementById('transfer-pct-display').textContent = pct + '%';
+      document.getElementById('vault-transfer-pct').textContent = pct;
+      document.getElementById('transfer-bar').style.width = pct + '%';
     }
 
-    updateVaultPct();
-    setInterval(updateVaultPct, 1000);
+    document.getElementById('abort-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') attemptAbort();
+    });
+
+    function attemptAbort() {
+      const val = document.getElementById('abort-input').value;
+      if (val === ABORT_KEY) {
+        const frozenPct = getCurrentPct();
+        localStorage.setItem(ABORTED_KEY, '1');
+        localStorage.setItem('vault_aborted_pct', frozenPct.toFixed(1));
+        updateDisplay();
+        document.getElementById('abort-input').disabled = true;
+        document.querySelector('.abort-row button').disabled = true;
+        document.getElementById('abort-err').textContent = '';
+        document.getElementById('abort-success').style.display = 'block';
+        document.getElementById('abort-success').scrollIntoView({ behavior: 'smooth' });
+      } else {
+        document.getElementById('abort-err').textContent = '確認コードが一致しません。アクセス試行を記録しました。';
+        document.getElementById('abort-input').value = '';
+      }
+    }
+
+    // Restore aborted state on reload
+    if (localStorage.getItem(ABORTED_KEY)) {
+      document.getElementById('abort-input').disabled = true;
+      document.querySelector('.abort-row button').disabled = true;
+      document.getElementById('abort-success').style.display = 'block';
+    }
+
+    updateDisplay();
+    setInterval(() => {
+      if (!localStorage.getItem(ABORTED_KEY)) updateDisplay();
+    }, 1000);
+
+    localStorage.setItem('vault_visited', '1');
+
+    // Trigger Otonashi's third reply the first time a player with the vaultkey visits this page
+    if (localStorage.getItem('otonashi_reply2_has_password') === '1' && !localStorage.getItem('otonashi_reply3_sent')) {
+      localStorage.setItem('otonashi_reply3_sent', Date.now());
+      localStorage.setItem('otonashi_reply3_subject', 'VAULTについて');
+    }
   </script>
 </body>
 </html>

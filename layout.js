@@ -98,6 +98,38 @@
   }
 
   /* ----------------------------------------------------------
+     ARG: SITE DOWN OVERLAY
+     If vai_site_down === "true", hide all content and show
+     the access-restricted message.
+  ---------------------------------------------------------- */
+  if (down === 'true') {
+    document.body.style.background = 'white';
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) mainContent.style.display = 'none';
+    const layoutEl = document.querySelector('.layout');
+    if (layoutEl) layoutEl.style.display = 'none';
+
+    let overlay = document.getElementById('vai-down-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'vai-down-overlay';
+      overlay.style.cssText = 'text-align:center;padding:100px 30px;';
+      overlay.innerHTML = `
+        <h1>現在、メンテナンスを実施中です。</h1>
+        <p>ご不便をおかけしますが、しばらくお待ちください。</p>`;
+      const footerRef = document.getElementById('vai-footer');
+      footerRef ? document.body.insertBefore(overlay, footerRef) : document.body.appendChild(overlay);
+    }
+
+    if (!localStorage.getItem('vault_visited')) {
+      setTimeout(() => {
+        localStorage.removeItem('vai_site_down');
+        location.reload();
+      }, 60 * 1000);
+    }
+  }
+
+  /* ----------------------------------------------------------
      FOOTER
   ---------------------------------------------------------- */
   const footerEl = document.getElementById('vai-footer');
@@ -107,29 +139,7 @@
         © 2026 Virtual Academy Institution（VAI）
       </div>`;
   }
-
-  /* ----------------------------------------------------------
-     ARG: SITE DOWN OVERLAY
-     If vai_site_down === "true", hide all content and show
-     the access-restricted message.
-  ---------------------------------------------------------- */
-  if (down === 'true') {
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) mainContent.style.display = 'none';
-
-    let overlay = document.getElementById('vai-down-overlay');
-    if (!overlay) {
-      overlay = document.createElement('div');
-      overlay.id = 'vai-down-overlay';
-      overlay.style.cssText = 'text-align:center;padding:100px 30px;';
-      overlay.innerHTML = `
-        <h1>現在、メンテナンスを実施中です。</h1>
-        <p>不審なアクティビティを検知しました。</p>
-        <p>一部のユーザーのみアクセス可能です。</p>`;
-      document.body.appendChild(overlay);
-    }
-  }
-
+  
   /* ----------------------------------------------------------
      SHARED STYLES
      Injected once so every page gets consistent topbar/nav/footer
@@ -199,12 +209,9 @@
       .nav-links a:hover { color: #4a5bdc; }
 
       /* BASE LAYOUT FIX */
-      html, body {
-        height: 100%;
-        margin: 0;
-      }
-      
       body {
+        min-height: 100vh;
+        margin: 0;
         display: flex;
         flex-direction: column;
       }
@@ -215,6 +222,10 @@
       }
       
       /* FOOTER */
+      #vai-footer {
+        margin-top: auto;
+        flex-shrink: 0;
+      }
       .footer {
         background: #f0f2ff;
         padding: 20px;
