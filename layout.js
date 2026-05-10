@@ -137,6 +137,7 @@
     footerEl.innerHTML = `
       <div class="footer">
         © 2026 Virtual Academy Institution（VAI）
+        <br><span style="font-size:0.85em;color:#999;">このサイトはフィクションです。登場する施設・人物・団体はすべて架空のものであり、実在のいかなるものとも関係ありません。</span>
       </div>`;
   }
   
