@@ -40,6 +40,10 @@
       ? '/dashboard/'
       : '/login/';
 
+    const sysLink = down === 'true'
+      ? `<a href="/sys/" style="color:#ff9900;">SYS</a>`
+      : '';
+
     topbarEl.innerHTML = `
       <div class="topbar">
         <div>VAI | Virtual Academy Institution</div>
@@ -49,6 +53,7 @@
           <a href="${portalHref}" id="portal-link">${portalLabel}</a>
           <a href="/support/">サポート</a>
           <a href="/search/">検索</a>
+          ${sysLink}
         </div>
       </div>`;
   }
@@ -260,4 +265,121 @@ window.loginVAI = function (name) {
   localStorage.setItem('vai_user', name || 'ゲスト');
   localStorage.setItem('vai_role', 'student');
   location.href = '/dashboard/';
+};
+
+/* ----------------------------------------------------------
+   ARG STEP NAVIGATION — jump to any puzzle step via console
+   goStep1()  explore        — fresh start, home page
+   goStep2()  streams        — all streams unlocked
+   goStep3()  loggedIn       — logged in as Redvil, dashboard
+   goStep4()  b1Accessed     — vaultkey received, b1-access
+   goStep5()  vaultVisited   — vault seen, Otonashi reply 3 sent
+   goStep6()  siteDown       — system down, /sys/ accessible
+   goStep7()  serverSelected — correct server chosen in /sys/
+   goStep8()  fightDone      — president fight cleared, vault input ready
+   goStep9()  gameClear      — skip to clear screen
+---------------------------------------------------------- */
+function _setBase() {
+  localStorage.clear();
+  localStorage.setItem('vai_user', 'Redvil');
+  localStorage.setItem('vai_role', 'student');
+  localStorage.setItem('vai_login_time', new Date('2026-05-02T21:03:00').getTime());
+}
+
+window.goStep1 = function () {
+  localStorage.clear();
+  location.href = '/';
+};
+
+window.goStep2 = function () {
+  localStorage.clear();
+  localStorage.setItem('85yen_stream_unlocked', '1');
+  localStorage.setItem('redvil_stream_stage', 'done');
+  location.href = '/streams/redvil/';
+};
+
+window.goStep3 = function () {
+  _setBase();
+  localStorage.setItem('85yen_stream_unlocked', '1');
+  localStorage.setItem('redvil_stream_stage', 'done');
+  location.href = '/dashboard/';
+};
+
+window.goStep4 = function () {
+  _setBase();
+  localStorage.setItem('85yen_stream_unlocked', '1');
+  localStorage.setItem('redvil_stream_stage', 'done');
+  const t = new Date('2026-05-02T09:00:00').getTime();
+  localStorage.setItem('otonashi_reply_sent', t);
+  localStorage.setItem('otonashi_reply_subject', '助けてほしい');
+  localStorage.setItem('otonashi_reply2_sent', t + 60000);
+  localStorage.setItem('otonashi_reply2_subject', 'b1-access password');
+  localStorage.setItem('otonashi_reply2_has_password', '1');
+  localStorage.setItem('vai_b1_accessed', '1');
+  localStorage.setItem('vault_transfer_start', Date.now() - 120000);
+  location.href = '/b1-access/';
+};
+
+window.goStep5 = function () {
+  _setBase();
+  localStorage.setItem('85yen_stream_unlocked', '1');
+  localStorage.setItem('redvil_stream_stage', 'done');
+  const t = new Date('2026-05-02T09:00:00').getTime();
+  localStorage.setItem('otonashi_reply_sent', t);
+  localStorage.setItem('otonashi_reply_subject', '助けてほしい');
+  localStorage.setItem('otonashi_reply2_sent', t + 60000);
+  localStorage.setItem('otonashi_reply2_subject', 'b1-access password');
+  localStorage.setItem('otonashi_reply2_has_password', '1');
+  localStorage.setItem('vai_b1_accessed', '1');
+  localStorage.setItem('vault_transfer_start', Date.now() - 180000);
+  localStorage.setItem('vault_visited', '1');
+  localStorage.setItem('otonashi_reply3_sent', t + 120000);
+  localStorage.setItem('otonashi_reply3_subject', 'VAULTについて');
+  location.href = '/vault/';
+};
+
+window.goStep6 = function () {
+  _setBase();
+  localStorage.setItem('redvil_stream_stage', 'done');
+  localStorage.setItem('85yen_stream_unlocked', '1');
+  const t = new Date('2026-05-02T09:00:00').getTime();
+  localStorage.setItem('otonashi_reply2_has_password', '1');
+  localStorage.setItem('vai_b1_accessed', '1');
+  localStorage.setItem('vault_transfer_start', Date.now() - 300000);
+  localStorage.setItem('vault_visited', '1');
+  localStorage.setItem('otonashi_reply3_sent', t);
+  localStorage.setItem('vai_site_down', 'true');
+  localStorage.setItem('vault_abort_code', 'TEST-1234');
+  location.href = '/sys/';
+};
+
+window.goStep7 = function () {
+  _setBase();
+  localStorage.setItem('vai_b1_accessed', '1');
+  localStorage.setItem('vault_transfer_start', Date.now() - 300000);
+  localStorage.setItem('vault_visited', '1');
+  localStorage.setItem('otonashi_reply2_has_password', '1');
+  localStorage.setItem('vai_site_down', 'true');
+  localStorage.setItem('vault_abort_code', 'TEST-1234');
+  localStorage.setItem('sys_server_chosen', '1');
+  location.href = '/sys/';
+};
+
+window.goStep8 = function () {
+  _setBase();
+  localStorage.setItem('vai_b1_accessed', '1');
+  localStorage.setItem('vault_transfer_start', Date.now() - 300000);
+  localStorage.setItem('vault_visited', '1');
+  localStorage.setItem('otonashi_reply2_has_password', '1');
+  localStorage.setItem('vai_site_down', 'true');
+  localStorage.setItem('vault_abort_code', 'TEST-1234');
+  localStorage.setItem('sys_server_chosen', '1');
+  localStorage.setItem('vault_fight_done', '1');
+  location.href = '/vault/';
+};
+
+window.goStep9 = function () {
+  localStorage.setItem('vault_transfer_aborted', '1');
+  localStorage.setItem('vault_aborted_pct', '78.5');
+  location.href = '/clear/';
 };

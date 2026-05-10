@@ -197,6 +197,69 @@
     }
     .abort-success .s-label { color: #22cc22; font-size: 0.9em; letter-spacing: 0.1em; margin-bottom: 8px; }
 
+    /* ── President interference ── */
+    .fight-overlay {
+      background: #0a0000;
+      border: 1px solid #660000;
+      border-radius: 6px;
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      font-size: 0.82em;
+      line-height: 2;
+    }
+    .fight-president {
+      color: #ff2222;
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+    }
+    .fight-president .name { color: #882222; font-size: 0.8em; margin-bottom: 6px; }
+    .fight-otonashi {
+      color: #ff9900;
+      font-size: 0.85em;
+      margin-bottom: 18px;
+      min-height: 1.4em;
+    }
+    .fight-otonashi .name { color: #664400; font-size: 0.8em; margin-bottom: 4px; }
+    .fight-btn {
+      padding: 10px 24px;
+      background: #1a0000;
+      border: 1px solid #880000;
+      border-radius: 4px;
+      color: #ff4444;
+      font-family: monospace;
+      font-size: 0.85em;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+    .fight-btn:hover { background: #2a0000; border-color: #ff2222; }
+    .fight-counter { font-size: 0.72em; color: #440000; margin-top: 10px; text-align: right; }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-4px); }
+      40% { transform: translateX(4px); }
+      60% { transform: translateX(-2px); }
+      80% { transform: translateX(2px); }
+    }
+    .shaking { animation: shake 0.4s ease; }
+
+    @keyframes flicker-mid {
+      0%, 100% { opacity: 0.35; }
+      30% { opacity: 0.15; }
+      60% { opacity: 0.4; }
+    }
+    @keyframes flicker-end {
+      0%, 100% { opacity: 0.12; }
+      20% { opacity: 0.04; }
+      50% { opacity: 0.18; }
+      75% { opacity: 0.02; }
+    }
+    .oto-line-1 { opacity: 0.55; }
+    .oto-line-2 { animation: flicker-mid 3s ease-in-out infinite; }
+    .oto-line-3 { animation: flicker-end 2s ease-in-out infinite; letter-spacing: 0.02em; }
+
     .closing {
       margin-top: 60px;
       padding-top: 20px;
@@ -286,11 +349,7 @@
       </p>
       <p>
         転送は現在進行中であり、完了まで停止はできない——<br>
-        <span style="color:#333;">ただし、対象の存在証明（本人確認コード）が提出された場合を除く。</span>
-      </p>
-      <p style="color:#1e1e1e;">
-        対象が実在する人間であることをシステムが確認した場合、転送は中止される。<br>
-        これはVAI創設時に埋め込まれた唯一の中断条件である。
+        <span style="color:#333;">ただし、中断コードが入力された場合を除く。</span>
       </p>
     </div>
 
@@ -298,23 +357,42 @@
     <div class="abort-section">
       <div class="abort-label">// 緊急中断ターミナル — VAULT-006</div>
       <div class="abort-desc">
-        転送を中止するには、対象本人のみが知り得る確認コードを入力してください。<br>
-        これは対象が「データではなく人間である」ことをシステムに証明する唯一の手段です。<br>
-        <span style="color:#2a2a2a;">誤入力は記録されます。正しいコードは対象自身の記録の中に存在します。</span>
+        中断コードが必要です。
       </div>
+      <!-- President interference -->
+      <div class="fight-overlay" id="fight-overlay" style="display:none;">
+        <div class="fight-president">
+          <div class="name">// 御堂 静一郎</div>
+          <div id="president-msg">このシステムへのアクセスは許可されていない。</div>
+        </div>
+        <div class="fight-otonashi" id="otonashi-fight-msg" style="display:none;">
+          <div class="name">// 音無 零</div>
+          <div id="otonashi-fight-text"></div>
+        </div>
+        <div class="fight-counter" id="fight-counter">0 / 5</div>
+        <button class="fight-btn" id="fight-btn" onclick="pushThrough()">— 無視して突破する —</button>
+      </div>
+
       <div class="abort-row">
-        <input type="password" id="abort-input" placeholder="本人確認コード" maxlength="20">
-        <button onclick="attemptAbort()">送信</button>
+        <input type="password" id="abort-input" placeholder="中断コード" maxlength="20">
+        <button onclick="attemptAbort()">実行</button>
       </div>
       <div class="abort-err" id="abort-err"></div>
 
       <div class="abort-success" id="abort-success">
-        <div class="s-label">✓ 本人確認 — 一致</div>
+        <div class="s-label">✓ コード一致 — 転送中断</div>
         VAULT-006 転送プロセス、中断しました。<br>
         赤井 瀧魔琉の存在はシステムから除外されました。<br>
         在籍記録の削除命令は取り消されました。<br>
         <br>
         <span style="color:#1a6b1a;">— 対象は安全です。</span>
+        <br><br>
+        <div style="border-top:1px solid #003300;padding-top:14px;color:#886600;font-size:0.92em;line-height:2.4;">
+          <span style="color:#443300;font-size:0.85em;">// 音無 零</span><br>
+          <span class="oto-line-1">……良かった。間に合いましたね。</span><br>
+          <span class="oto-line-2">私のことは心配しないでください。</span><br>
+          <span class="oto-line-3">もともと——私は、デ｀タでし_かなかっ　たか　ら。</span>
+        </div>
       </div>
     </div>
 
@@ -329,7 +407,7 @@
   <script>
     const BASE_PCT = 67.3;
     const RATE     = 0.1 / 5;
-    const ABORT_KEY = 'Tono0128';
+    const ABORT_KEY = localStorage.getItem('vault_abort_code') || '';
     const ABORTED_KEY = 'vault_transfer_aborted';
 
     function getCurrentPct() {
@@ -362,10 +440,70 @@
         document.getElementById('abort-err').textContent = '';
         document.getElementById('abort-success').style.display = 'block';
         document.getElementById('abort-success').scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => { location.href = '/clear/'; }, 10000);
       } else {
-        document.getElementById('abort-err').textContent = '確認コードが一致しません。アクセス試行を記録しました。';
+        document.getElementById('abort-err').textContent = 'コードが一致しません。';
         document.getElementById('abort-input').value = '';
       }
+    }
+
+    /* ── President fight mechanic ── */
+    const PRESIDENT_MSGS = [
+      'このシステムへのアクセスは許可されていない。',
+      '転送を止めることは許可しない。退け。',
+      '貴様は何者だ。どこからアクセスしている。',
+      '音無零……お前か。消えろ。',
+      '……ッ、く——システムが——',
+    ];
+    const OTONASHI_MSGS = [
+      null,
+      '押し続けてください——私が抑えています——',
+      '早く——御堂が私を——',
+      'ッ、消されそう——でも——もう少し——',
+      '——行って——早く——',
+    ];
+
+    let fightStep = 0;
+    const FIGHT_TOTAL = 5;
+
+    function initFight() {
+      if (localStorage.getItem(ABORTED_KEY)) return;
+      if (localStorage.getItem('vault_fight_done')) {
+        unlockAbortInput();
+        return;
+      }
+      if (!localStorage.getItem('vault_abort_code')) return;
+      document.getElementById('fight-overlay').style.display = 'block';
+      document.getElementById('abort-input').disabled = true;
+      document.getElementById('fight-counter').textContent = `抵抗: ${fightStep} / ${FIGHT_TOTAL}`;
+    }
+
+    function pushThrough() {
+      fightStep++;
+      const overlay = document.getElementById('fight-overlay');
+      overlay.classList.add('shaking');
+      setTimeout(() => overlay.classList.remove('shaking'), 400);
+
+      document.getElementById('president-msg').textContent = PRESIDENT_MSGS[Math.min(fightStep, PRESIDENT_MSGS.length - 1)];
+      document.getElementById('fight-counter').textContent = `抵抗: ${fightStep} / ${FIGHT_TOTAL}`;
+
+      const otoMsg = OTONASHI_MSGS[Math.min(fightStep, OTONASHI_MSGS.length - 1)];
+      if (otoMsg) {
+        document.getElementById('otonashi-fight-msg').style.display = 'block';
+        document.getElementById('otonashi-fight-text').textContent = otoMsg;
+      }
+
+      if (fightStep >= FIGHT_TOTAL) {
+        localStorage.setItem('vault_fight_done', '1');
+        overlay.style.display = 'none';
+        unlockAbortInput();
+      }
+    }
+
+    function unlockAbortInput() {
+      const input = document.getElementById('abort-input');
+      input.disabled = false;
+      input.focus();
     }
 
     // Restore aborted state on reload
@@ -375,9 +513,19 @@
       document.getElementById('abort-success').style.display = 'block';
     }
 
+    initFight();
+
+    if (!localStorage.getItem('vault_transfer_start') && !localStorage.getItem(ABORTED_KEY)) {
+      localStorage.setItem('vault_transfer_start', Date.now());
+    }
+
     updateDisplay();
     setInterval(() => {
-      if (!localStorage.getItem(ABORTED_KEY)) updateDisplay();
+      if (localStorage.getItem(ABORTED_KEY)) return;
+      updateDisplay();
+      if (getCurrentPct() >= 99.9) {
+        location.href = '/gameover/';
+      }
     }, 1000);
 
     localStorage.setItem('vault_visited', '1');

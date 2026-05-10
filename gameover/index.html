@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>— TRANSFER COMPLETE —</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #080808;
+      color: #555;
+      font-family: monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 30px;
+      text-align: center;
+    }
+
+    .line {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tag {
+      font-size: 0.7em;
+      letter-spacing: 0.2em;
+      color: #222;
+      margin-bottom: 40px;
+    }
+
+    .result {
+      font-size: 2em;
+      color: #ff2222;
+      letter-spacing: 0.2em;
+      margin-bottom: 50px;
+    }
+
+    .entry {
+      font-size: 0.82em;
+      color: #444;
+      line-height: 2.6;
+      margin-bottom: 6px;
+    }
+    .entry .label { color: #333; display: inline-block; width: 220px; text-align: right; margin-right: 20px; }
+    .entry .val { color: #555; }
+    .entry .val.red { color: #882222; }
+    .entry .val.dim { color: #222; }
+
+    .divider {
+      width: 300px;
+      border: none;
+      border-top: 1px solid #111;
+      margin: 36px auto;
+    }
+
+    .closing-msg {
+      font-size: 0.78em;
+      color: #333;
+      line-height: 2.4;
+      max-width: 460px;
+    }
+
+    .end-tag {
+      font-size: 0.65em;
+      letter-spacing: 0.15em;
+      color: #1a1a1a;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="line tag" id="l0">VAULT-006 // 転送完了 // 2026-05-02</div>
+
+  <div class="line result" id="l1">TRANSFER COMPLETE</div>
+
+  <div class="line entry" id="l2">
+    <span class="label">赤井 瀧魔琉</span>
+    <span class="val red">アーカイブ済み</span>
+  </div>
+  <div class="line entry" id="l3">
+    <span class="label">在籍記録</span>
+    <span class="val dim">削除済み</span>
+  </div>
+  <div class="line entry" id="l4">
+    <span class="label">チャンネル</span>
+    <span class="val dim">沈黙</span>
+  </div>
+  <div class="line entry" id="l5">
+    <span class="label">VAULT-006</span>
+    <span class="val red">格納完了</span>
+  </div>
+
+  <hr class="divider line" id="l6">
+
+  <div class="line closing-msg" id="l7">
+    間に合いませんでした。<br>
+    赤井 瀧魔琉はVAULTに格納されました。<br>
+    彼の存在は、データとしてのみ残ります。
+  </div>
+
+  <div class="line end-tag" id="l8">— GAME OVER —</div>
+
+  <script>
+    const lines = ['l0','l1','l2','l3','l4','l5','l6','l7','l8'];
+    lines.forEach((id, i) => {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      }, 600 + i * 800);
+    });
+  </script>
+</body>
+</html>
