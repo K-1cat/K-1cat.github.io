@@ -387,6 +387,9 @@
         <!-- OUTBOX -->
         <div id="mail-pane-outbox" class="mail-pane">
           <div class="card">
+            <div id="deleted-notice" style="display:none;padding:10px 12px;margin-bottom:8px;background:#f9f0f0;border:1px solid #e8c8c8;border-radius:8px;font-size:0.85em;color:#a00;font-family:monospace;">
+              ⚠ システム通知：以前のメールはすべて削除されました。
+            </div>
             <div id="composed-emails"></div>
           </div>
         </div>
@@ -560,6 +563,7 @@
       document.getElementById('compose-panel').style.display = 'none';
 
       renderComposedEmails();
+      updateDeletedNotice();
 
       if (to.toLowerCase().includes('otonashi@vai.ac')) {
         if (!localStorage.getItem('otonashi_reply_sent')) {
@@ -613,6 +617,12 @@
     }
 
     renderComposedEmails();
+
+    function updateDeletedNotice() {
+      const mails = JSON.parse(localStorage.getItem('vai_composed_mails') || '[]');
+      document.getElementById('deleted-notice').style.display = mails.length === 0 ? 'block' : 'none';
+    }
+    updateDeletedNotice();
 
     /* ── Otonashi reply ── */
     function renderOtonashiReply(animate) {
