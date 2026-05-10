@@ -14,63 +14,48 @@
       border-bottom: 1px solid #eee;
     }
 
-    .stream-wrap { max-width: 800px; padding: 40px 50px 60px; }
-    .stream-wrap h1 { font-size: 1.8em; margin: 0 0 6px; }
+    .container { padding: 40px 50px; }
 
-    .stream-meta-top {
-      font-size: 0.85em;
-      color: #888;
-      font-family: monospace;
+    .stream-box {
+      background: #000;
+      border-radius: 12px;
       margin-bottom: 20px;
-      line-height: 1.8;
+      overflow: hidden;
+      border: 3px solid #333;
+      box-shadow: 0 0 0 1px #555, 0 8px 24px rgba(0,0,0,0.4);
     }
-
-    .status-dot {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #2ecc71;
-      margin-right: 4px;
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    .player-placeholder {
-      background: #111;
-      color: #aaa;
+    .stream-box img {
+      width: 100%;
+      height: auto;
+      display: block;
       border-radius: 10px;
-      height: 200px;
+    }
+    .stream-box .player-placeholder {
+      color: #aaa;
+      height: 220px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.1em;
-      margin-bottom: 20px;
       letter-spacing: 0.05em;
+      font-family: monospace;
     }
 
-    .stream-desc {
-      color: #555;
-      font-size: 0.95em;
-      line-height: 1.7;
-      margin-bottom: 30px;
+    .meta {
+      color: #777;
+      font-size: 0.9em;
+      margin-bottom: 20px;
     }
 
-    .chat-section h2 { font-size: 1.1em; margin-bottom: 12px; }
-
-    .chat-box {
-      border: 1px solid #e0e4f8;
-      border-radius: 10px;
-      padding: 16px 20px;
-      background: #f9f9ff;
-      max-width: 500px;
+    .comment-section { margin-top: 30px; }
+    .comment-section h2 { font-size: 1.1em; margin-bottom: 12px; }
+    .chat {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 24px 20px;
     }
-
-    .chat-msg { font-size: 0.9em; margin-bottom: 8px; line-height: 1.5; }
-    .chat-msg:last-child { margin-bottom: 0; }
+    .chat p { margin: 8px 0; font-size: 0.9em; }
     .chat-user { font-weight: 600; color: #4a5bdc; }
     .chat-user.host { color: #c0392b; }
   </style>
@@ -80,32 +65,30 @@
   <div id="main-content">
     <div class="stream-nav">VAI &rsaquo; 卒業生配信</div>
 
-    <div class="stream-wrap">
-      <h1>📖 伊豆の語り子 - 朗読配信</h1>
-      <div class="stream-meta-top">
+    <div class="container">
+      <h1>📖 伊豆の語り子 - 朗読配信 <span style="display:inline-block;background:#c0392b;color:white;font-size:0.45em;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:0.1em;vertical-align:middle;margin-left:8px;">● LIVE</span></h1>
+      <div class="meta">
         配信メディア: YouTube<br>
-        配信開始：06/03　21:14<br>
-        Stream ID：IK-8329<br>
-        <span class="status-dot"></span>LIVE
+        配信開始：05/02　21:00<br>
+        Stream ID：IK-8329
       </div>
 
-      <div class="player-placeholder">▶ 再生中…</div>
+      <div class="stream-box">
+        <div class="player-placeholder">▶ 再生中…</div>
+      </div>
 
-      <p class="stream-desc">
-        静かな語り口で物語を紡ぐ配信。視聴者は音声に集中するため、<br>
-        画面の演出は最小限に抑えられている。
-      </p>
+      <p>静かな語り口で物語を紡ぐ配信。視聴者は音声に集中するため、画面の演出は最小限に抑えられている。</p>
 
-      <div class="chat-section">
+      <div class="comment-section">
         <h2>💬 チャット</h2>
-        <div class="chat-box">
-          <div class="chat-msg"><span class="chat-user host">izu:</span> コードを要求された場合: 3108329</div>
-          <div class="chat-msg"><span class="chat-user">viewer_12:</span> こんちゃ～</div>
-          <div class="chat-msg"><span class="chat-user">viewer_03:</span> 待ってました。</div>
-          <div class="chat-msg"><span class="chat-user">viewer_08:</span> 睡眠導入剤助かります！</div>
-          <div class="chat-msg"><span class="chat-user">viewer_26:</span> 声めっちゃ良いですね</div>
-          <div class="chat-msg"><span class="chat-user">viewer_20:</span> チャンネル登録しました！</div>
-          <div class="chat-msg"><span class="chat-user">viewer_12:</span> 次の歌配いつですか？</div>
+        <div class="chat">
+          <p><span class="chat-user host">izu:</span> コードを要求された場合: 3108329</p>
+          <p><span class="chat-user">viewer_12:</span> こんちゃ～</p>
+          <p><span class="chat-user">viewer_03:</span> 待ってました。</p>
+          <p><span class="chat-user">viewer_08:</span> 睡眠導入剤助かります！</p>
+          <p><span class="chat-user">viewer_26:</span> 声めっちゃ良いですね</p>
+          <p><span class="chat-user">viewer_20:</span> チャンネル登録しました！</p>
+          <p><span class="chat-user">viewer_12:</span> 次の歌配いつですか？</p>
         </div>
       </div>
     </div>

@@ -95,12 +95,16 @@
       font-size: 0.9em;
       margin-bottom: 20px;
     }
+    .comment-section { margin-top: 30px; }
+    .comment-section h2 { font-size: 1.1em; margin-bottom: 12px; }
     .chat {
-      background: #f5f5f5;
-      padding: 20px;
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
       border-radius: 12px;
+      padding: 24px 20px;
     }
-    .chat p { margin: 8px 0; }
+    .chat p { margin: 8px 0; font-size: 0.9em; }
+    .chat-user { font-weight: 600; color: #4a5bdc; }
   </style>
 </head>
 <body data-page="">
@@ -142,15 +146,17 @@
         </div>
         <p>たんばりんとスプラしてます！視聴者参加型！！強者カモン！🦑</p>
 
-        <h2>💬 チャット</h2>
-        <div class="chat">
-          <p><b>viewer_04:</b> 58ha~</p>
-          <p><b>viewer_12:</b> こん～</p>
-          <p><b>viewer_03:</b> コラボ最高！</p>
-          <p><b>viewer_08:</b> たんばりんさんから来ました</p>
-          <p><b>viewer_26:</b> めっちゃ上手いですね。</p>
-          <p><b>viewer_20:</b> チャンネル登録しました！</p>
-          <p><b>viewer_12:</b> 次のコラボ配信いつですか？</p>
+        <div class="comment-section">
+          <h2>💬 コメント</h2>
+          <div class="chat">
+            <p><span class="chat-user">viewer_04:</span> 58ha~</p>
+            <p><span class="chat-user">viewer_12:</span> こん～</p>
+            <p><span class="chat-user">viewer_03:</span> コラボ最高！</p>
+            <p><span class="chat-user">viewer_08:</span> たんばりんさんから来ました</p>
+            <p><span class="chat-user">viewer_26:</span> めっちゃ上手いですね。</p>
+            <p><span class="chat-user">viewer_20:</span> チャンネル登録しました！</p>
+            <p><span class="chat-user">viewer_12:</span> 次のコラボ配信いつですか？</p>
+          </div>
         </div>
       </div>
     </div>
