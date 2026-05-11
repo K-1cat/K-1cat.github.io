@@ -273,6 +273,10 @@
 <body>
   <div class="wrap">
 
+    <div style="margin-bottom:24px;font-size:0.72em;">
+      <a href="javascript:history.back()" style="color:#444;text-decoration:none;letter-spacing:0.06em;">← 戻る</a>
+    </div>
+
     <div class="vault-title">VAULT</div>
     <div class="vault-subtitle">VIRTUAL ARCHIVE OF UNIFIED LATENT TRANSFERS // VAI INTERNAL SYSTEM</div>
     <div class="active-banner">⚠ VAULT-006 — 転送アクティブ</div>
@@ -440,7 +444,8 @@
         document.getElementById('abort-err').textContent = '';
         document.getElementById('abort-success').style.display = 'block';
         document.getElementById('abort-success').scrollIntoView({ behavior: 'smooth' });
-        setTimeout(() => { location.href = '/clear/'; }, 10000);
+        const ending = localStorage.getItem('otonashi_backup_activated') ? '/clear-good/' : '/clear/';
+        setTimeout(() => { location.href = ending; }, 10000);
       } else {
         document.getElementById('abort-err').textContent = 'コードが一致しません。';
         document.getElementById('abort-input').value = '';

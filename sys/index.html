@@ -133,6 +133,16 @@
     .srv-btn:hover { border-color: #ff4444; color: #ff4444; }
 
     #sys-body-wrap { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      white-space: normal;
+    }
+    .btn-row span { font-size: 0.8em; }
   </style>
 </head>
 <body>
@@ -172,6 +182,7 @@
       <div class="tree-dir">VAULT/</div>
       <div class="tree-file" onclick="openFile('transfer_active')">transfer_active.dat</div>
       <div class="tree-file" onclick="openFile('archive_manifest')">archive_manifest.txt</div>
+      <div class="tree-file" onclick="openFile('access_log')">access_log.txt</div>
 
       <div class="tree-dir">RESEARCH/</div>
       <div class="tree-file" onclick="openFile('phase2_notes')">phase2_notes.txt</div>
@@ -181,6 +192,7 @@
 
       <div class="tree-dir">SYSTEM/</div>
       <div class="tree-file" onclick="openFile('emergency_protocol')">emergency_protocol.txt</div>
+      <div class="tree-file" onclick="openFile('entity_backup')">entity_backup.dat</div>
 
       <div style="margin-top:24px;padding:0 20px;">
         <a href="/vault/" style="font-size:0.75em;color:#ff4444;text-decoration:none;letter-spacing:0.08em;">→ /vault/ に移動</a>
@@ -199,6 +211,9 @@
         <div class="otonashi-msg visible" id="msg-default">
           <span class="sender">音無零 &gt;</span>入れました。御堂のサーバーです。静かに、慎重に。ファイルを確認してください。
         </div>
+        <div class="otonashi-msg" id="msg-access_log">
+          <span class="sender">音無零 &gt;</span>誰かがアクセスしてきています。急いでください。
+        </div>
         <div class="otonashi-msg" id="msg-transfer_active">
           <span class="sender">音無零 &gt;</span>……赤井さんのデータが全部ここに記録されている。早く。早くしないと。
         </div>
@@ -213,6 +228,9 @@
         </div>
         <div class="otonashi-msg" id="msg-emergency_protocol">
           <span class="sender">音無零 &gt;</span>……あった。これです。コードを覚えて、VAULTへ急いでください。時間がない。
+        </div>
+        <div class="otonashi-msg" id="msg-entity_backup">
+          <span class="sender">音無零 &gt;</span>……これは、私のデータ元で、VAULT-001から003の再構成ログです。
         </div>
       </div>
     </div>
@@ -264,6 +282,21 @@
     }
 
     const FILES = {
+      access_log: {
+        header: 'VAULT/access_log.txt',
+        content: `VAULTシステム — アクセスログ
+══════════════════════════════════════════
+
+2026-05-02 07:19:41  SYSTEM      転送セッション開始
+2026-05-02 07:21:03  SYSTEM      VAULT-006 転送開始
+2026-05-02 08:47:00  kuroda      VAI-399 対象確認
+2026-05-02 09:02:00  SYSTEM      外部エンティティ接続検出
+2026-05-02 09:02:14  SYSTEM      警告: 不審なアクセスを検知
+2026-05-02 <span class="c-red">--:--:--  UNKNOWN     現在のセッション — 未認証</span>
+
+<div class="btn-row"><button onclick="sysAction('act-log-clear')" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ ログをクリアする</button><span id="act-log-clear" style="display:none;color:#882200;">エラー: ログは改ざん防止保護下にあります</span><button onclick="sysAction('act-log-export')" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ ログをエクスポートする</button><span id="act-log-export" style="display:none;color:#882200;">エラー: 接続タイムアウト</span><button onclick="refreshLog()" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ ログを更新する</button><span id="act-log-refresh" style="display:none;"></span></div>`
+      },
+
       transfer_active: {
         header: 'VAULT/transfer_active.dat',
         content: `VAULT TRANSFER — アクティブセッション
@@ -289,7 +322,9 @@ Stream ID    : RV-0214
 転送完了時処理:
   - 在籍記録を削除
   - チャンネルを沈黙させる
-  - 本人への通知: <span class="c-dim">なし</span>`
+  - 本人への通知: <span class="c-dim">なし</span>
+
+<div class="btn-row"><button onclick="sysAction('act-transfer')" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ 転送を中断する</button><span id="act-transfer" style="display:none;color:#882200;">エラー: 学長権限が必要です</span><button onclick="refreshTransferPct()" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ データを更新する</button><span id="act-transfer-refresh" style="display:none;color:#22cc88;">更新完了</span></div>`
       },
 
       archive_manifest: {
@@ -308,7 +343,9 @@ VAI-399 選抜候補（次期対象）:
   <span class="c-dim">85Yen / たんばりん / [他12名]</span>
 
 備考: 転送完了後、対象の記録はVAULT内のみに存在する。
-      物理的活動は終了する。`
+      物理的活動は終了する。
+
+<div class="btn-row"><button onclick="sysAction('act-archive')" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ アーカイブを展開する</button><span id="act-archive" style="display:none;color:#882200;">エラー: 読み取り専用です</span><button onclick="runIntegrityCheck()" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ 整合性を確認する</button><span id="act-integrity" style="display:none;"></span></div>`
       },
 
       phase2_notes: {
@@ -331,7 +368,9 @@ VTuberという現象は、「完全に観測された存在」を
 より「高スコア」な個体のアーカイブが必要。
 VAI-399はそのための選別プロセスである。
 
-<span class="c-dim">— 記録者: 御堂 静一郎 / 2026-04-18</span>`
+<span class="c-dim">— 記録者: 御堂 静一郎 / 2026-04-18</span>
+
+<div class="btn-row"><button onclick="sysAction('act-notes')" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ ファイルを削除する</button><span id="act-notes" style="display:none;color:#882200;">エラー: 削除権限がありません</span><button onclick="decryptNotes()" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ 暗号化を解除する</button><span id="act-decrypt" style="display:none;"></span></div>`
       },
 
       kuroda_exchange: {
@@ -363,7 +402,9 @@ VAI-399はそのための選別プロセスである。
 外部からの干渉には注意してください。
 最近、システムへの不審なアクセスを検知しています。
 
-御堂 静一郎`
+御堂 静一郎
+
+<div class="btn-row"><button onclick="sysAction('act-mail')" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ メールをエクスポートする</button><span id="act-mail" style="display:none;color:#882200;">エラー: 接続タイムアウト</span><button onclick="showAttachments()" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ 添付ファイルを確認する</button><span id="act-attach" style="display:none;"></span></div>`
       },
 
       emergency_protocol: {
@@ -385,10 +426,107 @@ VAI-399はそのための選別プロセスである。
       完全に停止し、対象のデータをシステムから
       除外する。操作は不可逆ではない。
 
+<div class="btn-row"><button onclick="sysAction('act-proto')" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ コードをリセットする</button><span id="act-proto" style="display:none;color:#882200;">エラー: 操作が拒否されました</span><button onclick="sysAction('act-proto-log')" style="padding:8px 20px;background:#0a0000;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ アクセス履歴を消去する</button><span id="act-proto-log" style="display:none;color:#882200;">エラー: 監査ログは保護されています</span></div>
+
 <span class="c-dim">発行: 御堂 静一郎 — 2024-11-14
 文書番号: VAI-SYS-OVERRIDE-001</span>`
+      },
+
+      entity_backup: {
+        header: 'SYSTEM/entity_backup.dat',
+        content: `VAULTエンティティ — バックアップレコード
+══════════════════════════════════════════
+対象エンティティ : otonashi@vai.ac
+種別             : VAULT生成 合成エンティティ
+生成元           : VAULT-001 / VAULT-002 / VAULT-003
+
+このファイルにはエンティティの完全な再構成データが
+含まれています。元アーカイブから独立した形で保持されており、
+VAULTシステムの外部でも実行可能です。
+
+転送先           : 外部ストレージ（指定なし）
+ステータス       : <span class="c-dim" id="backup-status">未実行</span>
+
+<span id="backup-btn-wrap"><button onclick="activateBackup()" style="padding:8px 20px;background:#001a00;border:1px solid #005500;border-radius:4px;color:#22cc88;font-family:monospace;font-size:0.82em;cursor:pointer;letter-spacing:0.06em;">▶ 復元プロトコルを実行する</button></span>`
       }
     };
+
+    function sysAction(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'inline';
+    }
+
+    function refreshTransferPct() {
+      updateSysPct();
+      const el = document.getElementById('act-transfer-refresh');
+      if (el) { el.style.display = 'inline'; setTimeout(() => el.style.display = 'none', 2000); }
+    }
+
+    function runIntegrityCheck() {
+      const el = document.getElementById('act-integrity');
+      if (!el) return;
+      el.style.display = 'inline';
+      el.style.color = '#ff9900';
+      el.textContent = 'チェック中…';
+      setTimeout(() => {
+        el.style.color = '#22cc88';
+        el.textContent = '整合性チェック完了 — 異常なし（VAULT-006を除く）';
+      }, 1400);
+    }
+
+    function decryptNotes() {
+      const el = document.getElementById('act-decrypt');
+      if (!el) return;
+      el.style.display = 'inline';
+      el.style.color = '#ff9900';
+      el.textContent = '解除中…';
+      setTimeout(() => {
+        el.style.color = '#888';
+        el.textContent = '復号完了 — 追加データなし（このファイルは暗号化されていません）';
+      }, 1200);
+    }
+
+    function showAttachments() {
+      const el = document.getElementById('act-attach');
+      if (!el) return;
+      el.style.display = 'inline';
+      el.style.color = '#666';
+      el.textContent = '添付ファイル: なし';
+    }
+
+    function refreshLog() {
+      const el = document.getElementById('act-log-refresh');
+      if (!el) return;
+      el.style.display = 'block';
+      el.style.color = '#ff9900';
+      el.textContent = '更新中…';
+      const now = new Date();
+      const ts = `2026-05-02 ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+      setTimeout(() => {
+        el.style.color = '#22cc88';
+        el.textContent = `更新完了 — 最終エントリ: ${ts}  UNKNOWN  セッション継続中`;
+      }, 900);
+    }
+
+    function activateBackup() {
+      localStorage.setItem('otonashi_backup_activated', '1');
+      const statusEl = document.getElementById('backup-status');
+      const btnWrap  = document.getElementById('backup-btn-wrap');
+      if (statusEl) { statusEl.textContent = '実行済み'; statusEl.style.color = '#22cc88'; }
+      if (btnWrap)  btnWrap.innerHTML = '<span style="color:#22cc88;font-size:0.85em;">✓ プロトコル実行済み</span>';
+      const otoMsg = document.getElementById('msg-entity_backup');
+      if (otoMsg) otoMsg.innerHTML = '<span class="sender">音無零 &gt;</span>ありがとう。これで——消えなくて済むかもしれない。VAULTへ急いでください。';
+    }
+
+    // Restore activation state if already done
+    if (localStorage.getItem('otonashi_backup_activated')) {
+      setTimeout(() => {
+        const s = document.getElementById('backup-status');
+        const b = document.getElementById('backup-btn-wrap');
+        if (s) { s.textContent = '実行済み'; s.style.color = '#22cc88'; }
+        if (b) b.innerHTML = '<span style="color:#22cc88;font-size:0.85em;">✓ プロトコル実行済み</span>';
+      }, 100);
+    }
 
     function openFile(key) {
       const file = FILES[key];
