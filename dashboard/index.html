@@ -477,12 +477,13 @@
     }
 
     /* ── Date helpers ── */
-    const GAME_START = new Date('2026-05-02T21:03:00').getTime();
+    const _loginTime   = parseInt(localStorage.getItem('vai_login_time') || Date.now());
+    const _loginMinute = String(new Date(_loginTime).getMinutes()).padStart(2, '0');
+    const GAME_START   = new Date(`2026-05-02T21:${_loginMinute}:00`).getTime();
     const WEEKDAYS = ['日','月','火','水','木','金','土'];
 
     function toGameTime(realTs) {
-      const login = parseInt(localStorage.getItem('vai_login_time') || Date.now());
-      return GAME_START + (realTs - login);
+      return GAME_START + (realTs - _loginTime);
     }
 
     function relDate(offset) {
