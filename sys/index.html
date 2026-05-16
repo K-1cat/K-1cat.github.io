@@ -547,7 +547,7 @@ VAULTシステムの外部でも実行可能です。
     }
 
     const BASE_PCT = 67.3;
-    const RATE     = 0.1 / 0.1;
+    const RATE     = 0.1 / 5;
     function getCurrentPct() {
       const start = parseInt(localStorage.getItem('vault_transfer_start') || '0');
       if (!start) return BASE_PCT;
