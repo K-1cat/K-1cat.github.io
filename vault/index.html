@@ -434,7 +434,7 @@
 
     function attemptAbort() {
       const val = document.getElementById('abort-input').value;
-      if (val === ABORT_KEY) {
+      if (ABORT_KEY && val === ABORT_KEY) {
         const frozenPct = getCurrentPct();
         localStorage.setItem(ABORTED_KEY, '1');
         localStorage.setItem('vault_aborted_pct', frozenPct.toFixed(1));
